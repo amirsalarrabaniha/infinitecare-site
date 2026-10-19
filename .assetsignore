@@ -10,3 +10,5 @@ Procfile
 README.md
 *.py
 *.sqlite3
+cf-django
+.venv

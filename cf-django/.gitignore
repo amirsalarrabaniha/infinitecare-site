@@ -1,0 +1,10 @@
+node_modules/
+.venv/
+python_modules/
+staticfiles/
+src/content/
+src/contact/
+src/templates/
+src/config_urls.py
+.wrangler/
+src/app/i18n_js.py

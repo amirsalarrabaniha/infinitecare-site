@@ -1,0 +1,13 @@
+[project]
+name = "infinitecare-django-worker"
+version = "0.1.0"
+description = "Infinite Care Django backend on Cloudflare Python Workers (Durable Object SQLite storage)"
+requires-python = ">=3.12"
+dependencies = [
+    "django-cf",
+    "django==5.2.6",
+    "tzdata",
+]
+
+[dependency-groups]
+dev = ["workers-py", "workers-runtime-sdk"]

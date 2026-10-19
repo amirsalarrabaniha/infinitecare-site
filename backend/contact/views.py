@@ -18,6 +18,8 @@ PHONE_RE = re.compile(r'^[+0-9 ()/.-]{5,40}$')
 
 
 def client_ip(request):
+    if getattr(settings, 'TRUST_CF_CONNECTING_IP', False) and request.META.get('HTTP_CF_CONNECTING_IP'):
+        return request.META['HTTP_CF_CONNECTING_IP']
     if settings.TRUST_X_FORWARDED_FOR and request.META.get('HTTP_X_FORWARDED_FOR'):
         return request.META['HTTP_X_FORWARDED_FOR'].split(',')[0].strip()
     return request.META.get('REMOTE_ADDR')

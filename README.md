@@ -78,3 +78,26 @@ Switch to D1 (needs an API token with *D1 Edit*): `npx wrangler d1 create infini
 Why not full Django on Workers: Python Workers + `django-cf` (D1/R2) exist, but django-cf requires the Workers Paid plan
 (Django start-up exceeds free CPU limits), D1 has no transactions and Django admin support is documented as limited.
 The exported static site on Workers is the reliable option; Django stays deployable on Render/Railway/VPS.
+
+## Cloudflare: Django backend (live: https://infinitecare-api.amyrsalarr.workers.dev)
+The Worker `infinitecare-api` runs the full Django project on Cloudflare Python Workers. Persistence is a
+**SQLite Durable Object** (`django_cf.db.backends.do`) — D1 is not used because the current API token lacks
+*Account › D1 › Edit*, and R2 is not enabled on the account. Uploaded media go into the same Durable Object
+via `cfmedia.storage.DatabaseStorage`; seeded images are served from static assets.
+
+```bash
+export CLOUDFLARE_API_TOKEN=… CLOUDFLARE_ACCOUNT_ID=164584608fafa1395f843df7bb17e1c7   # Node.js ≥ 22, uv
+cd cf-django
+uv sync
+# first deploy: wrangler secret put SECRET_KEY  and  MGMT_TOKEN
+uv run pywrangler deploy
+# one-time setup (replace $MGMT_TOKEN):
+curl -XPOST -H "X-Mgmt-Token: $MGMT_TOKEN" https://infinitecare-api.amyrsalarr.workers.dev/__manage__/migrate/
+curl -XPOST -H "X-Mgmt-Token: $MGMT_TOKEN" https://infinitecare-api.amyrsalarr.workers.dev/__manage__/load_initial_content/
+curl -XPOST -H "X-Mgmt-Token: $MGMT_TOKEN" -H 'content-type: application/json' \
+  -d '{"username":"admin","email":"…","password":"…"}' \
+  https://infinitecare-api.amyrsalarr.workers.dev/__manage__/superuser/
+```
+Admin: https://infinitecare-api.amyrsalarr.workers.dev/admin/
+Site (DB-rendered): https://infinitecare-api.amyrsalarr.workers.dev/en/ and `/hu/`
+The static Worker `infinitecare-site` posts its contact form to this Django `/api/contact/` (CORS allow-listed).

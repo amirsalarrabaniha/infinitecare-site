@@ -21,6 +21,10 @@ IMAGES = settings.SITE_ROOT / 'assets' / 'images'
 def attach(obj, field, filename, folder):
     if not filename:
         return
+    if not getattr(settings, 'CONTENT_SEED_FILES', True):
+        # e.g. on Cloudflare Workers: reference the image already shipped as a static asset (assets/media/<folder>/<file>)
+        getattr(obj, field).name = f'{folder}/{filename}'
+        return
     src = IMAGES / filename
     with src.open('rb') as fh:
         getattr(obj, field).save(filename, File(fh), save=False)
@@ -39,9 +43,12 @@ class Command(BaseCommand):
             return
         for m in (PriceItem, PriceCategory, Package, Service, Counter, HomePage, SiteSettings):
             m.objects.all().delete() if m not in (HomePage, SiteSettings) else m.objects.filter().delete()
-        for folder in ('home', 'services', 'packages'):
+        for folder in ('home', 'services', 'packages') if getattr(settings, 'CONTENT_SEED_FILES', True) else ():
             shutil.rmtree(Path(settings.MEDIA_ROOT) / folder, ignore_errors=True)
-        d = json.loads(SEED.read_text(encoding='utf-8'))
+        if SEED.exists():
+            d = json.loads(SEED.read_text(encoding='utf-8'))
+        else:  # bundles that ship only .py files (Cloudflare Python Workers)
+            from content.seed.seed_data import DATA as d
 
         SiteSettings(**d['settings']).save()
         home = dict(d['home'])
