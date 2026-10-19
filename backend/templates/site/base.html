@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ title }} | Infinite Care Beauty Clinic</title>
+<meta name="description" content="{{ ui.desc }} {{ site.address }}">
+<link rel="alternate" hreflang="en" href="{{ alternates.en }}"><link rel="alternate" hreflang="hu" href="{{ alternates.hu }}"><link rel="alternate" hreflang="x-default" href="{{ alternates.en }}">
+<link rel="icon" href="{{ S }}assets/images/favicon.ico"><link rel="icon" sizes="96x96" href="{{ S }}assets/images/infinitecare-96.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Mr+Dafoe&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ S }}css/style.css">
+</head>
+<body class="page-{{ page }}" data-lang="{{ lang }}" data-api="{{ api_url }}">
+<div class="loader"><img src="{{ S }}assets/images/infinitecare-logo-4.png" alt=""></div><div class="cursor-glow"></div><div class="progress"></div>
+<header class="nav">
+ <a href="{{ urls.index }}" class="brand"><img class="logo-light" src="{{ S }}assets/images/infinitecare-logo-2.png" alt="Infinite Care"><img class="logo-dark" src="{{ S }}assets/images/infinitecare-logo-1.png" alt="Infinite Care"></a>
+ <nav class="menu">
+  {% for n in nav %}<a href="{{ n.href }}" class="{% if n.key == page %}active{% endif %}">{{ n.label }}</a>{% endfor %}
+  <div class="langsw" role="group" aria-label="Language">
+   <a href="{{ switch.en }}" hreflang="en" lang="en" data-lang="en" class="{% if lang == 'en' %}on{% endif %}"{% if lang == 'en' %} aria-current="true"{% endif %}>EN</a><a href="{{ switch.hu }}" hreflang="hu" lang="hu" data-lang="hu" class="{% if lang == 'hu' %}on{% endif %}"{% if lang == 'hu' %} aria-current="true"{% endif %}>HU</a>
+  </div>
+ </nav>
+ <a class="btn btn-sm nav-cta" href="{{ site.phone_href }}">{{ site.phone }}</a>
+ <button class="burger" aria-label="{{ ui.menu }}"><span></span><span></span></button>
+</header>
+{% block content %}{% endblock %}
+<footer class="footer">
+ <div class="wrap fgrid">
+  <div class="reveal"><img src="{{ S }}assets/images/infinitecare-logo-2.png" alt="Infinite Care" class="flogo"><p class="script">Beauty Clinic</p></div>
+  <div class="reveal"><h4>{{ ui.hours }}</h4><p>{% for l in site.hours %}{{ l }}{% if not forloop.last %}<br>{% endif %}{% endfor %}</p></div>
+  <div class="reveal"><h4>{{ ui.res }}</h4><p><a href="{{ site.phone_href }}">{{ site.phone }}</a><br>{{ site.address }}<br><a href="mailto:{{ site.email }}">{{ site.email }}</a></p></div>
+  <div class="reveal social">{% if site.facebook %}<a href="{{ site.facebook }}" aria-label="Facebook">f</a>{% endif %}{% if site.instagram %}<a href="{{ site.instagram }}" aria-label="Instagram">ig</a>{% endif %}{% if site.youtube %}<a href="{{ site.youtube }}" aria-label="YouTube">yt</a>{% endif %}</div>
+ </div>
+ <div class="wrap fbottom"><span>{{ site.city }}</span><span>{{ site.tagline }}</span></div>
+</footer>
+<script src="{{ S }}js/main.js"></script>
+</body>
+</html>

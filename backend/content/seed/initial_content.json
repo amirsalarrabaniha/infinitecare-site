@@ -1,0 +1,723 @@
+{
+ "settings": {
+  "phone": "+36 1 707 0075",
+  "email": "info@infinitecare.hu",
+  "address_en": "Bp. VI. Podmaniczky str. 5.",
+  "address_hu": "Bp. VI. Podmaniczky u. 5.",
+  "hours_en": "Mon-Fri: 9 - 20\nSat: 9 - 15",
+  "hours_hu": "H-P: 9 - 20\nSZ: 9 - 15",
+  "tagline_en": "Infinite Care - The Beauty of Health",
+  "tagline_hu": "Infinite Care - Az Egészség Szépsége",
+  "facebook": "https://www.facebook.com/profile.php?id=100092186686742",
+  "instagram": "https://www.instagram.com/infinitecarebeauty",
+  "youtube": "https://youtube.com/@InfiniteCareBeautyClinic",
+  "map_embed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2695.108056800498!2d19.053390076740023!3d47.50728679483003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4741dd16d7887141%3A0x615a4db6ad2f2ed2!2sInfinite%20Care%20Beauty%20Clinic!5e0!3m2!1sen!2sen!4v1689769315232!5m2!1sen!2sen",
+  "city": "Budapest, Hungary"
+ },
+ "home": {
+  "hello_en": "Hello Beautiful!",
+  "hello_hu": "Hello Beautiful!",
+  "lead_en": "Welcome to the Infinite Care Beauty Clinic! Our highly educated and experienced beauty team are waiting for you in the heart of Budapest. Let's find together the harmony between body and soul. Infinite Care health and beauty.",
+  "lead_hu": "Budapest legújabb esztétikai klinikája szeretettel várja minden kedves szépülni vágyó vendégét. Teremtsük meg közösen a harmóniát test és lélek között. Infinite Care az egészség szépsége.",
+  "contact_en": "Contact",
+  "contact_hu": "Kapcsolat",
+  "cta_s_en": "Beauty and health",
+  "cta_s_hu": "A szépség egészsége",
+  "cta_en": "We are waiting for you to a consultation",
+  "cta_hu": "Várunk konzultációra",
+  "cta_b_en": "+36 1 707 0075",
+  "cta_b_hu": "Jelentkezem",
+  "c_h_en": "Beauty and health",
+  "c_h_hu": "A szépség egészsége",
+  "c_p_en": "Have you got any questions about us or our treatments? keep in touch we get back to you!",
+  "c_p_hu": "Kérdésed van? tudj meg rólunk többet! Felvesszük veled a kapcsolatot!",
+  "h1_en": "Infinite Care|health and beauty",
+  "h1_hu": "Infinite Care|az egészség szépsége",
+  "f1_eyebrow_en": "Our treatments",
+  "f1_title_en": "Enhance your beauty",
+  "f1_text_en": "Let your face, skin and your whole body smile to the world! Let's shine brighter! You deserve to be beautiful in every single minute of your life.\n\nOur highly educated beauty team, brand new treatments and techniques and the most powerful machines are waiting for you in our clinic!",
+  "f1_button_en": "Our treatments",
+  "f1_eyebrow_hu": "Szolgáltatásaink",
+  "f1_title_hu": "Még gyönörűbbé varázsolunk",
+  "f1_text_hu": "Engedd, hogy a bőröd, az arcod és az egész tested mosolyogjon a világra! Hadd ragyogj még fényesebben! Megérdemled, hogy szép legyél, életed minden pillanatában.\n\nFelkészült csapatunk, világelső berendezéseink és legújabb klinikánk csak rád vár!",
+  "f1_button_hu": "Szolgáltatásaink",
+  "f2_eyebrow_en": "Perfect harmony",
+  "f2_title_en": "The beautiful body is waiting for you!",
+  "f2_text_en": "When did you feel last time that your body and soul were in harmony? When you felt that everything is perfect and you don't need anything just to enjoy the moment you are living in?\n\nWe help you to find the harmony between your body and soul!",
+  "f2_button_en": "Learn more about us!",
+  "f2_eyebrow_hu": "Tökéletes harmónia",
+  "f2_title_hu": "A gyönyörű test rád vár!",
+  "f2_text_hu": "Mikor érezted utoljára, hogy a tested és a lelked is tökéletes harmóniában van egymással? Amikor úgy érezted, hogy nincs szükséged többre, csak megélni a pillanatot?\n\nMi segítünk megtalálni a harmóniát test és lélek egyensúlya között!",
+  "f2_button_hu": "Tudj meg többet!",
+  "marquee_en": "Exosome Therapy, Laser hair removal, Mesotherapy, Emsculpt, Carbon peeling, Teeth whitening, Face lifting, Brazilift, Massage",
+  "marquee_hu": "Exoszóma Terápia, Lézeres szőrtelenítés, Mezoterápia, Emsculpt, Carbon hámlasztás, Fogfehérítés, Face lifting, Brazilift, Masszázs",
+  "f1_image": "box-1.jpg",
+  "f2_image": "box-2.jpg",
+  "hero_image": "main-banner.jpg",
+  "cta_image": "services.jpg"
+ },
+ "counters": [
+  {
+   "value": 11,
+   "label_en": "treatments",
+   "label_hu": "kezelés",
+   "suffix": "+"
+  },
+  {
+   "value": 4,
+   "label_en": "packages",
+   "label_hu": "csomag",
+   "suffix": ""
+  },
+  {
+   "value": 6,
+   "label_en": "days a week",
+   "label_hu": "nap egy héten",
+   "suffix": ""
+  },
+  {
+   "value": 70,
+   "label_en": "price items",
+   "label_hu": "ártétel",
+   "suffix": "+"
+  }
+ ],
+ "services": [
+  {
+   "image": "box-14.jpg",
+   "eyebrow_en": "Brand new, Worldwide innovation",
+   "eyebrow_hu": "Világújdonság a szépségápolásban",
+   "title_en": "Exosome Therapy",
+   "title_hu": "Exoszóma Terápia",
+   "description_en": "Exosome therapy offers several benefits as a standalone treatment, including reduced inflammation, improved tissue repair, and enhanced collagen production. This makes exosomes particularly effective in reducing the appearance of wrinkles, uneven skin tone, pigmentation, promoting wound healing, hair and scalp problems and treating scars.",
+   "description_hu": "Az exoszómák a szépségiparban új és ígéretes területet jelentenek. A növényi exoszómák különböző biológiai és farmakológiai hatásokat fejtenek ki, mint például sebgyógyítás, antioxidáns és gyulladáscsökkentő hatások, pigment kezelés, haj és fejbőr problémák."
+  },
+  {
+   "image": "box-2.jpg",
+   "eyebrow_en": "Soft and infinitely smooth",
+   "eyebrow_hu": "Lágy és végtelenül sima",
+   "title_en": "Laser hair removal",
+   "title_hu": "Dióda lézeres tartós szörtelenítés",
+   "description_en": "Smooth and hairless body all over the year? Yes, it's possible! We all know the feeling when our body is not perfectly shaved and hairless. We have the best solution for this problem! Painless and permanent hair removal. Visible result after the first treatment. Ideal solution for men as well!",
+   "description_hu": "Tökéletes simaság egész évben? Létezik ilyen? Mi hölgyek ismerjük az érzést, amikor nincs tökéletesen szőrtelenítve testünk azon része, amit szívesen megmutatnánk a külvilágnak. Mi megoldjuk ezt a problémát! Nem csak hölgyeknek, de férfiaknak is ideális megoldás!"
+  },
+  {
+   "image": "box-12.jpg",
+   "eyebrow_en": "Bio-rejuvenation for the flawless skin",
+   "eyebrow_hu": "Bio-rejuvenáció a ragyogó arcbőrért",
+   "title_en": "Mesotherapy with micro needles",
+   "title_hu": "Mikrotűs mezoterápia",
+   "description_en": "Recent days perfectly clean and even skin tone are a must have. Here in Infinite Care Beauty Clinic we help you to achieve your perfect skin goal with our pure Revitalize serums used for micro needling Mesotherapy.",
+   "description_hu": "A ragyogóan tiszta és egységes bőrkép a fiatalság megőrzésének egyik legfontosabb eleme. Ebben nyújt segítséget az orvosi tisztaságú Revitalize szérumainkkal végzett mikrotűs mezoterápiás kezelésünk."
+  },
+  {
+   "image": "box-3.jpg",
+   "eyebrow_en": "Perfect body all over the year",
+   "eyebrow_hu": "Tökéletes alak egész évben",
+   "title_en": "Emsculpt treatment",
+   "title_hu": "Emsculpt testkezelés",
+   "description_en": "Perfect body within two weeks with electric muscle stimulation! The EMSCULPT is the best solution if you want to build muscles and burn fat at the same time!",
+   "description_hu": "Az elektromos izom stimuláció (EMS), talán a legtökéletesebb módja annak, hogy igazán formába lendülj nagyon rövid idő alatt! Nem csak formás és izmos testet kölcsönöz, de még zsírbontásra is nagyon jó!"
+  },
+  {
+   "image": "box-4.jpg",
+   "eyebrow_en": "Good bye cellulite",
+   "eyebrow_hu": "Viszlát narancsbőr",
+   "title_en": "Cellulite therapy",
+   "title_hu": "Cellulit terápia",
+   "description_en": "Anti cellulite treatment for flawlessly perfect body with ultrasound technology what burns fat and tighten the skin on the critical areas.",
+   "description_hu": "Az Ultrasape célzott ultrahang technológiájának segítségével nem csak a zsírt távolítjuk el a szövetekből, de a bőrt is feszesítjük, ezáltal sokkal simább és tónusosabb testet kapunk."
+  },
+  {
+   "image": "box-5.jpg",
+   "eyebrow_en": "Experience the flawless and radiant skin",
+   "eyebrow_hu": "Ragyogóan gyönyörű bőr érzése",
+   "title_en": "Carbon peeling",
+   "title_hu": "Carbon hámlasztás",
+   "description_en": "The anti-aging carbon peeling gives everything what your skin needs. Ideal for scares and wrinkles, lightens the dark and uneven spots on your skin for a more beautiful skin tone. We recommend this treatment all over the body.",
+   "description_hu": "A bőrtökéletesítő carbon hámlasztás megadja az örök fiatalság érzését. A feszesebb és hibátlan arcbőr többé már nem elérhetetlen! Heggek, ráncok és pgmentfoltok eltüntetésére is ideális. A test bármely területén alkalmazható."
+  },
+  {
+   "image": "box-6.jpg",
+   "eyebrow_en": "The secret of the perfect smile",
+   "eyebrow_hu": "A tökéletes mosoly titka",
+   "title_en": "Teeth whitening",
+   "title_hu": "Fogfehérítés",
+   "description_en": "Hollywood smile without pain in 30 or 60 minutes. It's a must have treatment you will ever need for the whiter and brighter looking teeth.",
+   "description_hu": "A Hollywood-i mosoly elengedhetetlen kelléke a vakító fehérség, amit egy ilyen fogfehérítő eljárás során végeredményként kapunk. Mosolyogj rá a világra és az mindig visszamosolyog rád!"
+  },
+  {
+   "image": "box-7.jpg",
+   "eyebrow_en": "Happy life without wrinkles",
+   "eyebrow_hu": "A ránctalan élet öröme",
+   "title_en": "Face lifting",
+   "title_hu": "Face lifting (ultrahang)",
+   "description_en": "Our face is the most important part of our body. We have to take care of it as much as possible and give everything it needs. Our ultimate machines are the best options to spoil the skin on your face.",
+   "description_hu": "Az arc a karakterünk talán legmeghatározóbb eleme. Rugalmasságának visszaállítása és természetességének megőrzése a vágyott cél, amit a legmodernebb facelifting technológiával kezelünk."
+  },
+  {
+   "image": "box-8.jpg",
+   "eyebrow_en": "Plumped lips, wrinkle free skin",
+   "eyebrow_hu": "Teltebb ajkak, ránctalan arcbőr",
+   "title_en": "Esthetic treatments",
+   "title_hu": "Esztétikai kezeléseink",
+   "description_en": "Wrinkle free face, beautiful and plumped lips, tighter skin, excellent nose. You can find everything in our beauty clinic what you need: Botox, Lip fillers, Russian lips technique, filler for cheeks, chin and jaw line, nose correction, face slimming, double chin removal, collagen therapy, skin booster, body fat dissolving, mesotherapy.",
+   "description_hu": "Válogasson esztétikai kezeléseink széles skálájáról:\nBotox, szájfeltöltés, \"russian lips\", arc és áll feltöltés, műtét nélküli orr plasztika, arc vékonyítás, face lift, toka feszesítés, kollagén terápia, skin booster, mezoterápia, zsírbontó injekciók"
+  },
+  {
+   "image": "box-9.jpg",
+   "eyebrow_en": "Bigger and tighter buttocks and boobs",
+   "eyebrow_hu": "Feszesebb fenék, teltebb keblek",
+   "title_en": "Brazilift",
+   "title_hu": "Brazilift",
+   "description_en": "If you don't like the shape of your buttocks or you want naturally plumped and bigger boobs you are in a right place! BRAZILIFT is the ultimate treatment for bigger and tighter buttocks and more plumped boobs. Try our painless Brazilian lift and your body will look like as a body of a Brazilian supermodel.",
+   "description_hu": "Lapos a popsid? Elégedetlen vagy a melleid méretével, de félsz a plasztikai beavatkozástól? Nálunk van rá megoldás! Legyen olyan feneked, valamint dús és telt kebleid, mint a brazil nőknek!"
+  },
+  {
+   "image": "box-11.jpg",
+   "eyebrow_en": "Pampering treatments, skin care",
+   "eyebrow_hu": "Kényeztető kezelések, a bőr ápolása",
+   "title_en": "Massage",
+   "title_hu": "Masszázs",
+   "description_en": "Choose from our massages:\nFace massage, aromatherapy massage, deep relaxation massage, hydrating massage, energetic massage, cellulite Massage, honey massage, chocolate massage",
+   "description_hu": "Válogasson masszázsainkból:\nArcmasszázs, aromaterápiás masszázs, mély relaxáló masszázs, bőrtápláló, hidratáló masszázs, energetikai masszázs, cellulit masszázs, mézes masszázs bőrradírozással, étcsokoládés masszázs"
+  }
+ ],
+ "packages": [
+  {
+   "name_en": "Slim",
+   "name_hu": "Slim",
+   "items_en": "EMSCULPT 6 treatment\nU Shaping Cellulite Therapy 6 treatments",
+   "items_hu": "EMSCULPT kezelés 6 alkalom\nCellulit kezelés 6 alkalom",
+   "price": "309 000",
+   "image": ""
+  },
+  {
+   "name_en": "Bridal",
+   "name_hu": "Menyasszony",
+   "items_en": "Laser hair removal - 6 treatments (full body)\nEMSCULPT - 6 treatments\nCarbon Peeling - 2 treatments\nTeeth Whitening (60 minutes)",
+   "items_hu": "Lézeres szőrtelenítés 6 alkalom (teljes test)\nEMSCULPT kezelés 6 alkalom\nCarbon hámlasztás 2 alkalom\nFogfehérítés (összesen 60 perc)",
+   "price": "719 000",
+   "image": ""
+  },
+  {
+   "name_en": "Summer",
+   "name_hu": "Summer",
+   "items_en": "Laser hair removal - 6 treatments (full body)\nEMSCULPT - 6 treatments\nCellulite treatment 6 treatments\nTeeth Whitening (60 minutes)",
+   "items_hu": "Lézeres szőrtelenítés - 6 alkalom (teljes test)\nEMSCULPT kezelés 6 alkalom\nCellulit terápia 6 alkalom\nFogfehérítés (összesen 60 perc)",
+   "price": "799 000",
+   "image": ""
+  },
+  {
+   "name_en": "Business",
+   "name_hu": "Business",
+   "items_en": "Laser Hair Removal - 6 treatments\nEMSCULPT - 4 treatments\nCellulite therapy - 4 treatments\nTeeth Whitening - 4 treatments",
+   "items_hu": "Lézeres szőrtelenítés 4 alkalom\nEMSCULPT kezelés 4 alkalom\nCellulit terápia 4 alkalom\nFogfehérítés 4 alkalom",
+   "price": "459 000",
+   "image": ""
+  }
+ ],
+ "price_categories": [
+  {
+   "title_en": "Exosome Therapy",
+   "title_hu": "Exoszóma Terápia",
+   "items": [
+    {
+     "label_en": "Exosome therapy",
+     "label_hu": "Exoszóma terápia",
+     "price_en": "70.000 HUF",
+     "price_hu": "70.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Exosome therapy 3 treatments",
+     "label_hu": "Exoszóma terápia 3 alkalom",
+     "price_en": "180.000 HUF",
+     "price_hu": "180.000 Ft",
+     "is_subheading": false
+    }
+   ]
+  },
+  {
+   "title_en": "Diod laser hair removal",
+   "title_hu": "Dióda lézeres szőrtelenítés",
+   "items": [
+    {
+     "label_en": "Full body",
+     "label_hu": "Teljes test",
+     "price_en": "115.000 HUF",
+     "price_hu": "115.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "6 treatments full body",
+     "label_hu": "6 alkalmas teljes test szőrtelenítés",
+     "price_en": "499.000 HUF",
+     "price_hu": "499.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Back and shoulders",
+     "label_hu": "Hát és vállak",
+     "price_en": "49.000 HUF",
+     "price_hu": "49.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Chest and belly",
+     "label_hu": "Mellkas és has",
+     "price_en": "49.000 HUF",
+     "price_hu": "49.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Armpits",
+     "label_hu": "Hónalj",
+     "price_en": "17.000 HUF",
+     "price_hu": "17.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Full face",
+     "label_hu": "Teljes arc",
+     "price_en": "28.000 HUF",
+     "price_hu": "28.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Forearm",
+     "label_hu": "Alkar",
+     "price_en": "24.000 HUF",
+     "price_hu": "24.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Full arm",
+     "label_hu": "Teljes kar",
+     "price_en": "39.000 HUF",
+     "price_hu": "39.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Hand and fingers",
+     "label_hu": "Kézfej + ujjak",
+     "price_en": "17.000 HUF",
+     "price_hu": "17.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Mustache",
+     "label_hu": "Bajusz",
+     "price_en": "13.000 HUF",
+     "price_hu": "13.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Neck",
+     "label_hu": "Nyak",
+     "price_en": "16.000 HUF",
+     "price_hu": "16.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Bikini",
+     "label_hu": "Bikini",
+     "price_en": "22.000 HUF",
+     "price_hu": "22.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Bikini and buttocks",
+     "label_hu": "Bikini + fenék",
+     "price_en": "38.000 HUF",
+     "price_hu": "38.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Buttocks",
+     "label_hu": "Fenék",
+     "price_en": "21.000 HUF",
+     "price_hu": "21.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Full leg",
+     "label_hu": "Teljes láb",
+     "price_en": "69.000 HUF",
+     "price_hu": "69.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Thigh",
+     "label_hu": "Comb",
+     "price_en": "42.000 HUF",
+     "price_hu": "42.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Lower leg",
+     "label_hu": "Lábszár",
+     "price_en": "44.000 HUF",
+     "price_hu": "44.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Feet and toes",
+     "label_hu": "Lábfej + lábujjak",
+     "price_en": "14.000 HUF",
+     "price_hu": "14.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Around nipple",
+     "label_hu": "Mellbimbó körüli területek",
+     "price_en": "11.000 HUF",
+     "price_hu": "11.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Forehead",
+     "label_hu": "Homlok",
+     "price_en": "18.000 HUF",
+     "price_hu": "18.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "6 treatments package: -20%",
+     "label_hu": "6 alkalmas kezelés vásárlásakor: -20% kedvezmény",
+     "price_en": "",
+     "price_hu": "",
+     "is_subheading": true
+    }
+   ]
+  },
+  {
+   "title_en": "Facelifting",
+   "title_hu": "Facelifting (Arcfeszesítő kezelés)",
+   "items": [
+    {
+     "label_en": "Facelifting with machine (radio frequency, infrared, vacuum)",
+     "label_hu": "Facelifting (vákum, rádiófrekvencia, infravörös fény)",
+     "price_en": "19.900 HUF",
+     "price_hu": "19.900 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "6 facelifting package",
+     "label_hu": "6 alkalmas Facelifting bérlet",
+     "price_en": "99.900 HUF",
+     "price_hu": "99.900 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "12 facelifting package",
+     "label_hu": "12 alkalmas Facelifting bérlet",
+     "price_en": "199.900 HUF",
+     "price_hu": "199.900 Ft",
+     "is_subheading": false
+    }
+   ]
+  },
+  {
+   "title_en": "Carbon peeling",
+   "title_hu": "Carbon hámlasztás",
+   "items": [
+    {
+     "label_en": "Carbon peeling",
+     "label_hu": "Carbon peeling",
+     "price_en": "24.900 HUF",
+     "price_hu": "24.900 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "4 treatments package",
+     "label_hu": "4 alkalmas carbon peeling bérlet",
+     "price_en": "89.900 HUF",
+     "price_hu": "89.900 Ft",
+     "is_subheading": false
+    }
+   ]
+  },
+  {
+   "title_en": "Mesotherapy",
+   "title_hu": "Mezoterápia",
+   "items": [
+    {
+     "label_en": "Mesotherapy with micro needles",
+     "label_hu": "Mikrotűs mezoterápia",
+     "price_en": "39.900 HUF",
+     "price_hu": "39.900 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Mesotherapy 4 treatments package",
+     "label_hu": "4 alkalmas mezoterápia bérlet",
+     "price_en": "129.900 HUF",
+     "price_hu": "129.900 Ft",
+     "is_subheading": false
+    }
+   ]
+  },
+  {
+   "title_en": "Teeth whitening with laser",
+   "title_hu": "Lézeres fogfehérítés",
+   "items": [
+    {
+     "label_en": "60 minutes",
+     "label_hu": "60 perc fogfehérítés",
+     "price_en": "24.900 HUF",
+     "price_hu": "24.900 Ft",
+     "is_subheading": false
+    }
+   ]
+  },
+  {
+   "title_en": "U Shaping",
+   "title_hu": "Cellulit kezelés / u-shaping",
+   "items": [
+    {
+     "label_en": "U Shaping with machine (radio frequency, infrared, vacuum)",
+     "label_hu": "Cellulit kezelés gépi (rádiófrekvencia, infravörös fény, vákum)",
+     "price_en": "19.900 HUF",
+     "price_hu": "19.900 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "6 treatments package",
+     "label_hu": "Cellulit kezelés gépi 6 alkalom",
+     "price_en": "79.900 HUF",
+     "price_hu": "79.900 Ft",
+     "is_subheading": false
+    }
+   ]
+  },
+  {
+   "title_en": "EMS training",
+   "title_hu": "EMS alakformáló edzés",
+   "items": [
+    {
+     "label_en": "EMS 30 minutes",
+     "label_hu": "EMS 30 perc",
+     "price_en": "6.900 HUF",
+     "price_hu": "6.900 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "EMS 60 minutes",
+     "label_hu": "EMS 60 perc",
+     "price_en": "8.900 HUF",
+     "price_hu": "8.900 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "EMS UNLIMITED - 30 days, 30 minutes / session",
+     "label_hu": "EMS 30 napos korlátlan bérlet 30 perc/alkalom",
+     "price_en": "79.900 HUF",
+     "price_hu": "79.900 Ft",
+     "is_subheading": false
+    }
+   ]
+  },
+  {
+   "title_en": "Aesthetic treatments",
+   "title_hu": "Esztétikai kezelések",
+   "items": [
+    {
+     "label_en": "Botox per area",
+     "label_hu": "Botox régiónként",
+     "price_en": "40.000 HUF",
+     "price_hu": "40.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Botox 3 areas",
+     "label_hu": "Botox 3 régió",
+     "price_en": "110.000 HUF",
+     "price_hu": "110.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Lip filler / ml",
+     "label_hu": "Szájfeltöltés / ml",
+     "price_en": "110.000 HUF",
+     "price_hu": "110.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Filler for cheeks / ml",
+     "label_hu": "Arcfeltöltés / ml",
+     "price_en": "110.000 HUF",
+     "price_hu": "110.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Filler for chin / ml",
+     "label_hu": "Állfeltöltés / ml",
+     "price_en": "110.000 HUF",
+     "price_hu": "110.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Jaw line filler / ml",
+     "label_hu": "Állkapocs feszesítés / ml",
+     "price_en": "110.000 HUF",
+     "price_hu": "110.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Fat dissolving",
+     "label_hu": "Zsírbontó kezelés",
+     "price_en": "65.000 HUF",
+     "price_hu": "65.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Double chin removal",
+     "label_hu": "Toka eltüntetés",
+     "price_en": "65.000 HUF",
+     "price_hu": "65.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Skinbooster / 2 ml",
+     "label_hu": "SKINBOOSTER - 2ml",
+     "price_en": "125.000 HUF",
+     "price_hu": "125.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Skinbooster package of 3",
+     "label_hu": "SKINBOOSTER bérlet (3 alkalom)",
+     "price_en": "310.000 HUF",
+     "price_hu": "310.000 Ft",
+     "is_subheading": false
+    }
+   ]
+  },
+  {
+   "title_en": "Massage",
+   "title_hu": "Masszázs",
+   "items": [
+    {
+     "label_en": "Face massage 30 minutes",
+     "label_hu": "Arcmasszázs 30 perc",
+     "price_en": "13.000 HUF",
+     "price_hu": "13.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Face massage (manual) + Face Lift (radio frequency, infra red, vacuum) 60 minutes",
+     "label_hu": "Arcmasszázs (manuális) + Face Lift (gépi: rádiófrekvencia, infravörös fény, vákum) 60 perc",
+     "price_en": "29.900 HUF",
+     "price_hu": "29.900 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Aromatherapy massage",
+     "label_hu": "Aromaterápiás masszázs",
+     "price_en": "",
+     "price_hu": "",
+     "is_subheading": true
+    },
+    {
+     "label_en": "60 minutes",
+     "label_hu": "60 perc",
+     "price_en": "15.000 HUF",
+     "price_hu": "15.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "90 minutes",
+     "label_hu": "90 perc",
+     "price_en": "20.000 HUF",
+     "price_hu": "20.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "120 minutes",
+     "label_hu": "120 perc",
+     "price_en": "25.000 HUF",
+     "price_hu": "25.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Deep relaxation massage",
+     "label_hu": "Mély relaxáló masszázs",
+     "price_en": "",
+     "price_hu": "",
+     "is_subheading": true
+    },
+    {
+     "label_en": "60 minutes",
+     "label_hu": "60 perc",
+     "price_en": "15.000 HUF",
+     "price_hu": "15.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "90 minutes",
+     "label_hu": "90 perc",
+     "price_en": "20.000 HUF",
+     "price_hu": "20.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "120 minutes",
+     "label_hu": "120 perc",
+     "price_en": "25.000 HUF",
+     "price_hu": "25.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Deep hydration massage 60 minutes",
+     "label_hu": "Bőrtápláló, hidratáló masszázs 60 perc",
+     "price_en": "15.000 HUF",
+     "price_hu": "15.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Energetic massage 60 minutes",
+     "label_hu": "Energetikai masszázs 60 perc",
+     "price_en": "20.000 HUF",
+     "price_hu": "20.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Cellulite Massage 60 minutes",
+     "label_hu": "Cellulit masszázs 60 perc",
+     "price_en": "25.000 HUF",
+     "price_hu": "25.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Cellulite massage (manual) + machine (radio frequency, infra red, vacuum) 90 minutes",
+     "label_hu": "Cellulit masszázs (manuális) + gépi kezelés (rádiófrekvencia, infravörös fény, vákum) 90 perc",
+     "price_en": "35.000 HUF",
+     "price_hu": "35.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Honey massage with body scrub 60 minutes",
+     "label_hu": "Mézes masszázs bőrradírozással 60 perc",
+     "price_en": "25.000 HUF",
+     "price_hu": "25.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Dark chocolate massage 90 minutes",
+     "label_hu": "Étcsokoládés masszázs 90 perc",
+     "price_en": "25.000 HUF",
+     "price_hu": "25.000 Ft",
+     "is_subheading": false
+    },
+    {
+     "label_en": "Optional: body scrub before massages",
+     "label_hu": "Minden masszázs kezelés előtt kérhető test radírozás is melynek ára",
+     "price_en": "+ 3.000 HUF",
+     "price_hu": "+ 3.000 Ft",
+     "is_subheading": false
+    }
+   ]
+  }
+ ]
+}
