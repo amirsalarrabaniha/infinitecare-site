@@ -56,3 +56,25 @@ Without an API URL the contact form opens the visitor's mail app (mailto). With 
   Create the admin with `python manage.py createsuperuser` in the service shell.
 * **VPS**: clone, create venv, `.env`, migrate/seed/collectstatic, run `gunicorn config.wsgi -b 127.0.0.1:8000`
   under systemd behind nginx (TLS via certbot). nginx may serve `/media/` directly from `MEDIA_ROOT`.
+
+## Cloudflare Workers (live: https://infinitecare-site.amyrsalarr.workers.dev)
+The Worker `infinitecare-site` serves the exported static EN/HU site as Workers static assets and implements
+`POST /api/contact` itself (`cloudflare/worker.js`): same JSON contract, validation, honeypot and rate limit as Django.
+Messages are stored in **D1** when a `DB` binding is configured (schema: `cloudflare/schema.sql`), otherwise in the
+**Workers KV** namespace bound as `MESSAGES` (current setup). **Django admin does not run on Workers**; content edits are
+made in the Django admin (locally or on a Python host) and published by re-exporting.
+
+```bash
+export CLOUDFLARE_API_TOKEN=…  CLOUDFLARE_ACCOUNT_ID=164584608fafa1395f843df7bb17e1c7   # Node.js >= 22
+cd backend && python manage.py export_static --api-url /api/contact/ && cd ..
+npx wrangler@latest deploy                    # uses wrangler.toml, uploads files not listed in .assetsignore
+npx wrangler@latest kv key list --binding MESSAGES --remote          # list stored messages (keys msg:…)
+npx wrangler@latest kv key get --binding MESSAGES --remote "msg:<id>" # read one message
+```
+Switch to D1 (needs an API token with *D1 Edit*): `npx wrangler d1 create infinitecare-messages`,
+`npx wrangler d1 execute infinitecare-messages --remote --file cloudflare/schema.sql`, uncomment the
+`[[d1_databases]]` block in `wrangler.toml`, deploy; query with `npx wrangler d1 execute infinitecare-messages --remote --command "SELECT * FROM contact_messages"`.
+
+Why not full Django on Workers: Python Workers + `django-cf` (D1/R2) exist, but django-cf requires the Workers Paid plan
+(Django start-up exceeds free CPU limits), D1 has no transactions and Django admin support is documented as limited.
+The exported static site on Workers is the reliable option; Django stays deployable on Render/Railway/VPS.

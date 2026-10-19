@@ -1,0 +1,12 @@
+.git
+.gitignore
+.assetsignore
+.wrangler
+backend
+cloudflare
+node_modules
+wrangler.toml
+Procfile
+README.md
+*.py
+*.sqlite3

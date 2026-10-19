@@ -1,0 +1,28 @@
+name = "infinitecare-site"
+main = "cloudflare/worker.js"
+compatibility_date = "2026-10-19"
+account_id = "164584608fafa1395f843df7bb17e1c7"
+workers_dev = true
+
+[assets]
+directory = "."
+binding = "ASSETS"
+run_worker_first = ["/api/*"]
+html_handling = "auto-trailing-slash"
+
+[vars]
+CORS_ALLOWED_ORIGINS = "https://amirsalarrabaniha.github.io"
+
+# Messages + rate-limit counters (used when no D1 binding is configured)
+[[kv_namespaces]]
+binding = "MESSAGES"
+id = "22e0f350231e4c719ef38fe6f077e849"
+
+# Preferred storage once the API token has D1 permission:
+#   npx wrangler d1 create infinitecare-messages
+#   npx wrangler d1 execute infinitecare-messages --remote --file cloudflare/schema.sql
+# then uncomment and fill in database_id:
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "infinitecare-messages"
+# database_id = "<id>"
