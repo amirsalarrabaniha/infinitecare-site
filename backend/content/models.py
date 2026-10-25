@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 LANGS = ('en', 'hu')
@@ -92,6 +94,7 @@ class HomePage(Singleton):
     cta_hu = models.CharField('Banner title (HU)', max_length=200, blank=True)
     cta_b_en = models.CharField('Banner button (EN)', max_length=100, blank=True)
     cta_b_hu = models.CharField('Banner button (HU)', max_length=100, blank=True)
+    contact_image = models.ImageField('Contact section photo (clinic entrance)', upload_to='home/', blank=True)
     contact_en = models.CharField('Contact eyebrow (EN)', max_length=100, blank=True)
     contact_hu = models.CharField('Contact eyebrow (HU)', max_length=100, blank=True)
     c_h_en = models.CharField('Contact title (EN)', max_length=200, blank=True)
@@ -185,3 +188,63 @@ class PriceItem(Bilingual):
 
     def __str__(self):
         return self.label_en
+
+
+class GalleryItem(Ordered):
+    """Photo shown in the "Our clinic" gallery on the home page (grid + lightbox)."""
+    CATEGORIES = [('clinic', 'Clinic'), ('treatments', 'Treatments'), ('events', 'Events')]
+    image = models.ImageField(upload_to='gallery/', help_text='Landscape or portrait photo, ideally max 1600 px on the long edge (WebP/JPG)')
+    category = models.CharField(max_length=20, choices=CATEGORIES, default='clinic')
+    alt_en = models.CharField('Caption / alt text (EN)', max_length=200)
+    alt_hu = models.CharField('Caption / alt text (HU)', max_length=200, blank=True)
+    width = models.PositiveIntegerField(default=0, editable=False)
+    height = models.PositiveIntegerField(default=0, editable=False)
+
+    class Meta(Ordered.Meta):
+        verbose_name = 'Gallery photo'
+
+    def __str__(self):
+        return self.alt_en
+
+    def save(self, *a, **kw):
+        if self.image and not (self.width and self.height):
+            try:  # needs Pillow; seeded items carry their size, so this is only for admin uploads
+                self.width, self.height = self.image.width, self.image.height
+            except Exception:
+                pass
+        super().save(*a, **kw)
+
+
+class VideoClip(Ordered):
+    """Short muted looping clip (vertical MP4, H.264, no audio, ideally < 3 MB) shown in the home page video section."""
+    video = models.FileField(upload_to='video/', help_text='MP4 (H.264), portrait 720x1280, no audio, under ~3 MB')
+    poster = models.ImageField(upload_to='video/', help_text='Still frame shown before the video plays')
+    title_en = models.CharField('Caption (EN)', max_length=150)
+    title_hu = models.CharField('Caption (HU)', max_length=150, blank=True)
+
+    class Meta(Ordered.Meta):
+        verbose_name = 'Video clip'
+
+    def __str__(self):
+        return self.title_en
+
+
+class BlogPost(Bilingual):
+    """Blog article (EN + HU). Body: blank line = new paragraph, "## " = sub-heading, lines starting with "- " = bullet list."""
+    slug = models.SlugField(unique=True, help_text='Used in the URL: /en/blog/<slug>/ and /hu/blog/<slug>/ (same for both languages)')
+    title_en = models.CharField('Title (EN)', max_length=200)
+    title_hu = models.CharField('Title (HU)', max_length=200, blank=True)
+    excerpt_en = models.TextField('Short summary (EN)', max_length=400, help_text='Shown on the blog list and used as meta description')
+    excerpt_hu = models.TextField('Short summary (HU)', max_length=400, blank=True)
+    body_en = models.TextField('Article (EN)', help_text='Blank line = new paragraph; "## Heading"; lines starting with "- " make a list')
+    body_hu = models.TextField('Article (HU)', blank=True)
+    cover = models.ImageField('Cover image', upload_to='blog/', help_text='Landscape photo, ideally 1200-1600 px wide')
+    published_at = models.DateField(default=datetime.date.today)
+    is_published = models.BooleanField('Published', default=True)
+
+    class Meta:
+        ordering = ['-published_at', '-id']
+        verbose_name = 'Blog post'
+
+    def __str__(self):
+        return self.title_en

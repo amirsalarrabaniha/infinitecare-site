@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import SiteSettings, HomePage, Counter, Service, Package, PriceCategory, PriceItem
+from .models import SiteSettings, HomePage, Counter, Service, Package, PriceCategory, PriceItem, GalleryItem, VideoClip, BlogPost
 
 admin.site.site_header = 'Infinite Care admin'
 admin.site.site_title = 'Infinite Care'
@@ -35,7 +35,7 @@ class HomePageAdmin(SingletonAdmin):
         ('Section 1', {'fields': ['f1_image', *pairs('f1_eyebrow', 'f1_title', 'f1_text', 'f1_button')]}),
         ('Section 2', {'fields': ['f2_image', *pairs('f2_eyebrow', 'f2_title', 'f2_text', 'f2_button')]}),
         ('Consultation banner', {'fields': ['cta_image', *pairs('cta_s', 'cta', 'cta_b')]}),
-        ('Contact section', {'fields': pairs('contact', 'c_h', 'c_p')}),
+        ('Contact section', {'fields': ['contact_image', *pairs('contact', 'c_h', 'c_p')]}),
     ]
 
 
@@ -84,3 +84,38 @@ class PriceCategoryAdmin(admin.ModelAdmin):
     @admin.display(description='Items')
     def item_count(self, obj):
         return obj.items.count()
+
+
+@admin.register(GalleryItem)
+class GalleryItemAdmin(Thumb, admin.ModelAdmin):
+    list_display = ['thumb', 'alt_en', 'alt_hu', 'category', 'order', 'is_active']
+    list_editable = ['category', 'order', 'is_active']
+    list_display_links = ['thumb', 'alt_en']
+    list_filter = ['category']
+    fields = ['image', ('category', 'order', 'is_active'), *pairs('alt')]
+
+
+@admin.register(VideoClip)
+class VideoClipAdmin(admin.ModelAdmin):
+    list_display = ['title_en', 'title_hu', 'order', 'is_active']
+    list_editable = ['order', 'is_active']
+    fields = [('order', 'is_active'), 'video', 'poster', *pairs('title')]
+
+
+@admin.register(BlogPost)
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ['thumb', 'title_en', 'title_hu', 'published_at', 'is_published']
+    list_editable = ['is_published']
+    list_display_links = ['thumb', 'title_en']
+    list_filter = ['is_published']
+    search_fields = ['title_en', 'title_hu', 'slug']
+    prepopulated_fields = {'slug': ('title_en',)}
+    fieldsets = [
+        (None, {'fields': ['title_en', 'title_hu', 'slug', ('published_at', 'is_published'), 'cover']}),
+        ('English', {'fields': ['excerpt_en', 'body_en']}),
+        ('Magyar', {'fields': ['excerpt_hu', 'body_hu']}),
+    ]
+
+    @admin.display(description='Cover')
+    def thumb(self, obj):
+        return format_html('<img src="{}" style="height:48px;border-radius:6px">', obj.cover.url) if obj.cover else '–'

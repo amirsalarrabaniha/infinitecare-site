@@ -19,17 +19,18 @@ python manage.py migrate
 python manage.py load_initial_content   # seeds all original texts, prices, images (EN+HU)
 python manage.py createsuperuser
 python manage.py runserver      # http://localhost:8000/en/ , /hu/ , /admin/
-python manage.py test           # 20 tests (contact API, pages, JSON API, export)
+python manage.py test           # contact API, pages, gallery, blog, JSON API, export
 ```
 
 ## URLs
 | URL | |
 |---|---|
-| `/en/`, `/en/services/`, `/en/prices/` (and `/hu/…`) | pages rendered from the DB |
+| `/en/`, `/en/services/`, `/en/prices/`, `/en/blog/` (and `/hu/…`) | pages rendered from the DB |
+| `/en/blog/<slug>/`, `/hu/blog/<slug>/` | one blog post (same slug in both languages; unpublished posts return 404) |
 | `/` | redirects to the remembered language (`ic-lang` cookie) or `/en/` |
-| `/admin/` | Django admin: site settings, home page texts, counters, services, packages, price categories/items, contact messages (mark read/unread, delete) |
+| `/admin/` | Django admin: site settings, home page texts, counters, services, packages, price categories/items, **gallery photos, video clips, blog posts**, contact messages (mark read/unread, delete) |
 | `POST /api/contact/` | JSON `{name,email,phone,message,lang,website}` → 201 / 422 (validation) / 429 (rate limit). `website` is a honeypot. |
-| `GET /api/settings/?lang=hu`, `/api/home/`, `/api/services/`, `/api/packages/`, `/api/prices/` | read-only JSON |
+| `GET /api/settings/?lang=hu`, `/api/home/`, `/api/services/`, `/api/packages/`, `/api/prices/`, `/api/gallery/` (photos + videos), `/api/blog/`, `/api/blog/<slug>/` | read-only JSON |
 
 Language switcher: every page links to the same page in the other language (`/en/prices/` ↔ `/hu/prices/`,
 `prices.html` ↔ `hu/prices.html` in the static copy). The choice is stored in `localStorage` + cookie; visiting the
@@ -41,11 +42,24 @@ site later from outside opens the remembered language. `<html lang>` and `hrefla
 `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, `EMAIL_USE_TLS`, `EMAIL_USE_SSL`, `DEFAULT_FROM_EMAIL`,
 `STATIC_EXPORT_API_URL`, `STATIC_EXPORT_SITE_URL`. Without `NOTIFY_EMAIL`/`EMAIL_HOST` messages are only stored.
 
+## Clinic photos, videos and blog
+* **Gallery + reels** (home page): admin → *Gallery photos* / *Video clips*. Photos have category (clinic / treatments / events), EN+HU caption (used as alt text), order and an *active* flag;
+  the page shows filter buttons and a lightbox. Clips are short muted MP4s with a poster, played when scrolled into view (not with *reduce motion*).
+  Source files live in `assets/images/gallery/` and `assets/video/` and are copied to the media folder by `load_initial_content`.
+  **Existing databases** (seeded before this feature): `python manage.py load_clinic_media --update-images` adds the gallery, clips and starter blog posts and swaps in the clinic photos (without the flag the home/service images are left alone).
+* **Blog**: admin → *Blog posts* (EN+HU title, summary and article, cover, date, *published* flag; HU falls back to EN when empty).
+  Article text: blank line = new paragraph, `## Heading`, lines starting with `- ` = bullet list. The slug is shared by both languages.
+  Three starter posts are seeded (first visit, laser hair removal prep/aftercare, teeth whitening basics). **They are draft copy – the clinic should review and edit them (admin) before relying on them.**
+  Blog pages carry `<title>`, meta description (= summary), `hreflang`, canonical, Open Graph and `BlogPosting` JSON-LD. There is no sitemap in this project.
+* The static export writes `blog.html`, `blog/<slug>.html` and the `hu/` equivalents (and removes posts that were unpublished); `wrangler.toml` needs no change
+  (`html_handling = "auto-trailing-slash"` serves them at `/blog`, `/blog/<slug>`, `/hu/blog`, `/hu/blog/<slug>`).
+* Gallery photos/videos show clinic clients – make sure the clinic has their consent.
+
 ## Static GitHub Pages copy
 ```bash
 cd backend && python manage.py export_static [--api-url https://your-backend/api/contact/]
 ```
-Regenerates `index.html`, `services.html`, `prices.html`, `hu/*.html` and copies uploaded images to `assets/media/`.
+Regenerates `index.html`, `services.html`, `prices.html`, `blog.html`, `blog/<slug>.html`, `hu/*.html`, `hu/blog/<slug>.html` and copies uploaded images to `assets/media/`.
 Without an API URL the contact form opens the visitor's mail app (mailto). With one, add the Pages origin to `CORS_ALLOWED_ORIGINS`.
 
 ## Deploy

@@ -11,6 +11,13 @@
 {% include "site/feature.html" with f=h.f1 rev=False href=urls.services %}
 {% if counters %}<section class="stats wrap">{% for c in counters %}<div class="stat reveal"><b data-count="{{ c.value }}" data-suffix="{{ c.suffix }}">0</b><span>{{ c.label }}</span></div>{% endfor %}</section>{% endif %}
 {% include "site/feature.html" with f=h.f2 rev=True href=urls.prices %}
+{% if gallery %}<section class="gallery wrap" id="gallery">
+ <div class="g-head"><span class="eyebrow reveal">{{ ui.gal_eyebrow }}</span><h2 class="split">{{ ui.gal_title }}</h2><p class="reveal">{{ ui.gal_text }}</p>
+  <div class="g-filters reveal" role="group" aria-label="{{ ui.gal_eyebrow }}">{% for key, label in ui.gal_filters %}<button type="button" data-filter="{{ key }}"{% if forloop.first %} class="on" aria-pressed="true"{% else %} aria-pressed="false"{% endif %}>{{ label }}</button>{% endfor %}</div></div>
+ <div class="g-grid" data-lb-close="{{ ui.lb.close }}" data-lb-prev="{{ ui.lb.prev }}" data-lb-next="{{ ui.lb.next }}">{% for g in gallery %}<button type="button" class="g-item reveal" data-cat="{{ g.category }}" data-full="{{ g.image }}" data-caption="{{ g.alt }}"><img src="{{ g.image }}" alt="{{ g.alt }}" loading="lazy" decoding="async"{% if g.width %} width="{{ g.width }}" height="{{ g.height }}"{% endif %}><span>{{ g.alt }}</span></button>{% endfor %}</div>
+</section>{% endif %}
+{% if clips %}<section class="reels"><div class="wrap reel-wrap"><div class="reel-text"><span class="eyebrow light reveal">{{ ui.reel_eyebrow }}</span><h2 class="split">{{ ui.reel_title }}</h2><p class="reveal">{{ ui.reel_text }}</p></div>
+ <div class="reel-grid">{% for c in clips %}<figure class="reel reveal"><video muted loop playsinline preload="none" poster="{{ c.poster }}" aria-label="{{ c.title }}" data-reel><source src="{{ c.video }}" type="video/mp4"></video><button type="button" class="reel-btn" aria-label="{{ ui.lb.play }}"></button><figcaption>{{ c.title }}</figcaption></figure>{% endfor %}</div></div></section>{% endif %}
 <section class="cta"><div class="cta-bg" data-parallax style="background-image:url({{ h.cta_image }})"></div><div class="cta-in">
  <span class="script reveal">{{ h.cta_script }}</span><h2 class="split">{{ h.cta_title }}</h2><a class="btn reveal" href="{{ site.phone_href }}">{{ h.cta_button }}</a></div></section>
 <section class="contact wrap" id="contact"><div class="c-info"><span class="eyebrow reveal">{{ h.contact_eyebrow }}</span><h2 class="split">{{ h.contact_title }}</h2>
@@ -23,6 +30,8 @@
   <div class="hp" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off"></div>
   <button class="btn" type="submit">{{ ui.form.4 }}</button><p class="form-status" role="status" aria-live="polite"></p>
  </form></div>
- {% if site.map_embed %}<div class="map reveal-img"><iframe loading="lazy" title="Map" src="{{ site.map_embed }}"></iframe></div>{% endif %}
+ {% if h.contact_image or site.map_embed %}<div class="c-side">
+  {% if h.contact_image %}<figure class="c-photo reveal-img"><img src="{{ h.contact_image }}" alt="{{ ui.entrance }}" loading="lazy" decoding="async" width="1206" height="783"><figcaption><b>{{ ui.find_us }}</b>{{ site.address }}, {{ site.city }}</figcaption></figure>{% endif %}
+  {% if site.map_embed %}<div class="map reveal-img"><iframe loading="lazy" title="Map" src="{{ site.map_embed }}"></iframe></div>{% endif %}</div>{% endif %}
 </section>
 {% endwith %}{% endblock %}

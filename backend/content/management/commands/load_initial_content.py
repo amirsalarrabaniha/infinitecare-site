@@ -12,22 +12,51 @@ from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from content.models import SiteSettings, HomePage, Counter, Service, Package, PriceCategory, PriceItem
+from content.models import (SiteSettings, HomePage, Counter, Service, Package, PriceCategory, PriceItem,
+                            GalleryItem, VideoClip, BlogPost)
 
 SEED = Path(__file__).resolve().parents[2] / 'seed' / 'initial_content.json'
-IMAGES = settings.SITE_ROOT / 'assets' / 'images'
+IMAGES = settings.SITE_ROOT / 'assets' / 'images'   # seed images (may be in a sub-folder, e.g. gallery/x.webp)
+VIDEOS = settings.SITE_ROOT / 'assets' / 'video'
 
 
-def attach(obj, field, filename, folder):
+def attach(obj, field, filename, folder, base=IMAGES):
     if not filename:
         return
+    name = Path(filename).name
     if not getattr(settings, 'CONTENT_SEED_FILES', True):
         # e.g. on Cloudflare Workers: reference the image already shipped as a static asset (assets/media/<folder>/<file>)
-        getattr(obj, field).name = f'{folder}/{filename}'
+        getattr(obj, field).name = f'{folder}/{name}'
         return
-    src = IMAGES / filename
-    with src.open('rb') as fh:
-        getattr(obj, field).save(filename, File(fh), save=False)
+    with (base / filename).open('rb') as fh:
+        getattr(obj, field).save(name, File(fh), save=False)
+
+
+def load_blog(d):
+    """Create the starter blog posts (DRAFT COPY for the clinic to review) from the seed data."""
+    import datetime
+    for b in d.get('blog', []):
+        if BlogPost.objects.filter(slug=b['slug']).exists():
+            continue
+        obj = BlogPost(**{k: v for k, v in b.items() if k not in ('image', 'published_at')},
+                       published_at=datetime.date.fromisoformat(b['published_at']))
+        attach(obj, 'cover', b['image'], 'blog')
+        obj.save()
+    return BlogPost.objects.count()
+
+
+def load_gallery(d):
+    """Create the gallery photos and video clips from the seed data (files are copied into MEDIA_ROOT)."""
+    for i, g in enumerate(d.get('gallery', [])):
+        obj = GalleryItem(order=(i + 1) * 10, **{k: v for k, v in g.items() if k != 'image'})
+        attach(obj, 'image', g['image'], 'gallery')
+        obj.save()
+    for i, c in enumerate(d.get('clips', [])):
+        obj = VideoClip(order=(i + 1) * 10, title_en=c['title_en'], title_hu=c['title_hu'])
+        attach(obj, 'video', c['video'], 'video', VIDEOS)
+        attach(obj, 'poster', c['poster'], 'video', VIDEOS)
+        obj.save()
+    return GalleryItem.objects.count(), VideoClip.objects.count()
 
 
 class Command(BaseCommand):
@@ -41,9 +70,9 @@ class Command(BaseCommand):
         if Service.objects.exists() and not force:
             self.stdout.write('Content already present – nothing to do (use --force to reload).')
             return
-        for m in (PriceItem, PriceCategory, Package, Service, Counter, HomePage, SiteSettings):
+        for m in (BlogPost, GalleryItem, VideoClip, PriceItem, PriceCategory, Package, Service, Counter, HomePage, SiteSettings):
             m.objects.all().delete() if m not in (HomePage, SiteSettings) else m.objects.filter().delete()
-        for folder in ('home', 'services', 'packages') if getattr(settings, 'CONTENT_SEED_FILES', True) else ():
+        for folder in ('home', 'services', 'packages', 'gallery', 'video', 'blog') if getattr(settings, 'CONTENT_SEED_FILES', True) else ():
             shutil.rmtree(Path(settings.MEDIA_ROOT) / folder, ignore_errors=True)
         if SEED.exists():
             d = json.loads(SEED.read_text(encoding='utf-8'))
@@ -52,7 +81,7 @@ class Command(BaseCommand):
 
         SiteSettings(**d['settings']).save()
         home = dict(d['home'])
-        images = {k: home.pop(k) for k in ('hero_image', 'f1_image', 'f2_image', 'cta_image')}
+        images = {k: home.pop(k) for k in ('hero_image', 'f1_image', 'f2_image', 'cta_image', 'contact_image')}
         h = HomePage(**home)
         for k, fn in images.items():
             attach(h, k, fn, 'home')
@@ -70,7 +99,9 @@ class Command(BaseCommand):
         for i, c in enumerate(d['price_categories']):
             cat = PriceCategory.objects.create(order=(i + 1) * 10, title_en=c['title_en'], title_hu=c['title_hu'])
             PriceItem.objects.bulk_create(PriceItem(category=cat, order=j, **it) for j, it in enumerate(c['items']))
+        photos, clips = load_gallery(d)
+        posts = load_blog(d)
         self.stdout.write(self.style.SUCCESS(
             f"Loaded {Service.objects.count()} services, {Package.objects.count()} packages, "
             f"{PriceCategory.objects.count()} price categories / {PriceItem.objects.count()} items, "
-            f"{Counter.objects.count()} counters, site settings and home page."))
+            f"{Counter.objects.count()} counters, {photos} gallery photos, {clips} video clips, {posts} blog posts, site settings and home page."))

@@ -51,10 +51,11 @@
   "f2_button_hu": "Tudj meg többet!",
   "marquee_en": "Exosome Therapy, Laser hair removal, Mesotherapy, Emsculpt, Carbon peeling, Teeth whitening, Face lifting, Brazilift, Massage",
   "marquee_hu": "Exoszóma Terápia, Lézeres szőrtelenítés, Mezoterápia, Emsculpt, Carbon hámlasztás, Fogfehérítés, Face lifting, Brazilift, Masszázs",
-  "f1_image": "box-1.jpg",
-  "f2_image": "box-2.jpg",
-  "hero_image": "main-banner.jpg",
-  "cta_image": "services.jpg"
+  "f1_image": "gallery/service-microneedling.webp",
+  "f2_image": "gallery/home-treatment-room.webp",
+  "hero_image": "gallery/clinic-lounge.webp",
+  "cta_image": "services.jpg",
+  "contact_image": "gallery/clinic-facade.webp"
  },
  "counters": [
   {
@@ -93,7 +94,7 @@
    "description_hu": "Az exoszómák a szépségiparban új és ígéretes területet jelentenek. A növényi exoszómák különböző biológiai és farmakológiai hatásokat fejtenek ki, mint például sebgyógyítás, antioxidáns és gyulladáscsökkentő hatások, pigment kezelés, haj és fejbőr problémák."
   },
   {
-   "image": "box-2.jpg",
+   "image": "gallery/service-laser-hair-removal.webp",
    "eyebrow_en": "Soft and infinitely smooth",
    "eyebrow_hu": "Lágy és végtelenül sima",
    "title_en": "Laser hair removal",
@@ -102,7 +103,7 @@
    "description_hu": "Tökéletes simaság egész évben? Létezik ilyen? Mi hölgyek ismerjük az érzést, amikor nincs tökéletesen szőrtelenítve testünk azon része, amit szívesen megmutatnánk a külvilágnak. Mi megoldjuk ezt a problémát! Nem csak hölgyeknek, de férfiaknak is ideális megoldás!"
   },
   {
-   "image": "box-12.jpg",
+   "image": "gallery/service-microneedling.webp",
    "eyebrow_en": "Bio-rejuvenation for the flawless skin",
    "eyebrow_hu": "Bio-rejuvenáció a ragyogó arcbőrért",
    "title_en": "Mesotherapy with micro needles",
@@ -111,7 +112,7 @@
    "description_hu": "A ragyogóan tiszta és egységes bőrkép a fiatalság megőrzésének egyik legfontosabb eleme. Ebben nyújt segítséget az orvosi tisztaságú Revitalize szérumainkkal végzett mikrotűs mezoterápiás kezelésünk."
   },
   {
-   "image": "box-3.jpg",
+   "image": "gallery/service-emsculpt.webp",
    "eyebrow_en": "Perfect body all over the year",
    "eyebrow_hu": "Tökéletes alak egész évben",
    "title_en": "Emsculpt treatment",
@@ -138,7 +139,7 @@
    "description_hu": "A bőrtökéletesítő carbon hámlasztás megadja az örök fiatalság érzését. A feszesebb és hibátlan arcbőr többé már nem elérhetetlen! Heggek, ráncok és pgmentfoltok eltüntetésére is ideális. A test bármely területén alkalmazható."
   },
   {
-   "image": "box-6.jpg",
+   "image": "gallery/service-teeth-whitening.webp",
    "eyebrow_en": "The secret of the perfect smile",
    "eyebrow_hu": "A tökéletes mosoly titka",
    "title_en": "Teeth whitening",
@@ -718,6 +719,161 @@
      "is_subheading": false
     }
    ]
+  }
+ ],
+ "gallery": [
+  {
+   "image": "gallery/clinic-facade.webp",
+   "category": "clinic",
+   "alt_en": "The entrance of Infinite Care Beauty Clinic on Podmaniczky street",
+   "alt_hu": "Az Infinite Care Beauty Clinic bejárata a Podmaniczky utcában",
+   "width": 1206,
+   "height": 783
+  },
+  {
+   "image": "gallery/clinic-lounge.webp",
+   "category": "clinic",
+   "alt_en": "Our waiting lounge",
+   "alt_hu": "Várótermünk",
+   "width": 1206,
+   "height": 725
+  },
+  {
+   "image": "gallery/clinic-reception-logo-wall.webp",
+   "category": "clinic",
+   "alt_en": "Reception with the Infinite Care logo wall",
+   "alt_hu": "Recepció az Infinite Care logófallal",
+   "width": 1412,
+   "height": 1600
+  },
+  {
+   "image": "gallery/clinic-reception-hallway.webp",
+   "category": "clinic",
+   "alt_en": "Reception and hallway",
+   "alt_hu": "Recepció és folyosó",
+   "width": 1200,
+   "height": 1600
+  },
+  {
+   "image": "gallery/clinic-treatment-room.webp",
+   "category": "clinic",
+   "alt_en": "A treatment room",
+   "alt_hu": "Kezelőszoba",
+   "width": 1200,
+   "height": 1600
+  },
+  {
+   "image": "gallery/treatment-microneedling.webp",
+   "category": "treatments",
+   "alt_en": "Microneedling skin treatment",
+   "alt_hu": "Mikrotűs bőrkezelés",
+   "width": 1200,
+   "height": 1600
+  },
+  {
+   "image": "gallery/treatment-laser-hair-removal.webp",
+   "category": "treatments",
+   "alt_en": "Laser hair removal",
+   "alt_hu": "Lézeres szőrtelenítés",
+   "width": 780,
+   "height": 681
+  },
+  {
+   "image": "gallery/treatment-emsculpt.webp",
+   "category": "treatments",
+   "alt_en": "EMSCULPT body contouring",
+   "alt_hu": "EMSCULPT testformálás",
+   "width": 1042,
+   "height": 628
+  },
+  {
+   "image": "gallery/teeth-whitening-before-after.webp",
+   "category": "treatments",
+   "alt_en": "Teeth whitening, before and after",
+   "alt_hu": "Fogfehérítés, előtte és utána",
+   "width": 1080,
+   "height": 1146
+  },
+  {
+   "image": "gallery/event-welcome-table.webp",
+   "category": "events",
+   "alt_en": "Event at the clinic",
+   "alt_hu": "Esemény a klinikán",
+   "width": 1206,
+   "height": 849
+  },
+  {
+   "image": "gallery/event-logo-backdrop.webp",
+   "category": "events",
+   "alt_en": "Guests in front of the Infinite Care backdrop",
+   "alt_hu": "Vendégeink az Infinite Care háttér előtt",
+   "width": 1206,
+   "height": 800
+  },
+  {
+   "image": "gallery/event-long-table.webp",
+   "category": "events",
+   "alt_en": "Guests around the long table at our event",
+   "alt_hu": "Vendégeink a hosszú asztalnál rendezvényünkön",
+   "width": 1206,
+   "height": 1515
+  },
+  {
+   "image": "gallery/event-guests-portrait.webp",
+   "category": "events",
+   "alt_en": "Welcome at our event",
+   "alt_hu": "Üdvözlés rendezvényünkön",
+   "width": 1073,
+   "height": 1600
+  }
+ ],
+ "clips": [
+  {
+   "video": "facial-treatment-extraction.mp4",
+   "poster": "facial-treatment-extraction-poster.jpg",
+   "title_en": "Facial treatment: steam and cleansing",
+   "title_hu": "Arckezelés: gőz és tisztítás"
+  },
+  {
+   "video": "facial-treatment-cleansing.mp4",
+   "poster": "facial-treatment-cleansing-poster.jpg",
+   "title_en": "Facial treatment: gentle skin care",
+   "title_hu": "Arckezelés: gyengéd bőrápolás"
+  }
+ ],
+ "blog": [
+  {
+   "slug": "what-to-expect-at-your-first-visit",
+   "published_at": "2026-10-12",
+   "image": "gallery/clinic-lounge.webp",
+   "title_en": "What to expect at your first visit to Infinite Care",
+   "title_hu": "Mire számíts az első Infinite Care-es látogatásodon?",
+   "excerpt_en": "A friendly walk-through of your first visit: arriving, the consultation, your treatment and what happens afterwards.",
+   "excerpt_hu": "Barátságos útmutató az első látogatáshoz: érkezés, konzultáció, kezelés és a kezelés utáni teendők.",
+   "body_en": "Visiting a beauty clinic for the first time can feel like a big step. Here is a simple overview of how a first visit to Infinite Care Beauty Clinic usually goes, so you know what to expect.\n\n## Before you arrive\n\nThe clinic is in the 6th district of Budapest, at Podmaniczky street 5. We are open Monday to Friday from 9 to 20 and on Saturdays from 9 to 15. You can book by phone, so please call us or send an email to choose a time that suits you.\n\n- Arrive a few minutes early so you can settle in without rushing.\n- Come with clean skin if you are booked for a facial or another skin treatment.\n- Bring a list of any medications, allergies or skin conditions you would like us to know about.\n\n## The consultation\n\nEvery visit starts with a conversation. Your specialist will ask about your goals, your skin or health background and any questions you have. Together you will talk through the options, so you can decide what feels right for you. Nobody will pressure you to choose anything.\n\n## Your treatment\n\nTreatments take place in a calm, private treatment room. Your specialist will explain each step before it begins and will adjust things to keep you comfortable. If you feel unsure at any point, simply say so.\n\n## After your visit\n\nYou will receive aftercare advice that fits the treatment you chose. If you have questions once you are home, you are welcome to contact us. Some treatments are planned as a series, and your specialist can talk you through a schedule that suits you.\n\nWe look forward to welcoming you.",
+   "body_hu": "Az első látogatás egy szépségklinikán sokaknak nagy lépés. Összefoglaljuk, hogyan zajlik általában az első alkalom az Infinite Care Beauty Clinicben, hogy pontosan tudd, mire számíthatsz.\n\n## Érkezés előtt\n\nA klinika Budapest VI. kerületében, a Podmaniczky utca 5. szám alatt található. Hétfőtől péntekig 9 és 20 óra között, szombaton 9 és 15 óra között várunk. Időpontot telefonon foglalhatsz, hívj minket, vagy írj egy e-mailt, és megtaláljuk a számodra megfelelő időpontot.\n\n- Érkezz néhány perccel korábban, hogy sietség nélkül megérkezhess.\n- Arckezelés vagy más bőrkezelés előtt érdemes tiszta bőrrel jönni.\n- Hozd magaddal azoknak a gyógyszereknek, allergiáknak vagy bőrproblémáknak a listáját, amelyekről szeretnéd, hogy tudjunk.\n\n## A konzultáció\n\nMinden látogatás beszélgetéssel kezdődik. Szakemberünk megkérdezi a céljaidat, a bőrödre vagy az egészségi állapotodra vonatkozó tudnivalókat, és válaszol minden kérdésedre. Együtt átbeszélitek a lehetőségeket, így te döntöd el, mi tűnik a legjobbnak. Nem fogunk semmire sem rábeszélni.\n\n## A kezelés\n\nA kezelések nyugodt, privát kezelőben zajlanak. Szakemberünk minden lépést elmagyaráz, mielőtt belekezd, és úgy igazít a folyamaton, hogy végig komfortosan érezd magad. Ha bármikor bizonytalan vagy, nyugodtan szólj.\n\n## A látogatás után\n\nA választott kezeléshez illő utógondozási tanácsokat kapsz. Ha otthon felmerül kérdésed, bátran keress minket. Egyes kezeléseket kúraszerűen érdemes tervezni, ilyenkor szakemberünk segít kialakítani a számodra megfelelő ütemezést.\n\nSzeretettel várunk."
+  },
+  {
+   "slug": "laser-hair-removal-preparation-and-aftercare",
+   "published_at": "2026-10-19",
+   "image": "gallery/treatment-laser-hair-removal.webp",
+   "title_en": "Laser hair removal: how to prepare and what to do afterwards",
+   "title_hu": "Lézeres szőrtelenítés: felkészülés és utógondozás",
+   "excerpt_en": "General tips for getting ready for a laser hair removal session and looking after your skin once it is over.",
+   "excerpt_hu": "Általános tippek a lézeres szőrtelenítésre való felkészüléshez és a bőr ápolásához a kezelés után.",
+   "body_en": "Laser hair removal works best when you and your specialist prepare well and follow the aftercare advice. The tips below are general guidelines. Your specialist will give you personal instructions at the clinic, and those always come first.\n\n## Before your session\n\n- Shave the treatment area shortly before your appointment, as advised by your specialist. Avoid waxing, plucking or epilating beforehand, because the treatment works with the hair that is still in the skin.\n- Avoid strong sun exposure, solariums and self-tanning products on the area for a while before the session.\n- Come with clean skin, without creams, oils or deodorant on the area.\n- Tell your specialist about any medications, skin conditions, allergies or recent treatments.\n\n## What the session is like\n\nYour specialist will start with a short consultation and prepare the area. During the treatment you may feel warmth or a light snapping sensation, and you can let your specialist know if it feels uncomfortable. The length of a session depends on the size of the area.\n\n## Afterwards\n\n- Skin can look slightly red or feel warm for a short time. A gentle, fragrance-free moisturiser can help it feel comfortable.\n- Protect the area from the sun and use sun protection as recommended.\n- It is usually advised to avoid very hot baths, saunas, intense exercise and harsh scrubs for a few days.\n- Do not pick at the skin, and avoid waxing or plucking between sessions.\n\n## Plan for several sessions\n\nHair grows in cycles, so laser hair removal is normally planned as a series of sessions with breaks in between. Your specialist will explain a schedule that suits your skin and hair type. Results differ from person to person.\n\nIf anything feels unusual after your session, please contact the clinic.",
+   "body_hu": "A lézeres szőrtelenítés akkor működik a legjobban, ha te és a szakember is jól felkészültök, és követed az utógondozási tanácsokat. Az alábbi tippek általános irányelvek. Szakemberünk a klinikán személyre szabott útmutatást ad, és mindig az a mérvadó.\n\n## A kezelés előtt\n\n- A kezelendő területet szakemberünk javaslata szerint, nem sokkal az időpont előtt borotváld le. Kerüld a gyantázást, csipeszelést és epilálást, mert a kezelés a bőrben lévő szőrszálakkal dolgozik.\n- A kezelés előtt egy ideig kerüld az erős napozást, a szolláriumot és az önbarnító termékeket a területen.\n- Tiszta bőrrel érkezz, krém, olaj vagy dezodor nélkül a kezelendő területen.\n- Mondd el szakemberünknek, ha szedsz gyógyszert, van bőrbetegséged vagy allergiád, illetve ha nemrég kezelésen voltál.\n\n## Milyen a kezelés?\n\nSzakemberünk rövid konzultációval kezd, majd előkészíti a területet. A kezelés közben melegséget vagy enyhe csípő érzést érezhetsz, és ha kellemetlen, szólj nyugodtan. Az alkalom hossza a terület méretétől függ.\n\n## A kezelés után\n\n- A bőr rövid ideig kissé piros lehet vagy melegnek érződhet. Egy gyengéd, illatanyagmentes testápoló segíthet a komfortérzetben.\n- Védd a területet a naptól, és használj a javaslat szerinti fényvédőt.\n- Általában azt javasolják, hogy néhány napig kerüld a nagyon forró fürdőt, a szaunát, az intenzív edzést és az erős bőrradírokat.\n- Ne piszkáld a bőrt, és a kezelések között kerüld a gyantázást és a csipeszelést.\n\n## Több alkalommal érdemes számolni\n\nA szőrszálak ciklusokban nőnek, ezért a lézeres szőrtelenítést általában több alkalomból álló sorozatként, szünetekkel tervezik. Szakemberünk elmagyarázza a bőrtípusodhoz és a szőrzetedhez illő ütemezést. Az eredmények személyenként eltérhetnek.\n\nHa a kezelés után bármi szokatlant tapasztalsz, kérjük, vedd fel velünk a kapcsolatot."
+  },
+  {
+   "slug": "professional-teeth-whitening-basics",
+   "published_at": "2026-10-26",
+   "image": "gallery/blog-teeth-whitening-cover.webp",
+   "title_en": "Professional teeth whitening: the basics",
+   "title_hu": "Professzionális fogfehérítés: amit érdemes tudni",
+   "excerpt_en": "What professional teeth whitening is, how a visit usually goes and how to look after your smile afterwards.",
+   "excerpt_hu": "Mi az a professzionális fogfehérítés, hogyan zajlik egy alkalom, és hogyan ápold a mosolyodat utána.",
+   "body_en": "A brighter smile is one of the most popular wishes we hear. Here are the basics of professional teeth whitening, so you can decide whether it is right for you.\n\n## What is professional whitening?\n\nProfessional whitening is carried out by a trained specialist, who uses products and methods designed for use in a clinic. It lightens the natural colour of your teeth. It does not change the colour of crowns, veneers or fillings.\n\n## Is it right for me?\n\nA consultation comes first. Your specialist will look at your teeth and gums and ask about your history. In some cases, for example when there are cavities or gum problems, it may be better to see a dentist first. Tell us if you are pregnant or breastfeeding, if you have sensitive teeth or if you have any dental work.\n\n## How a visit usually goes\n\n- Your specialist checks the starting shade and protects your gums and lips.\n- The whitening product is applied and left for the planned time.\n- The shade is checked again, and you will get advice for the following days.\n\n## Looking after your smile afterwards\n\n- Teeth can feel a little sensitive for a short while. Let your specialist know if this bothers you.\n- For the first day or two it is usually advised to avoid strongly coloured food and drinks, such as coffee, tea, red wine and berries, and to avoid smoking.\n- Keep up a good routine of brushing twice a day, cleaning between your teeth and regular dental check-ups.\n\n## What to keep in mind\n\nThe result depends on your natural tooth colour and your daily habits, and it is not the same for everyone. Whitening is not permanent, and you can discuss with your specialist how to keep your smile looking fresh.",
+   "body_hu": "A ragyogóbb mosoly az egyik leggyakoribb kívánság, amit hallunk. Összefoglaljuk a professzionális fogfehérítés alapjait, hogy el tudd dönteni, neked való-e.\n\n## Mit jelent a professzionális fogfehérítés?\n\nA professzionális fogfehérítést képzett szakember végzi, klinikai használatra készült termékekkel és módszerekkel. A fogak természetes színét világosítja. A koronák, héjak és tömések színét nem változtatja meg.\n\n## Nekem való?\n\nElőször mindig konzultáció van. Szakemberünk megvizsgálja a fogaidat és az ínyedet, és rákérdez az előzményekre. Bizonyos esetekben, például ha szuvas fog vagy ínyprobléma áll fenn, jobb lehet előbb fogorvoshoz fordulni. Mondd el, ha várandós vagy szoptatsz, érzékeny a fogad, vagy van fogpótlásod, tömésed.\n\n## Hogyan zajlik egy alkalom?\n\n- Szakemberünk ellenőrzi a kiindulási árnyalatot, és megvédi az ínyedet és az ajkadat.\n- Szakemberünk felviszi a fehérítő anyagot, amely a tervezett ideig hat.\n- Újra ellenőrzi az árnyalatot, és tanácsokat kapsz a következő napokra.\n\n## A mosolyod ápolása a kezelés után\n\n- A fogak rövid ideig kissé érzékenyek lehetnek. Ha ez zavar, szólj szakemberünknek.\n- Az első egy-két napban általában azt javasolják, hogy kerüld az erősen színező ételeket és italokat, például a kávét, a teát, a vörösbort és az erdei gyümölcsöket, valamint a dohányzást.\n- Tartsd fenn a jó szokásokat: napi kétszeri fogmosás, fogköztisztítás és rendszeres fogorvosi ellenőrzés.\n\n## Mit érdemes észben tartani?\n\nAz eredmény a fogaid természetes színétől és a mindennapi szokásaidtól függ, ezért nem mindenkinél ugyanolyan. A fehérítés nem végleges, és szakemberünkkel megbeszélheted, hogyan tarthatod frissen a mosolyodat."
   }
  ]
 }

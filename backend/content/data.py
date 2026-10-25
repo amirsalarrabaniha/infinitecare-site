@@ -1,9 +1,11 @@
 """Turns DB content into plain dicts for one language. Used by the HTML views, the JSON API and the static exporter."""
+import posixpath
+
 from django.conf import settings
 
-from .models import SiteSettings, HomePage, Counter, Service, Package, PriceCategory
+from .models import SiteSettings, HomePage, Counter, Service, Package, PriceCategory, GalleryItem, VideoClip, BlogPost
 
-PAGES = ('index', 'services', 'prices')
+PAGES = ('index', 'services', 'prices', 'blog')   # pages with one HTML file per language; blog posts are exported separately
 
 
 class LiveUrls:
@@ -13,8 +15,10 @@ class LiveUrls:
     def __init__(self, lang):
         self.lang = lang
 
-    def page(self, name, lang=None):
+    def page(self, name, lang=None, slug=None):
         lang = lang or self.lang
+        if slug:
+            return f'/{lang}/blog/{slug}/'
         return f'/{lang}/' if name == 'index' else f'/{lang}/{name}/'
 
     def media(self, f):
@@ -22,17 +26,18 @@ class LiveUrls:
 
 
 class ExportUrls:
-    """Relative URLs for the static (GitHub Pages) export: EN in the root, HU in /hu/."""
-    def __init__(self, lang):
+    """Relative URLs for the static export: EN in the root, HU in /hu/, blog posts in blog/ (EN) and hu/blog/ (HU).
+    `subdir` is the folder of the page being rendered below its language root ('' or 'blog')."""
+    def __init__(self, lang, subdir=''):
         self.lang = lang
-        self.prefix = '../' if lang == 'hu' else ''
+        self.cur = ('hu/' if lang == 'hu' else '') + (subdir + '/' if subdir else '')
+        self.prefix = '../' * self.cur.count('/')
         self.static = self.prefix
 
-    def page(self, name, lang=None):
+    def page(self, name, lang=None, slug=None):
         lang = lang or self.lang
-        if lang == self.lang:
-            return f'{name}.html'
-        return f'hu/{name}.html' if lang == 'hu' else f'../{name}.html'
+        target = ('hu/' if lang == 'hu' else '') + (f'blog/{slug}.html' if slug else f'{name}.html')
+        return posixpath.relpath(target, self.cur.rstrip('/') or '.')
 
     def media(self, f):
         return f'{self.prefix}assets/media/{f.name}' if f else ''
@@ -64,7 +69,7 @@ def home(lang, urls):
                 marquee=[m.strip() for m in t('marquee').split(',') if m.strip()],
                 f1=sec('f1'), f2=sec('f2'), cta_image=urls.media(h.cta_image), cta_script=t('cta_s'),
                 cta_title=t('cta'), cta_button=t('cta_b'), contact_eyebrow=t('contact'),
-                contact_title=t('c_h'), contact_text=t('c_p'))
+                contact_title=t('c_h'), contact_text=t('c_p'), contact_image=urls.media(h.contact_image))
 
 
 def counters(lang):
@@ -87,3 +92,55 @@ def prices(lang):
                  items=[dict(label=i.tr('label', lang), price=i.tr('price', lang), is_subheading=i.is_subheading)
                         for i in c.items.all()])
             for c in PriceCategory.objects.filter(is_active=True).prefetch_related('items')]
+
+
+def gallery(lang, urls):
+    return [dict(id=g.id, image=urls.media(g.image), category=g.category, alt=g.tr('alt', lang),
+                 width=g.width, height=g.height) for g in GalleryItem.objects.filter(is_active=True)]
+
+
+def clips(lang, urls):
+    return [dict(id=c.id, video=urls.media(c.video), poster=urls.media(c.poster), title=c.tr('title', lang))
+            for c in VideoClip.objects.filter(is_active=True)]
+
+
+MONTHS = {
+    'en': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    'hu': ['január', 'február', 'március', 'április', 'május', 'június', 'július', 'augusztus', 'szeptember', 'október', 'november', 'december'],
+}
+
+
+def nice_date(d, lang):
+    m = MONTHS[lang][d.month - 1]
+    return f'{d.year}. {m} {d.day}.' if lang == 'hu' else f'{m} {d.day}, {d.year}'
+
+
+def body_blocks(text):
+    """Very small markup: '## ' heading, '- ' list, everything else paragraphs (rendered escaped by the template)."""
+    blocks = []
+    for chunk in paragraphs(text):
+        ls = [l.strip() for l in chunk.split('\n') if l.strip()]
+        if chunk.startswith('## '):
+            blocks.append(dict(type='h', text=chunk[3:].strip()))
+        elif all(l.startswith('- ') for l in ls):
+            blocks.append(dict(type='ul', items=[l[2:].strip() for l in ls]))
+        else:
+            blocks.append(dict(type='p', text=' '.join(ls)))
+    return blocks
+
+
+def published_posts():
+    return BlogPost.objects.filter(is_published=True)
+
+
+def post_summary(p, lang, urls):
+    return dict(slug=p.slug, title=p.tr('title', lang), excerpt=p.tr('excerpt', lang), cover=urls.media(p.cover),
+                date=nice_date(p.published_at, lang), iso_date=p.published_at.isoformat(), url=urls.page('blog', slug=p.slug))
+
+
+def blog_posts(lang, urls):
+    return [post_summary(p, lang, urls) for p in published_posts()]
+
+
+def blog_post(post, lang, urls):
+    return dict(post_summary(post, lang, urls), blocks=body_blocks(post.tr('body', lang)))
