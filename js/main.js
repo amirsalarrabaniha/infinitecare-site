@@ -24,6 +24,31 @@ addEventListener('scroll',onS,{passive:true});onS();
 if(matchMedia('(hover:hover)').matches){const g=document.querySelector('.cursor-glow');addEventListener('mousemove',e=>{g.style.left=e.clientX+'px';g.style.top=e.clientY+'px'});
 document.querySelectorAll('[data-tilt]').forEach(el=>{const t=el.closest('.f-img')||el;t.addEventListener('mousemove',e=>{const r=t.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;t.style.transform=`perspective(900px) rotateY(${x*6}deg) rotateX(${-y*6}deg)`});t.addEventListener('mouseleave',()=>t.style.transform='')})}
 
+// gallery: filters + lightbox, reels
+const gg=document.querySelector('.g-grid');
+if(gg){const items=[...gg.querySelectorAll('.g-item')],fb=[...document.querySelectorAll('.g-filters button')];
+ const vis=()=>items.filter(i=>!i.hidden);
+ fb.forEach(x=>x.addEventListener('click',()=>{fb.forEach(y=>{y.classList.toggle('on',y===x);y.setAttribute('aria-pressed',y===x)});items.forEach(i=>{i.hidden=x.dataset.filter!=='all'&&i.dataset.cat!==x.dataset.filter})}));
+ let lb,cur=-1,last;
+ const build=()=>{lb=document.createElement('div');lb.className='lb';lb.setAttribute('role','dialog');lb.setAttribute('aria-modal','true');lb.hidden=true;
+  lb.innerHTML='<button type="button" class="lb-x"></button><button type="button" class="lb-p"></button><button type="button" class="lb-n"></button><figure><img alt=""><figcaption></figcaption></figure>';
+  lb.querySelector('.lb-x').setAttribute('aria-label',gg.dataset.lbClose);lb.querySelector('.lb-p').setAttribute('aria-label',gg.dataset.lbPrev);lb.querySelector('.lb-n').setAttribute('aria-label',gg.dataset.lbNext);
+  lb.addEventListener('click',e=>{if(e.target===lb)close();else if(e.target.closest('.lb-x'))close();else if(e.target.closest('.lb-p'))go(-1);else if(e.target.closest('.lb-n'))go(1)});
+  let sx=0;lb.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});lb.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>50)go(d<0?1:-1)});
+  document.body.append(lb)};
+ const show=()=>{const v=vis(),it=v[cur];lb.querySelector('img').src=it.dataset.full;lb.querySelector('img').alt=it.dataset.caption;lb.querySelector('figcaption').textContent=it.dataset.caption;lb.classList.toggle('single',v.length<2)};
+ const go=d=>{const n=vis().length;cur=(cur+d+n)%n;show()};
+ const open=it=>{if(!lb)build();last=it;cur=vis().indexOf(it);show();lb.hidden=false;b.classList.add('lb-open');lb.querySelector('.lb-x').focus()};
+ const close=()=>{lb.hidden=true;b.classList.remove('lb-open');if(last)last.focus()};
+ items.forEach(i=>i.addEventListener('click',()=>open(i)));
+ addEventListener('keydown',e=>{if(!lb||lb.hidden)return;if(e.key==='Escape')close();else if(e.key==='ArrowLeft')go(-1);else if(e.key==='ArrowRight')go(1)})}
+const reels=[...document.querySelectorAll('[data-reel]')];
+if(reels.length){const still=matchMedia('(prefers-reduced-motion:reduce)').matches;
+ const vo=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(still)return;if(e.isIntersecting){v.preload='auto';v.play().catch(()=>{})}else v.pause()}),{threshold:.5});
+ reels.forEach(v=>{if(!still)vo.observe(v);const bt=v.parentElement.querySelector('.reel-btn');
+  const sync=()=>v.parentElement.classList.toggle('paused',v.paused);v.addEventListener('play',sync);v.addEventListener('pause',sync);sync();
+  bt.addEventListener('click',()=>{v.paused?v.play().catch(()=>{}):v.pause()})})}
+
 // language: remember choice, redirect first visit of a session
 const lang=b.dataset.lang;
 document.querySelectorAll('.langsw a').forEach(a=>a.addEventListener('click',()=>{try{localStorage.setItem('ic-lang',a.dataset.lang)}catch(e){}document.cookie='ic-lang='+a.dataset.lang+';path=/;max-age=31536000;samesite=lax'}));

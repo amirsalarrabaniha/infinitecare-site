@@ -1,0 +1,8 @@
+{% extends "site/base.html" %}
+{% block content %}{% include "site/subhero.html" %}
+<main class="blog"><div class="wrap">
+<span class="eyebrow reveal">{{ ui.blog_eyebrow }}</span><h2 class="split">{{ ui.blog_lead }}</h2>
+{% if posts %}<div class="bgrid">
+{% for p in posts %}{% include "site/blog_card.html" %}{% endfor %}
+</div>{% else %}<p class="b-empty">{{ ui.empty }}</p>{% endif %}
+</div></main>{% endblock %}
