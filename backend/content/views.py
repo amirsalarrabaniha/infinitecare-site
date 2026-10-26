@@ -1,4 +1,6 @@
+import hashlib
 import json
+from functools import lru_cache
 
 from django.conf import settings
 from django.http import Http404, JsonResponse
@@ -12,9 +14,23 @@ LANGS = settings.SITE_LANGUAGES
 
 
 def alt_url(lang, page, slug=None):
-    """Absolute URL (static export layout) of a page in a language, for hreflang / canonical / og tags."""
+    """Absolute URL (static export layout) of a page in a language, for hreflang / canonical / og tags.
+    With STATIC_EXPORT_CLEAN_URLS (Cloudflare Workers assets: /services instead of /services.html) the .html is dropped."""
     base = settings.STATIC_EXPORT_SITE_URL + ('hu/' if lang == 'hu' else '')
-    return base + (f'blog/{slug}.html' if slug else f'{page}.html')
+    name = f'blog/{slug}' if slug else page
+    if settings.STATIC_EXPORT_CLEAN_URLS:
+        return base + ('' if name == 'index' else name)
+    return base + f'{name}.html'
+
+
+@lru_cache(maxsize=1)
+def asset_version():
+    """Short content hash of css/js, appended as ?v=… so they can be cached for a year (`_headers`)."""
+    h = hashlib.md5()
+    for f in ('css/style.css', 'js/main.js'):
+        p = settings.SITE_ROOT / f
+        h.update(p.read_bytes() if p.exists() else b'')
+    return h.hexdigest()[:8]
 
 
 def page_context(lang, page, urls, api_url, post=None):
@@ -30,18 +46,19 @@ def page_context(lang, page, urls, api_url, post=None):
            dict(key='blog', label=ui['nav'][4], href=urls.page('blog'))]
     site = data.site_settings(lang)
     ctx = dict(lang=lang, other=other, page=page, nav_key='blog' if page == 'blog_post' else page, ui=ui,
-               title=ui['titles'][page] if not post else post.tr('title', lang), nav=nav, S=urls.static,
+               title=ui['titles'][page] if not post else post.tr('title', lang), nav=nav, S=urls.static, v=asset_version(),
                urls={k: urls.page(k) for k in nav_keys},
                switch={l: urls.page('blog' if post else page, l, slug) for l in LANGS},
                alternates={l: alt_url(l, 'blog' if post else page, slug) for l in LANGS},
                site=site, api_url=api_url, description=f"{ui['desc']} {site['address']}")
+    ctx['canonical'] = ctx['alternates'][lang]
     if page == 'index':
         ctx.update(home=data.home(lang, urls), counters=data.counters(lang),
                    gallery=data.gallery(lang, urls), clips=data.clips(lang, urls))
     elif page == 'services':
         svcs = data.services(lang, urls)
         ctx.update(services_before=svcs[:5], services_after=svcs[5:], packages=data.packages(lang, urls),
-                   hero_image=urls.static + 'assets/images/services.jpg')
+                   hero_image=urls.static + 'assets/images/services.webp')
     elif page == 'blog':
         ctx.update(posts=data.blog_posts(lang, urls), hero_image=urls.static + 'assets/images/gallery/clinic-lounge.webp',
                    description=ui['blog_desc'])
@@ -54,7 +71,7 @@ def page_context(lang, page, urls, api_url, post=None):
         ctx.update(post=p, hero_image=p['cover'], canonical=ctx['alternates'][lang],
                    ld_json=json.dumps(ld, ensure_ascii=False).replace('<', '\\u003c'), og_image_url=og, description=p['excerpt'], more_posts=[x for x in data.blog_posts(lang, urls) if x['slug'] != post.slug][:2])
     else:
-        ctx.update(categories=data.prices(lang), hero_image=urls.static + 'assets/images/prices.jpg')
+        ctx.update(categories=data.prices(lang), hero_image=urls.static + 'assets/images/prices.webp')
     return ctx
 
 

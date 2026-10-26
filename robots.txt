@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://infinitecare-site.amyrsalarr.workers.dev/sitemap.xml

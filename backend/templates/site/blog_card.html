@@ -1,2 +1,2 @@
-<article class="bcard reveal"><a class="bc-img" href="{{ p.url }}" tabindex="-1" aria-hidden="true"><img src="{{ p.cover }}" alt="" loading="lazy"></a>
+{% load site_extras %}<article class="bcard reveal"><a class="bc-img" href="{{ p.url }}" tabindex="-1" aria-hidden="true"><img src="{{ p.cover }}" alt="" {{ p.cover|imgsize }} loading="lazy" decoding="async"></a>
 <div class="bc-body"><time datetime="{{ p.iso_date }}">{{ p.date }}</time><h3><a href="{{ p.url }}">{{ p.title }}</a></h3><p>{{ p.excerpt }}</p><a class="bc-more" href="{{ p.url }}">{{ ui.read_more }}</a></div></article>

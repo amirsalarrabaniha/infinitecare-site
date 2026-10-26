@@ -3,7 +3,7 @@
 // when empty and no data-api is present the form falls back to a mailto: link.
 const API_URL = '';
 (()=>{const b=document.body,nav=document.querySelector('.nav'),prog=document.querySelector('.progress');
-addEventListener('load',()=>setTimeout(()=>b.classList.add('loaded'),300));setTimeout(()=>b.classList.add('loaded'),2500);
+addEventListener('load',()=>setTimeout(()=>b.classList.add('loaded'),200));setTimeout(()=>b.classList.add('loaded'),1800);
 addEventListener('pageshow',e=>{if(e.persisted)b.classList.remove('leaving')});
 // page transitions (internal links to another page)
 document.querySelectorAll('a[href]').forEach(a=>a.addEventListener('click',e=>{if(e.metaKey||e.ctrlKey||e.shiftKey||a.target)return;const h=a.getAttribute('href');if(!h||h[0]==='#'||/^(tel|mailto):/.test(h))return;const u=new URL(a.href,location.href);if(u.origin!==location.origin||(u.pathname===location.pathname&&u.hash))return;e.preventDefault();b.classList.remove('menu-open');b.classList.add('leaving');setTimeout(()=>location.href=u.href,650)}));
@@ -14,11 +14,14 @@ document.querySelectorAll('.split').forEach(h=>{const walk=n=>[...n.childNodes].
 // reveal on scroll
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);if(e.target.dataset.count!==undefined)count(e.target)}}),{threshold:.15,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal,.reveal-img,.split,[data-count]').forEach((el,i)=>{if(el.classList.contains('reveal')){const sib=[...el.parentElement.children].filter(x=>x.classList.contains('reveal'));el.style.transitionDelay=Math.min(sib.indexOf(el),5)*110+'ms'}io.observe(el)});
-const hero=document.querySelector('.hero h1');if(hero)setTimeout(()=>hero.classList.add('in'),1300);
+const hero=document.querySelector('.hero h1');if(hero)setTimeout(()=>hero.classList.add('in'),900);
 function count(el){const t=+el.dataset.count,s=performance.now();const f=n=>{const p=Math.min((n-s)/1800,1);el.textContent=Math.round(t*(1-Math.pow(1-p,4)))+(p===1?(el.dataset.suffix??''):'');if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
 // scroll: nav, progress, parallax
 const px=[...document.querySelectorAll('[data-parallax]')];
-const onS=()=>{const y=scrollY;nav.classList.toggle('scrolled',y>60);prog.style.width=y/(document.documentElement.scrollHeight-innerHeight)*100+'%';px.forEach(el=>{const r=el.parentElement.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)el.style.transform=`translate3d(0,${(r.top)*-.18}px,0)`})};
+let tick=0;
+const run=()=>{tick=0;const y=scrollY,vh=innerHeight,max=document.documentElement.scrollHeight-vh,rs=px.map(el=>el.parentElement.getBoundingClientRect()); // all layout reads first, then the writes
+ nav.classList.toggle('scrolled',y>60);prog.style.width=(max>0?y/max*100:0)+'%';px.forEach((el,i)=>{const r=rs[i];if(r.bottom>0&&r.top<vh)el.style.transform=`translate3d(0,${r.top*-.18}px,0)`})};
+const onS=()=>{if(!tick){tick=1;requestAnimationFrame(run)}};
 addEventListener('scroll',onS,{passive:true});onS();
 // tilt + cursor glow (pointer devices)
 if(matchMedia('(hover:hover)').matches){const g=document.querySelector('.cursor-glow');addEventListener('mousemove',e=>{g.style.left=e.clientX+'px';g.style.top=e.clientY+'px'});
@@ -48,6 +51,10 @@ if(reels.length){const still=matchMedia('(prefers-reduced-motion:reduce)').match
  reels.forEach(v=>{if(!still)vo.observe(v);const bt=v.parentElement.querySelector('.reel-btn');
   const sync=()=>v.parentElement.classList.toggle('paused',v.paused);v.addEventListener('play',sync);v.addEventListener('pause',sync);sync();
   bt.addEventListener('click',()=>{v.paused?v.play().catch(()=>{}):v.pause()})})}
+
+// map: load Google Maps only after a click (no third-party requests/cookies on page load)
+document.querySelectorAll('[data-map]').forEach(w=>{const bt=w.querySelector('.map-btn');if(!bt)return;
+ bt.addEventListener('click',()=>{const f=document.createElement('iframe');f.src=w.dataset.map;f.title=w.dataset.title;f.referrerPolicy='no-referrer-when-downgrade';f.allowFullscreen=true;w.replaceChildren(f);f.focus()})});
 
 // language: remember choice, redirect first visit of a session
 const lang=b.dataset.lang;

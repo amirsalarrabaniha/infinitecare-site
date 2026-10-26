@@ -1,2 +1,2 @@
-<section class="feature {% if rev %}feature-rev{% endif %} wrap"><div class="f-img reveal-img"><img src="{{ f.image }}" alt="{{ f.title }}" data-tilt></div>
+{% load site_extras %}<section class="feature {% if rev %}feature-rev{% endif %} wrap"><div class="f-img reveal-img"><img src="{{ f.image }}" alt="{{ f.title }}" {{ f.image|imgsize }} loading="lazy" decoding="async" data-tilt></div>
 <div class="f-text"><span class="eyebrow reveal">{{ f.eyebrow }}</span><h2 class="split">{{ f.title }}</h2>{% for p in f.paragraphs %}<p class="reveal">{{ p|linebreaksbr }}</p>{% endfor %}{% if f.button %}<a class="btn reveal" href="{{ href }}">{{ f.button }}</a>{% endif %}</div></section>
