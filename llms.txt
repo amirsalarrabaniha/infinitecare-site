@@ -1,0 +1,28 @@
+# Infinite Care Beauty Clinic
+
+> Beauty and aesthetic clinic in Budapest (Bp. VI. Podmaniczky str. 5.). Treatments such as microneedling, laser hair removal, EMSCULPT and teeth whitening. The website is available in English and Hungarian.
+
+## Pages
+
+- [Home](https://infinitecare-site.amyrsalarr.workers.dev/): clinic introduction, photo gallery, treatment videos and the contact form
+- [Our treatments](https://infinitecare-site.amyrsalarr.workers.dev/services): all treatments and current packages
+- [Our prices](https://infinitecare-site.amyrsalarr.workers.dev/prices): price list in HUF
+- [Blog](https://infinitecare-site.amyrsalarr.workers.dev/blog): articles about treatments and skin care
+- [Professional teeth whitening: the basics](https://infinitecare-site.amyrsalarr.workers.dev/blog/professional-teeth-whitening-basics)
+- [Laser hair removal: how to prepare and what to do afterwards](https://infinitecare-site.amyrsalarr.workers.dev/blog/laser-hair-removal-preparation-and-aftercare)
+- [What to expect at your first visit to Infinite Care](https://infinitecare-site.amyrsalarr.workers.dev/blog/what-to-expect-at-your-first-visit)
+
+## Magyar
+
+- [Főoldal](https://infinitecare-site.amyrsalarr.workers.dev/hu/)
+- [Szolgáltatásaink](https://infinitecare-site.amyrsalarr.workers.dev/hu/services)
+- [Áraink](https://infinitecare-site.amyrsalarr.workers.dev/hu/prices)
+- [Blog](https://infinitecare-site.amyrsalarr.workers.dev/hu/blog)
+
+## Contact
+
+- Phone: +36 1 707 0075
+- E-mail: info@infinitecare.hu
+- Address: Bp. VI. Podmaniczky str. 5., Budapest, Hungary
+- Opening hours: Mon-Fri: 9 - 20
+- Opening hours: Sat: 9 - 15

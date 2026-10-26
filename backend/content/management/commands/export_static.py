@@ -13,7 +13,7 @@ from django.core.management.base import BaseCommand
 from django.template.loader import render_to_string
 
 from content import data
-from content.views import page_context
+from content.views import alt_url, page_context
 
 
 class Command(BaseCommand):
@@ -21,17 +21,22 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('--out', default=str(settings.SITE_ROOT))
+        parser.add_argument('--site-url', default=settings.STATIC_EXPORT_SITE_URL,
+                            help='Public origin (with trailing slash) used for canonical / hreflang / sitemap, e.g. https://example.com/')
+        parser.add_argument('--clean-urls', action='store_true', default=settings.STATIC_EXPORT_CLEAN_URLS,
+                            help='Use /services instead of /services.html in canonical / hreflang / sitemap (Cloudflare Workers assets)')
         parser.add_argument('--api-url', default=settings.STATIC_EXPORT_API_URL,
                             help="Contact API URL baked into the pages ('' = mailto fallback)")
 
-    def handle(self, *args, out, api_url, **kw):
+    def handle(self, *args, out, api_url, site_url, clean_urls, **kw):
         out = Path(out)
+        settings.STATIC_EXPORT_SITE_URL = site_url if site_url.endswith('/') else site_url + '/'
+        settings.STATIC_EXPORT_CLEAN_URLS = clean_urls
         for old in (out / 'blog', out / 'hu' / 'blog'):  # drop posts that were unpublished / deleted
             shutil.rmtree(old, ignore_errors=True)
         media_out = out / 'assets' / 'media'
         if Path(settings.MEDIA_ROOT).exists():
-            shutil.rmtree(media_out, ignore_errors=True)
-            shutil.copytree(settings.MEDIA_ROOT, media_out)
+            shutil.copytree(settings.MEDIA_ROOT, media_out, dirs_exist_ok=True)   # keeps older files that live pages may still use
         n = 0
         for lang in settings.SITE_LANGUAGES:
             folder = out if lang == 'en' else out / lang
@@ -45,4 +50,38 @@ class Command(BaseCommand):
                 ctx = page_context(lang, 'blog_post', data.ExportUrls(lang, 'blog'), api_url, post=post)
                 (folder / 'blog' / f'{post.slug}.html').write_text(render_to_string('site/blog_post.html', ctx), encoding='utf-8')
                 n += 1
+        self.write_discovery_files(out)
         self.stdout.write(self.style.SUCCESS(f'Exported {n} pages to {out} (API: {api_url or "mailto fallback"})'))
+
+    def write_discovery_files(self, out):
+        """robots.txt, sitemap.xml (with hreflang alternates) and llms.txt, for the public origin."""
+        base = settings.STATIC_EXPORT_SITE_URL
+        posts = list(data.published_posts())
+        pages = [(p, None) for p in data.PAGES] + [('blog', p.slug) for p in posts]
+        rows = []
+        for page, slug in pages:
+            alts = {l: alt_url(l, page, slug) for l in settings.SITE_LANGUAGES}
+            links = ''.join(f'<xhtml:link rel="alternate" hreflang="{l}" href="{u}"/>' for l, u in alts.items())
+            links += f'<xhtml:link rel="alternate" hreflang="x-default" href="{alts["en"]}"/>'
+            lastmod = next((p.published_at.isoformat() for p in posts if p.slug == slug), '')
+            for l, u in alts.items():
+                rows.append(f'<url><loc>{u}</loc>{f"<lastmod>{lastmod}</lastmod>" if lastmod else ""}{links}</url>')
+        (out / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+                                         'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + '\n'.join(rows) + '\n</urlset>\n', encoding='utf-8')
+        (out / 'robots.txt').write_text(f'User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: {base}sitemap.xml\n', encoding='utf-8')
+        s = data.site_settings('en')
+        en = lambda page, slug=None: alt_url('en', page, slug)
+        hu = lambda page, slug=None: alt_url('hu', page, slug)
+        lines = [f'# Infinite Care Beauty Clinic', '',
+                 f'> Beauty and aesthetic clinic in Budapest ({s["address"]}). Treatments such as microneedling, laser hair removal, EMSCULPT and teeth whitening. The website is available in English and Hungarian.', '',
+                 '## Pages', '',
+                 f'- [Home]({en("index")}): clinic introduction, photo gallery, treatment videos and the contact form',
+                 f'- [Our treatments]({en("services")}): all treatments and current packages',
+                 f'- [Our prices]({en("prices")}): price list in HUF',
+                 f'- [Blog]({en("blog")}): articles about treatments and skin care']
+        lines += [f'- [{p.tr("title", "en")}]({en("blog", p.slug)})' for p in posts]
+        lines += ['', '## Magyar', '',
+                  f'- [Főoldal]({hu("index")})', f'- [Szolgáltatásaink]({hu("services")})', f'- [Áraink]({hu("prices")})', f'- [Blog]({hu("blog")})',
+                  '', '## Contact', '', f'- Phone: {s["phone"]}', f'- E-mail: {s["email"]}', f'- Address: {s["address"]}, {s["city"]}']
+        lines += [f'- Opening hours: {h}' for h in s['hours']]
+        (out / 'llms.txt').write_text('\n'.join(lines) + '\n', encoding='utf-8')

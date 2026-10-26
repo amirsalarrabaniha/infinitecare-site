@@ -54,7 +54,7 @@
   "f1_image": "gallery/service-microneedling.webp",
   "f2_image": "gallery/home-treatment-room.webp",
   "hero_image": "gallery/clinic-lounge.webp",
-  "cta_image": "services.jpg",
+  "cta_image": "services.webp",
   "contact_image": "gallery/clinic-facade.webp"
  },
  "counters": [
@@ -85,7 +85,7 @@
  ],
  "services": [
   {
-   "image": "box-14.jpg",
+   "image": "box-14.webp",
    "eyebrow_en": "Brand new, Worldwide innovation",
    "eyebrow_hu": "Világújdonság a szépségápolásban",
    "title_en": "Exosome Therapy",
@@ -121,7 +121,7 @@
    "description_hu": "Az elektromos izom stimuláció (EMS), talán a legtökéletesebb módja annak, hogy igazán formába lendülj nagyon rövid idő alatt! Nem csak formás és izmos testet kölcsönöz, de még zsírbontásra is nagyon jó!"
   },
   {
-   "image": "box-4.jpg",
+   "image": "box-4.webp",
    "eyebrow_en": "Good bye cellulite",
    "eyebrow_hu": "Viszlát narancsbőr",
    "title_en": "Cellulite therapy",
@@ -130,7 +130,7 @@
    "description_hu": "Az Ultrasape célzott ultrahang technológiájának segítségével nem csak a zsírt távolítjuk el a szövetekből, de a bőrt is feszesítjük, ezáltal sokkal simább és tónusosabb testet kapunk."
   },
   {
-   "image": "box-5.jpg",
+   "image": "box-5.webp",
    "eyebrow_en": "Experience the flawless and radiant skin",
    "eyebrow_hu": "Ragyogóan gyönyörű bőr érzése",
    "title_en": "Carbon peeling",
@@ -148,7 +148,7 @@
    "description_hu": "A Hollywood-i mosoly elengedhetetlen kelléke a vakító fehérség, amit egy ilyen fogfehérítő eljárás során végeredményként kapunk. Mosolyogj rá a világra és az mindig visszamosolyog rád!"
   },
   {
-   "image": "box-7.jpg",
+   "image": "box-7.webp",
    "eyebrow_en": "Happy life without wrinkles",
    "eyebrow_hu": "A ránctalan élet öröme",
    "title_en": "Face lifting",
@@ -157,7 +157,7 @@
    "description_hu": "Az arc a karakterünk talán legmeghatározóbb eleme. Rugalmasságának visszaállítása és természetességének megőrzése a vágyott cél, amit a legmodernebb facelifting technológiával kezelünk."
   },
   {
-   "image": "box-8.jpg",
+   "image": "box-8.webp",
    "eyebrow_en": "Plumped lips, wrinkle free skin",
    "eyebrow_hu": "Teltebb ajkak, ránctalan arcbőr",
    "title_en": "Esthetic treatments",
@@ -166,7 +166,7 @@
    "description_hu": "Válogasson esztétikai kezeléseink széles skálájáról:\nBotox, szájfeltöltés, \"russian lips\", arc és áll feltöltés, műtét nélküli orr plasztika, arc vékonyítás, face lift, toka feszesítés, kollagén terápia, skin booster, mezoterápia, zsírbontó injekciók"
   },
   {
-   "image": "box-9.jpg",
+   "image": "box-9.webp",
    "eyebrow_en": "Bigger and tighter buttocks and boobs",
    "eyebrow_hu": "Feszesebb fenék, teltebb keblek",
    "title_en": "Brazilift",
@@ -175,7 +175,7 @@
    "description_hu": "Lapos a popsid? Elégedetlen vagy a melleid méretével, de félsz a plasztikai beavatkozástól? Nálunk van rá megoldás! Legyen olyan feneked, valamint dús és telt kebleid, mint a brazil nőknek!"
   },
   {
-   "image": "box-11.jpg",
+   "image": "box-11.webp",
    "eyebrow_en": "Pampering treatments, skin care",
    "eyebrow_hu": "Kényeztető kezelések, a bőr ápolása",
    "title_en": "Massage",
@@ -830,13 +830,13 @@
  "clips": [
   {
    "video": "facial-treatment-extraction.mp4",
-   "poster": "facial-treatment-extraction-poster.jpg",
+   "poster": "facial-treatment-extraction-poster.webp",
    "title_en": "Facial treatment: steam and cleansing",
    "title_hu": "Arckezelés: gőz és tisztítás"
   },
   {
    "video": "facial-treatment-cleansing.mp4",
-   "poster": "facial-treatment-cleansing-poster.jpg",
+   "poster": "facial-treatment-cleansing-poster.webp",
    "title_en": "Facial treatment: gentle skin care",
    "title_hu": "Arckezelés: gyengéd bőrápolás"
   }

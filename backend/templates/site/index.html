@@ -1,7 +1,7 @@
 {% extends "site/base.html" %}
-{% block content %}{% with h=home %}
-<section class="hero"><div class="hero-bg" data-parallax style="background-image:url({{ h.hero_image }})"></div><div class="hero-veil"></div>
- <div class="hero-in"><img class="hero-logo" src="{{ S }}assets/images/infinitecare-logo-4.png" alt="">
+{% load site_extras %}{% block content %}{% with h=home %}
+<section class="hero"><div class="hero-bg" data-parallax><img src="{{ h.hero_image }}" alt="" {{ h.hero_image|imgsize }} fetchpriority="high" decoding="async"></div><div class="hero-veil"></div>
+ <div class="hero-in"><img class="hero-logo" src="{{ S }}assets/images/infinitecare-logo-4.png" alt="" width="248" height="260">
   <span class="script hero-script">{{ h.hello }}</span>
   <h1 class="split">{{ h.h1_main }}{% if h.h1_em %}<br><em>{{ h.h1_em }}</em>{% endif %}</h1>
   <p class="lead reveal">{{ h.lead }}</p>
@@ -18,20 +18,24 @@
 </section>{% endif %}
 {% if clips %}<section class="reels"><div class="wrap reel-wrap"><div class="reel-text"><span class="eyebrow light reveal">{{ ui.reel_eyebrow }}</span><h2 class="split">{{ ui.reel_title }}</h2><p class="reveal">{{ ui.reel_text }}</p></div>
  <div class="reel-grid">{% for c in clips %}<figure class="reel reveal"><video muted loop playsinline preload="none" poster="{{ c.poster }}" aria-label="{{ c.title }}" data-reel><source src="{{ c.video }}" type="video/mp4"></video><button type="button" class="reel-btn" aria-label="{{ ui.lb.play }}"></button><figcaption>{{ c.title }}</figcaption></figure>{% endfor %}</div></div></section>{% endif %}
-<section class="cta"><div class="cta-bg" data-parallax style="background-image:url({{ h.cta_image }})"></div><div class="cta-in">
+<section class="cta"><div class="cta-bg" data-parallax><img src="{{ h.cta_image }}" alt="" {{ h.cta_image|imgsize }} loading="lazy" decoding="async"></div><div class="cta-in">
  <span class="script reveal">{{ h.cta_script }}</span><h2 class="split">{{ h.cta_title }}</h2><a class="btn reveal" href="{{ site.phone_href }}">{{ h.cta_button }}</a></div></section>
 <section class="contact wrap" id="contact"><div class="c-info"><span class="eyebrow reveal">{{ h.contact_eyebrow }}</span><h2 class="split">{{ h.contact_title }}</h2>
  <p class="reveal">{{ h.contact_text }}</p>
- <form class="cform reveal" id="contact-form" novalidate data-ok="{{ ui.ok }}" data-err="{{ ui.err }}" data-sending="{{ ui.sending }}" data-invalid="{{ ui.inv }}" data-mailto="{{ site.email }}">
-  <label><input name="name" required maxlength="100" placeholder=" "><span>{{ ui.form.0 }}</span></label>
-  <label><input name="email" type="email" required maxlength="200" placeholder=" "><span>{{ ui.form.1 }}</span></label>
-  <label><input name="phone" type="tel" maxlength="40" placeholder=" "><span>{{ ui.form.2 }}</span></label>
-  <label><textarea name="message" rows="4" required maxlength="5000" placeholder=" "></textarea><span>{{ ui.form.3 }}</span></label>
+ <form class="cform reveal" id="contact-form" toolname="send_message" tooldescription="{{ ui.form_tool }}" novalidate data-ok="{{ ui.ok }}" data-err="{{ ui.err }}" data-sending="{{ ui.sending }}" data-invalid="{{ ui.inv }}" data-mailto="{{ site.email }}">
+  <label><input name="name" required maxlength="100" placeholder=" " autocomplete="name" toolparamdescription="{{ ui.form.0 }}"><span>{{ ui.form.0 }}</span></label>
+  <label><input name="email" type="email" required maxlength="200" placeholder=" " autocomplete="email" toolparamdescription="{{ ui.form.1 }}"><span>{{ ui.form.1 }}</span></label>
+  <label><input name="phone" type="tel" maxlength="40" placeholder=" " autocomplete="tel" toolparamdescription="{{ ui.form.2 }}"><span>{{ ui.form.2 }}</span></label>
+  <label><textarea name="message" rows="4" required maxlength="5000" placeholder=" " toolparamdescription="{{ ui.form.3 }}"></textarea><span>{{ ui.form.3 }}</span></label>
   <div class="hp" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off"></div>
   <button class="btn" type="submit">{{ ui.form.4 }}</button><p class="form-status" role="status" aria-live="polite"></p>
  </form></div>
  {% if h.contact_image or site.map_embed %}<div class="c-side">
-  {% if h.contact_image %}<figure class="c-photo reveal-img"><img src="{{ h.contact_image }}" alt="{{ ui.entrance }}" loading="lazy" decoding="async" width="1206" height="783"><figcaption><b>{{ ui.find_us }}</b>{{ site.address }}, {{ site.city }}</figcaption></figure>{% endif %}
-  {% if site.map_embed %}<div class="map reveal-img"><iframe loading="lazy" title="Map" src="{{ site.map_embed }}"></iframe></div>{% endif %}</div>{% endif %}
+  {% if h.contact_image %}<figure class="c-photo reveal-img"><img src="{{ h.contact_image }}" alt="{{ ui.entrance }}" {{ h.contact_image|imgsize }} loading="lazy" decoding="async"><figcaption><b>{{ ui.find_us }}</b>{{ site.address }}, {{ site.city }}</figcaption></figure>{% endif %}
+  {% if site.map_embed %}<div class="map reveal-img" data-map="{{ site.map_embed }}" data-title="{{ ui.map_title }}"><div class="map-fb">
+   <svg class="map-pin" viewBox="0 0 24 24" width="40" height="40" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+   <p class="map-addr">{{ site.address }}, {{ site.city }}</p>
+   <button type="button" class="btn map-btn">{{ ui.map_show }}</button><small>{{ ui.map_note }}</small>
+   <a class="link" href="https://www.google.com/maps/search/?api=1&amp;query={{ site.address|urlencode }}%2C%20{{ site.city|urlencode }}" target="_blank" rel="noopener noreferrer">{{ ui.map_open }}</a></div></div>{% endif %}</div>{% endif %}
 </section>
 {% endwith %}{% endblock %}

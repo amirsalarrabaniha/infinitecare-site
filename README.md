@@ -62,6 +62,25 @@ cd backend && python manage.py export_static [--api-url https://your-backend/api
 Regenerates `index.html`, `services.html`, `prices.html`, `blog.html`, `blog/<slug>.html`, `hu/*.html`, `hu/blog/<slug>.html` and copies uploaded images to `assets/media/`.
 Without an API URL the contact form opens the visitor's mail app (mailto). With one, add the Pages origin to `CORS_ALLOWED_ORIGINS`.
 
+Also written by the export: `sitemap.xml` (with hreflang alternates), `robots.txt` and `llms.txt` (use `--site-url` so they and the
+`<link rel="canonical">` tags carry the live origin; `--clean-urls` links to `/services` instead of `/services.html`, matching
+`html_handling = "auto-trailing-slash"`). `assets/media/` is only added to, never wiped.
+
+### Performance, accessibility and security notes
+* **Fonts are self-hosted** (`assets/fonts/*.woff2`: Montserrat, Playfair Display and Mr Dafoe, SIL Open Font License; latin plus a
+  latin-ext subset that covers Hungarian ő/ű). `style.css` has `font-display: swap` faces and metric-matched fallbacks to avoid layout
+  shifts; no request goes to Google Fonts.
+* **Images**: seed/uploaded photos are WebP. Templates add `width`/`height` through the `imgsize` filter
+  (`content/templatetags/site_extras.py`, needs Pillow, silently skipped if it is missing), the LCP image has `fetchpriority="high"`,
+  everything below the fold is `loading="lazy"`.
+* **Google Maps** loads only after the visitor clicks "Show the map" (`data-map` facade in `index.html`/`main.js`).
+* **`_headers`** (served by Workers static assets, so keep it out of `.assetsignore`): CSP, `nosniff`, Referrer-Policy,
+  Permissions-Policy, HSTS, COOP and cache rules. `css/` and `js/` are linked with `?v=<content hash>` (see `asset_version()` in
+  `content/views.py`) and cached for a year; photos/video for 30 days; HTML is revalidated. If you add a third-party script, font,
+  frame or image host, add it to the CSP there. API responses come from the Worker, not from `_headers`.
+* Check with `npx lighthouse@13 <url>` (the *Agentic browsing* category needs Lighthouse 13+). The contact form carries WebMCP
+  declarative attributes (`toolname`, `tooldescription`, `toolparamdescription`).
+
 ## Deploy
 * **Render / Railway**: new Web Service from this repo. Build: `pip install -r backend/requirements.txt`.
   Start: see `Procfile` (migrate, seed if empty, collectstatic, gunicorn). Set the env vars above
@@ -80,7 +99,8 @@ made in the Django admin (locally or on a Python host) and published by re-expor
 
 ```bash
 export CLOUDFLARE_API_TOKEN=…  CLOUDFLARE_ACCOUNT_ID=164584608fafa1395f843df7bb17e1c7   # Node.js >= 22
-cd backend && python manage.py export_static --api-url /api/contact/ && cd ..
+cd backend && python manage.py export_static --api-url /api/contact/ \
+  --site-url https://infinitecare-site.amyrsalarr.workers.dev/ --clean-urls && cd ..
 npx wrangler@latest deploy                    # uses wrangler.toml, uploads files not listed in .assetsignore
 npx wrangler@latest kv key list --binding MESSAGES --remote          # list stored messages (keys msg:…)
 npx wrangler@latest kv key get --binding MESSAGES --remote "msg:<id>" # read one message

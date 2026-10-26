@@ -18,3 +18,4 @@ cf-django/src/config_urls.py
 cf-django/src/app/i18n_js.py
 cf-django/.wrangler/
 cf-django/uv.lock
+.wrangler/

@@ -1,4 +1,4 @@
 {% extends "site/base.html" %}
 {% block content %}{% include "site/subhero.html" %}
-<main class="wrap prices">{% for c in categories %}<div class="pcard reveal"><h3>{{ c.title }}</h3>{% for i in c.items %}{% if i.is_subheading %}<div class="psub">{{ i.label }}</div>{% else %}<div class="prow"><span>{{ i.label }}</span><i></i><b>{{ i.price }}</b></div>{% endif %}{% endfor %}</div>{% endfor %}</main>
+<main class="wrap prices">{% for c in categories %}<div class="pcard reveal"><h2>{{ c.title }}</h2>{% for i in c.items %}{% if i.is_subheading %}<div class="psub">{{ i.label }}</div>{% else %}<div class="prow"><span>{{ i.label }}</span><i></i><b>{{ i.price }}</b></div>{% endif %}{% endfor %}</div>{% endfor %}</main>
 {% endblock %}

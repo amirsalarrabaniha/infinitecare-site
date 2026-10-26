@@ -68,7 +68,7 @@ class ContentTests(TestCase):
         hu = (p / 'hu' / 'services.html').read_text(encoding='utf-8')
         self.assertIn('href="../services.html" hreflang="en"', hu)
         self.assertIn('src="../assets/media/services/', hu)
-        self.assertIn('href="../css/style.css"', hu)
+        self.assertIn('href="../css/style.css?v=', hu)
         en = (p / 'index.html').read_text(encoding='utf-8')
         self.assertIn('href="hu/index.html" hreflang="hu"', en)
         self.assertTrue((p / 'assets' / 'media' / 'services').is_dir())
@@ -148,6 +148,38 @@ class ContentTests(TestCase):
                              '/hu/blog/professional-teeth-whitening-basics/', status_code=301, fetch_redirect_response=False)
         self.assertRedirects(self.client.get('/blog.html'), '/en/blog/', status_code=301, fetch_redirect_response=False)
 
+    def test_static_export_performance_and_discovery(self):
+        out = tempfile.mkdtemp()
+        call_command('export_static', out=out, api_url='/api/contact/', site_url='https://example.test/', clean_urls=True, verbosity=0)
+        p = pathlib.Path(out)
+        en = (p / 'index.html').read_text(encoding='utf-8')
+        self.assertNotIn('fonts.googleapis.com', en)
+        self.assertIn('rel="preload" href="assets/fonts/montserrat-latin.woff2"', en)
+        self.assertRegex(en, r'<img src="assets/media/home/[^"]+" alt="" width="\d+" height="\d+" fetchpriority="high"')  # LCP image
+        self.assertIn('width="248" height="260"', en)                                  # logos are sized
+        self.assertNotIn('<iframe', en)                                                 # Google Maps only after a click
+        self.assertIn('data-map="https://www.google.com/maps/embed', en)
+        self.assertIn('toolname="send_message"', en)
+        self.assertIn('<link rel="canonical" href="https://example.test/">', en)
+        self.assertIn('<link rel="canonical" href="https://example.test/hu/services">', (p / 'hu' / 'services.html').read_text(encoding='utf-8'))
+        self.assertIn('Térkép megjelenítése', (p / 'hu' / 'index.html').read_text(encoding='utf-8'))
+        self.assertNotIn('<h4', en)
+        sm = (p / 'sitemap.xml').read_text(encoding='utf-8')
+        self.assertIn('<loc>https://example.test/hu/blog</loc>', sm)
+        self.assertEqual(sm.count('<loc>'), 2 * (4 + BlogPost.objects.filter(is_published=True).count()))
+        self.assertIn('Sitemap: https://example.test/sitemap.xml', (p / 'robots.txt').read_text(encoding='utf-8'))
+        llms = (p / 'llms.txt').read_text(encoding='utf-8')
+        self.assertTrue(llms.startswith('# Infinite Care Beauty Clinic'))
+        self.assertIn('](https://example.test/services)', llms)
+        # shipped as static assets and cache/security headers are not excluded from the deploy
+        root = pathlib.Path(__file__).resolve().parents[2]
+        ignore = (root / '.assetsignore').read_text().split()
+        self.assertTrue((root / '_headers').is_file())
+        self.assertNotIn('_headers', ignore)
+        self.assertIn('Content-Security-Policy', (root / '_headers').read_text())
+        for f in ('montserrat-latin', 'playfair-display-latin', 'mr-dafoe-latin'):
+            self.assertTrue((root / 'assets' / 'fonts' / f'{f}.woff2').is_file(), f)
+
     def test_static_export_blog(self):
         out = tempfile.mkdtemp()
         call_command('export_static', out=out, api_url='', verbosity=0)
@@ -156,14 +188,14 @@ class ContentTests(TestCase):
         for f in ['blog.html', f'blog/{slug}.html', 'hu/blog.html', f'hu/blog/{slug}.html']:
             self.assertTrue((p / f).is_file(), f)
         en = (p / 'blog' / f'{slug}.html').read_text(encoding='utf-8')
-        self.assertIn('href="../css/style.css"', en)
-        self.assertIn('url(../assets/media/blog/', en)
+        self.assertIn('href="../css/style.css?v=', en)
+        self.assertIn('src="../assets/media/blog/', en)
         self.assertIn(f'href="../hu/blog/{slug}.html" hreflang="hu"', en)
         self.assertIn('href="../blog.html">Blog</a>', en)
         hu = (p / 'hu' / 'blog' / f'{slug}.html').read_text(encoding='utf-8')
-        self.assertIn('href="../../css/style.css"', hu)
+        self.assertIn('href="../../css/style.css?v=', hu)
         self.assertIn(f'href="../../blog/{slug}.html" hreflang="en"', hu)
-        self.assertIn('url(../../assets/media/blog/', hu)
+        self.assertIn('src="../../assets/media/blog/', hu)
         self.assertIn('href="../index.html" class="brand"', hu)
         lst = (p / 'hu' / 'blog.html').read_text(encoding='utf-8')
         self.assertIn(f'href="blog/{slug}.html"', lst)
