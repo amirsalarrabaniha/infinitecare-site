@@ -226,7 +226,7 @@ body.lb-open{overflow:hidden}
 .post-in p,.post-in li{font-size:1.05rem;line-height:1.9;color:#33423e}.post-in p{margin:0 0 1.3rem}
 .post-in h2{font-size:clamp(1.5rem,3vw,2rem);margin:2.6rem 0 1rem}
 .post-in ul{margin:0 0 1.6rem;padding-left:1.2rem}.post-in li{margin-bottom:.5rem}.post-in li::marker{color:var(--gold)}
-.post-in .post-note{font-size:.85rem;font-style:italic;color:#6b7a76;border-left:2px solid var(--gold);padding-left:1rem;margin-top:2.4rem}
+.post-in .post-note{font-size:.85rem;font-style:italic;color:#58665f;border-left:2px solid var(--gold);padding-left:1rem;margin-top:2.4rem}
 .post-cta{margin:3rem 0 1.5rem;padding:2.2rem;border-radius:22px;background:var(--g);color:#fff;text-align:center}.post-cta h3{color:#fff;font-size:1.5rem;margin-bottom:1.2rem}
 .post-back{display:inline-block;font-weight:500;color:var(--g);border-bottom:1px solid var(--gold);padding-bottom:2px}
 .post-more{margin-top:6rem;padding:5rem 0 6rem;background:#f1ebe0}.post-more h3{font-size:1.8rem;color:var(--g)}.post-more .bgrid{grid-template-columns:repeat(2,1fr);margin-top:2rem}
