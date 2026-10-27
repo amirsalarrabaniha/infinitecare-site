@@ -55,7 +55,7 @@ class ContentTests(TestCase):
 
     def test_social_links_everywhere(self):
         urls = ['https://www.youtube.com/@InfiniteCareBeautyClinic', 'https://www.instagram.com/infinitecarebeauty/',
-                'https://vm.tiktok.com/ZN8DVD2M3/']
+                'https://www.tiktok.com/@infinitecarebeautyclinic']
         for path in ('/en/', '/hu/', '/en/services/', '/hu/prices/', '/en/blog/', '/hu/blog/'):
             html = self.client.get(path).content.decode()
             for u in urls:
