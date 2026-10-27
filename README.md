@@ -90,28 +90,57 @@ Also written by the export: `sitemap.xml` (with hreflang alternates), `robots.tx
 * **VPS**: clone, create venv, `.env`, migrate/seed/collectstatic, run `gunicorn config.wsgi -b 127.0.0.1:8000`
   under systemd behind nginx (TLS via certbot). nginx may serve `/media/` directly from `MEDIA_ROOT`.
 
-## Publish changes made in the admin (API → static site)
+## Content from the admin: two layers (static HTML + live update)
 Content is edited in the admin of the API worker: <https://infinitecare-api.amyrsalarr.workers.dev/admin/>
-(site settings, home page, services, gallery/YouTube/clips, blog posts – EN and HU). The public site stays
-**static HTML** (best SEO, no layout shift, top Lighthouse), so an admin change goes live in two steps:
+(site settings, home page, services, gallery/YouTube/clips, blog posts – EN and HU).
 
+1. **Static HTML (build time)** – the files in this repo are generated from the API (`scripts/sync_from_api.sh`). This is what crawlers,
+   social previews, no-JS visitors and the first paint get (best SEO, no layout shift, top Lighthouse).
+2. **Live update (run time, in the browser)** – after the page has loaded, `js/main.js` asks the API for the same data
+   (`/api/settings`, `/api/home`, `/api/services`, `/api/gallery`, `/api/blog`, `/api/blog/<slug>` with `?lang=` of the page) and
+   updates the page **only where it differs**. So an admin edit shows up on every deployment (Cloudflare, Apache, anywhere) within about a minute,
+   **without** running the sync script, committing or redeploying.
+
+How the live layer works (progressive enhancement, no framework):
+* Every editable block of the static HTML has `data-live="<name>"` and `data-fp="<fingerprint of the data it was built from>"`
+  (`backend/content/live.py`: canonical JSON → FNV-1a). The browser computes the same fingerprint of the API data (`fp()` in `main.js`;
+  the two must stay identical – covered by tests). Equal fingerprint → the DOM is **not touched** (no flicker, no layout shift, CLS stays 0).
+  Different → just that block is re-rendered, with the same markup as the templates (images are preloaded and sized first, so nothing jumps).
+* Single values (phone, e-mail, address, opening hours, city, tagline, map, booking/offers/social links) are `data-s="…"` bindings that are set from `/api/settings`.
+  An empty `booking_url` / `offers_url` / social URL hides that link. Covered: hero, marquee, both feature blocks, counters, gallery (photos, categories,
+  YouTube), clips, "watch" section, CTA, contact texts, services (incl. videos), blog list cards, the blog post (title, date, cover, body, videos),
+  "more articles", all in the language of the page. Only **published** posts / **active** items are in the API; a post that was unpublished and is
+  opened from an old link redirects to the blog list.
+* Safe by design: starts after `load`; 4 s timeout; any error (offline, 5xx, CORS, bad JSON) leaves the static page exactly as it is;
+  responses are cached in `sessionStorage` for 60 s (stale-while-revalidate, so navigating between pages does not refetch).
+  The API allows `GET` from any origin (`CORS_ALLOWED_ORIGINS="*"`; it is public read-only data). The CSP (`_headers` and `.htaccess`) allows the API origin in
+  `connect-src`, `img-src` and `media-src`. Live mode is off automatically on pages without an `http(s)` `data-api` (e.g. Django-rendered pages).
+* **New blog posts**: a post published after the last sync has no HTML file of its own yet. The live blog list links it to `blog/post.html?p=<slug>`
+  (`hu/blog/post.html`), a generated empty, `noindex` article page that the browser fills from `/api/blog/<slug>`. The next `scripts/sync_from_api.sh`
+  creates the real, indexable page and the link switches to it.
+* **Limits**: crawlers and visitors without JS see the static copy, so run `scripts/sync_from_api.sh` from time to time to refresh it (SEO,
+  sitemap, `llms.txt`, real pages for new posts). Sections that did not exist in the static copy at all (e.g. a gallery that was empty at build time) are not created at run time.
+
+### Apache / shared hosting (e.g. `~/deploy/infinitecare-site`)
+The repository root **is** the web root and needs no build step: `git pull` is the deployment. `.htaccess` (mod_headers/rewrite/alias, every block
+optional) adds the same security headers/CSP and caching as `_headers`, blocks `backend/`, `cf-django/`, `scripts/`, `.git` etc., and serves
+`/services` → `services.html`. Make sure the host's web root points at this folder (or symlink it) and `AllowOverride` permits `.htaccess`.
+The live layer works there unchanged because the browser talks to the API directly.
+
+### Refresh the static copy (SEO) from the admin
 ```bash
 scripts/sync_from_api.sh        # 1. pulls /api/settings, /api/home, /api/services, /api/gallery, /api/blog (EN+HU)
 git diff --stat                 #    and regenerates the HTML, sitemap, llms.txt and downloads new images into assets/media/
 git add -A && git commit -m "Sync content from admin" && git push      # (or open a PR)
-CLOUDFLARE_ACCOUNT_ID=164584608fafa1395f843df7bb17e1c7 npx wrangler@4.40 deploy     # 2. publish (needs CLOUDFLARE_API_TOKEN)
+CLOUDFLARE_ACCOUNT_ID=164584608fafa1395f843df7bb17e1c7 npx wrangler@4.40 deploy     # 2. publish on Cloudflare (needs CLOUDFLARE_API_TOKEN); on Apache: `git pull`
 scripts/sync_from_api.sh --check   # optional: exit 1 if the committed site is behind the admin
 ```
 * The script needs Python 3.11+ (it creates `.sync-venv/` with Django + Pillow, or set `SYNC_PYTHON=/path/to/python`).
   `API_URL` / `SITE_URL` can be overridden by environment variables.
-* Only **published** posts / **active** items are in the API, so unpublishing in the admin removes the page on the next sync.
-  HU texts come from the same API responses (`?lang=hu`, falling back to EN when empty).
+* HU texts come from the same API responses (`?lang=hu`, falling back to EN when empty).
 * The contact form posts straight to `https://infinitecare-api.amyrsalarr.workers.dev/api/contact/` (messages appear in the
-  admin → *Contact messages*; CORS allows the site origin). If that request fails (network error / 5xx) the page
-  retries the same-origin Worker `POST /api/contact` (KV) and finally falls back to `mailto:`. The CSP `connect-src` in `_headers` allows the API origin.
-* **No live (browser) fetch of blog posts**: client-side rendering would hide the articles from crawlers/social previews
-  and add layout shift + an extra request to the critical path (worse SEO, LCP and CLS). Build-time rendering gives the same
-  data with none of that.
+  admin → *Contact messages*). If that request fails (network error / 5xx) the page
+  retries the same-origin Worker `POST /api/contact` (KV) and finally falls back to `mailto:`.
 * Images removed in the admin are not deleted from `assets/media/` automatically.
 
 ## Cloudflare Workers (live: https://infinitecare-site.amyrsalarr.workers.dev)

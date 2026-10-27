@@ -3,11 +3,11 @@
 <script type="application/ld+json">{{ ld_json|safe }}</script>{% endblock %}
 {% block content %}{% with kicker=post.date %}{% include "site/subhero.html" %}{% endwith %}
 <main class="post"><article class="wrap post-in">
-{% for b in post.blocks %}{% if b.type == 'h' %}<h2>{{ b.text }}</h2>{% elif b.type == 'ul' %}<ul>{% for i in b.items %}<li>{{ i }}</li>{% endfor %}</ul>{% else %}<p>{{ b.text }}</p>{% endif %}{% endfor %}
-{% for v in post.videos %}<figure class="post-vid">{% include "site/yt.html" %}</figure>{% endfor %}
+<div class="pbody" data-live="post" data-fp="{{ fp.post }}">{% for b in post.blocks %}{% if b.type == 'h' %}<h2>{{ b.text }}</h2>{% elif b.type == 'ul' %}<ul>{% for i in b.items %}<li>{{ i }}</li>{% endfor %}</ul>{% else %}<p>{{ b.text }}</p>{% endif %}{% endfor %}
+{% for v in post.videos %}<figure class="post-vid">{% include "site/yt.html" %}</figure>{% endfor %}</div>
 <p class="post-note">{{ ui.post_note }}</p>
-<div class="post-cta"><h3>{{ ui.book_cta }}</h3><div class="pc-btns">{% if site.booking_url %}{% include "site/book_link.html" with label=ui.book_online cls="pc-book" %}{% endif %}<a class="btn pc-tel" href="{{ site.phone_href }}">{{ site.phone }}</a></div></div>
+<div class="post-cta"><h3>{{ ui.book_cta }}</h3><div class="pc-btns">{% if site.booking_url %}{% include "site/book_link.html" with label=ui.book_online cls="pc-book" %}{% endif %}<a class="btn pc-tel" href="{{ site.phone_href }}" data-s="phone">{{ site.phone }}</a></div></div>
 <a class="post-back" href="{{ urls.blog }}">{{ ui.back }}</a>
 </article>
-{% if more_posts %}<section class="post-more"><div class="wrap"><h3>{{ ui.more }}</h3><div class="bgrid">{% for p in more_posts %}{% include "site/blog_card.html" %}{% endfor %}</div></div></section>{% endif %}
+{% if more_posts %}<section class="post-more" data-live="more" data-fp="{{ fp.more }}"><div class="wrap"><h3>{{ ui.more }}</h3><div class="bgrid">{% for p in more_posts %}{% include "site/blog_card.html" %}{% endfor %}</div></div></section>{% endif %}
 </main>{% endblock %}

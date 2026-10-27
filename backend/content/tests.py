@@ -231,7 +231,7 @@ class ContentTests(TestCase):
             for path in ['', 'services/', 'blog/']:
                 html = self.client.get(f'/{lang}/{path}').content.decode()
                 self.assertEqual(html.count(f'href="{self.OFFERS}"'), 1, (lang, path))
-                self.assertIn(f'<a href="{self.OFFERS}" class="" target="_blank" rel="noopener noreferrer">{label}', html)
+                self.assertIn(f'<a href="{self.OFFERS}" class="" target="_blank" rel="noopener noreferrer" data-s="offers">{label}', html)
                 # the "Book now" buttons keep the original booking URL
                 self.assertIn('href="https://l.fresha.com/3dvz3n7j6" target="_blank" rel="noopener noreferrer"', html)
                 self.assertNotIn('#packages', html)
@@ -466,3 +466,83 @@ class ApiSourceTests(TestCase):
         with mock.patch('content.management.commands.export_static.ApiSource', LocalApi):
             out = self._export(from_api='http://testserver')
         self.assertEqual(list((out / 'blog').glob('*.html')), [])
+
+
+class LiveContentTests(TestCase):
+    """The static pages carry fingerprints (`data-fp`) that js/main.js recomputes from the live API (see README "Live content")."""
+
+    @classmethod
+    def setUpTestData(cls):
+        call_command('load_initial_content', verbosity=0)
+        call_command('load_clinic_media', verbosity=0)
+
+    def _export(self):
+        out = tempfile.mkdtemp()
+        call_command('export_static', out=out, api_url='https://api.test/api/contact/', site_url='https://example.test/', clean_urls=True, verbosity=0)
+        return pathlib.Path(out)
+
+    def test_python_fingerprint(self):
+        from . import live
+        self.assertEqual(live.fp({'b': [1, 'é'], 'a': '../assets/media/x%20y.webp'}), live.fp({'a': '~/x%20y.webp', 'b': [1, '\u00e9']}))
+        self.assertNotEqual(live.fp({'a': 1}), live.fp({'a': 2}))
+        self.assertRegex(live.fp({}), r'^[0-9a-f]+-2$')
+
+    def test_markers_in_exported_pages(self):
+        out = self._export()
+        home = (out / 'index.html').read_text(encoding='utf-8')
+        for key in ('hero', 'marquee', 'f1', 'f2', 'counters', 'gallery', 'clips', 'watch', 'cta', 'contact'):
+            self.assertRegex(home, rf'data-live="{key}" data-fp="[0-9a-f]+-\d+"', key)
+        self.assertRegex((out / 'services.html').read_text(encoding='utf-8'), r'data-live="services" data-fp="[0-9a-f]+-\d+"')
+        self.assertRegex((out / 'hu' / 'blog.html').read_text(encoding='utf-8'), r'data-live="blog" data-fp="[0-9a-f]+-\d+"')
+        post = next((out / 'blog').glob('what-to-expect*.html')).read_text(encoding='utf-8')
+        self.assertRegex(post, r'data-live="post" data-fp="[0-9a-f]+-\d+"')
+        self.assertIn('data-slug="what-to-expect-at-your-first-visit"', post)
+        self.assertIn('data-s="phone"', home)
+        self.assertIn('data-slugs="', home)
+
+    def test_fallback_page_for_new_posts(self):
+        out = self._export()
+        for folder in (out, out / 'hu'):
+            shell = (folder / 'blog' / 'post.html').read_text(encoding='utf-8')
+            self.assertIn('<meta name="robots" content="noindex">', shell)
+            self.assertIn(' data-shell', shell)
+            self.assertIn('data-live="post" data-fp=""', shell)
+            self.assertNotIn('Infinite Care1', shell)
+        self.assertNotIn('post.html', (out / 'sitemap.xml').read_text(encoding='utf-8'))
+        self.assertNotIn('post.html', (out / 'llms.txt').read_text(encoding='utf-8'))
+
+    def test_js_fingerprint_matches_python(self):
+        """Runs the real fp() from js/main.js in node over the API responses and compares with the exported data-fp values."""
+        import json
+        import shutil
+        import subprocess
+        node = shutil.which('node')
+        if not node:
+            self.skipTest('node not installed')
+        js = (pathlib.Path(__file__).resolve().parents[2] / 'js' / 'main.js').read_text(encoding='utf-8')
+        a, z = js.index('const MEDIA='), js.index('// helpers')
+        out = self._export()
+
+        def api(path, lang):
+            return self.client.get(path, {'lang': lang}).json()
+
+        cases = []   # (file, key, data)
+        for lang, folder in (('en', out), ('hu', out / 'hu')):
+            h = api('/api/home/', lang)
+            g = api('/api/gallery/', lang)
+            home = (folder / 'index.html').read_text(encoding='utf-8')
+            cases += [(home, 'hero', [h['hero_image'], h['hello'], h['h1_main'], h['h1_em'], h['lead']]), (home, 'marquee', h['marquee']),
+                      (home, 'f1', h['f1']), (home, 'f2', h['f2']), (home, 'counters', h['counters']),
+                      (home, 'cta', [h['cta_image'], h['cta_script'], h['cta_title'], h['cta_button']]),
+                      (home, 'contact', [h['contact_eyebrow'], h['contact_title'], h['contact_text'], h['contact_image']]),
+                      (home, 'gallery', {'photos': g['photos'], 'yt': g['youtube'], 'clips': g['videos']}),
+                      ((folder / 'services.html').read_text(encoding='utf-8'), 'services', api('/api/services/', lang)['results']),
+                      ((folder / 'blog.html').read_text(encoding='utf-8'), 'blog', api('/api/blog/', lang)['results'])]
+            post = api('/api/blog/what-to-expect-at-your-first-visit/', lang)
+            cases.append(((folder / 'blog' / 'what-to-expect-at-your-first-visit.html').read_text(encoding='utf-8'), 'post', post))
+        script = ('const b={dataset:{}};const api="http://testserver";' + js[a:z] +
+                  'const c=JSON.parse(require("fs").readFileSync(0,"utf8"));console.log(JSON.stringify(c.map(([k,x])=>fp(k==="blog"||k==="post"?nourl(x):x))))')
+        res = subprocess.run([node, '-e', script], input=json.dumps([[c[1], c[2]] for c in cases]), capture_output=True, text=True, check=True)
+        for (html, key, _), got in zip(cases, json.loads(res.stdout)):
+            m = re.search(rf'data-live="{key}" data-fp="([^"]+)"', html)
+            self.assertEqual(m.group(1), got, f"{key}")

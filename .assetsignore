@@ -12,3 +12,4 @@ README.md
 *.sqlite3
 cf-django
 .venv
+.htaccess

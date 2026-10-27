@@ -7,7 +7,7 @@ from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_GET
 
-from . import data
+from . import data, live
 from .ui import UI
 
 LANGS = settings.SITE_LANGUAGES
@@ -52,7 +52,7 @@ def page_context(lang, page, urls, api_url, post=None, src=data):
                urls={k: urls.page(k) for k in nav_keys},
                switch={l: urls.page('blog' if post else page, l, slug) for l in LANGS},
                alternates={l: alt_url(l, 'blog' if post else page, slug) for l in LANGS},
-               site=site, socials=socials, api_url=api_url, description=f"{ui['desc']} {site['address']}")
+               site=site, socials=socials, api_url=api_url, post_tpl=urls.page('blog', slug='__SLUG__'), post_slugs=','.join(x.slug for x in src.published_posts()), description=f"{ui['desc']} {site['address']}")
     ctx['canonical'] = ctx['alternates'][lang]
     if page == 'index':
         yt = src.youtube(lang, urls)
@@ -63,15 +63,18 @@ def page_context(lang, page, urls, api_url, post=None, src=data):
                'address': site['address'] + ', ' + site['city'], 'sameAs': [x['url'] for x in socials]}
         if site['booking_url']:
             org['potentialAction'] = {'@type': 'ReserveAction', 'name': ui['book_online'], 'target': {'@type': 'EntryPoint', 'urlTemplate': site['booking_url'], 'actionPlatform': ['http://schema.org/DesktopWebPlatform', 'http://schema.org/MobileWebPlatform']}}
-        ctx.update(ld_json=json.dumps(org, ensure_ascii=False).replace('<', '\\u003c'), home=src.home(lang, urls), counters=src.counters(lang),
-                   gallery=gallery, gallery_videos=gallery_videos, gallery_filters=src.gallery_filters(gallery + gallery_videos, ui), clips=src.clips(lang, urls),
+        home, counters, clips = src.home(lang, urls), src.counters(lang), src.clips(lang, urls)
+        ctx.update(ld_json=json.dumps(org, ensure_ascii=False).replace('<', '\\u003c'), home=home, counters=counters,
+                   fp=live.index_fps(home, counters, gallery, yt, clips),
+                   gallery=gallery, gallery_videos=gallery_videos, gallery_filters=src.gallery_filters(gallery + gallery_videos, ui), clips=clips,
                    watch_featured=next((v for v in yt if v['featured']), None), watch_shorts=[v for v in yt if v['home'] and not v['featured']][:4])
     elif page == 'services':
         svcs = src.services(lang, urls)
-        ctx.update(services=svcs,
+        ctx.update(services=svcs, fp=dict(services=live.fp(svcs)),
                    hero_image=urls.static + 'assets/images/services.webp')
     elif page == 'blog':
-        ctx.update(posts=src.blog_posts(lang, urls), hero_image=urls.static + 'assets/images/gallery/clinic-lounge.webp',
+        posts = src.blog_posts(lang, urls)
+        ctx.update(posts=posts, fp=dict(blog=live.fp(live.no_url(posts))), hero_image=urls.static + 'assets/images/gallery/clinic-lounge.webp',
                    description=ui['blog_desc'])
     elif page == 'blog_post':
         p = src.blog_post(post, lang, urls)
@@ -79,8 +82,22 @@ def page_context(lang, page, urls, api_url, post=None, src=data):
         ld = dict({'@context': 'https://schema.org', '@type': 'BlogPosting'}, headline=p['title'], description=p['excerpt'],
                   datePublished=p['iso_date'], image=og, inLanguage=lang,
                   publisher={'@type': 'Organization', 'name': 'Infinite Care Beauty Clinic', 'sameAs': [x['url'] for x in socials]})
-        ctx.update(post=p, hero_image=p['cover'], canonical=ctx['alternates'][lang],
-                   ld_json=json.dumps(ld, ensure_ascii=False).replace('<', '\\u003c'), og_image_url=og, description=p['excerpt'], more_posts=[x for x in src.blog_posts(lang, urls) if x['slug'] != post.slug][:2])
+        more = [x for x in src.blog_posts(lang, urls) if x['slug'] != post.slug][:2]
+        ctx.update(post=p, more_posts=more, fp=dict(post=live.fp(live.no_url([p])[0]), more=live.fp(live.no_url(more))), hero_image=p['cover'], canonical=ctx['alternates'][lang],
+                   ld_json=json.dumps(ld, ensure_ascii=False).replace('<', '\\u003c'), og_image_url=og, description=p['excerpt'])
+    return ctx
+
+
+def shell_context(lang, api_url, src, post):
+    """Context of `blog/post.html`: an empty, noindex article page that main.js fills from the API for `?p=<slug>`.
+    Posts published after the last export have no static page of their own; the live blog list links them here."""
+    urls = data.ExportUrls(lang, 'blog')
+    ctx = page_context(lang, 'blog_post', urls, api_url, post=post, src=src)
+    blog = {l: alt_url(l, 'blog') for l in settings.SITE_LANGUAGES}
+    ctx.update(shell=True, noindex=True, title='…', more_posts=[], fp=dict(post='', more=''), ld_json='{}', canonical=blog[lang],
+               description=ctx['ui']['blog_desc'], hero_image=urls.static + 'assets/images/gallery/clinic-lounge.webp',
+               post=dict(ctx['post'], slug='', title='…', excerpt='', date='', iso_date='', blocks=[], videos=[]),
+               switch={l: urls.page('blog', l) for l in settings.SITE_LANGUAGES}, alternates=blog)
     return ctx
 
 

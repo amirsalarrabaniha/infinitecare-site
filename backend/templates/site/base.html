@@ -7,34 +7,34 @@
 {% block meta %}{% endblock %}
 <link rel="alternate" hreflang="en" href="{{ alternates.en }}"><link rel="alternate" hreflang="hu" href="{{ alternates.hu }}"><link rel="alternate" hreflang="x-default" href="{{ alternates.en }}">
 <link rel="icon" href="{{ S }}assets/images/favicon.ico"><link rel="icon" sizes="96x96" href="{{ S }}assets/images/infinitecare-96.png">
-<link rel="canonical" href="{{ canonical }}"><meta name="theme-color" content="#195146">
+{% if noindex %}<meta name="robots" content="noindex">{% endif %}<link rel="canonical" href="{{ canonical }}"><meta name="theme-color" content="#195146">
 <link rel="preload" href="{{ S }}assets/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="{{ S }}assets/fonts/playfair-display-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{{ S }}css/style.css?v={{ v }}">
 </head>
-<body class="page-{{ page }}" data-lang="{{ lang }}" data-api="{{ api_url }}">
+<body class="page-{{ page }}" data-lang="{{ lang }}" data-api="{{ api_url }}" data-post="{{ post_tpl }}" data-slugs="{{ post_slugs }}"{% if shell %} data-shell{% endif %}{% if post %} data-slug="{{ post.slug }}"{% endif %}>
 <div class="loader"><img src="{{ S }}assets/images/infinitecare-logo-4.png" alt="" width="248" height="260"></div><div class="cursor-glow"></div><div class="progress"></div>
 <header class="nav">
  <a href="{{ urls.index }}" class="brand"><img class="logo-light" src="{{ S }}assets/images/infinitecare-logo-2.png" alt="Infinite Care" width="240" height="120"><img class="logo-dark" src="{{ S }}assets/images/infinitecare-logo-1.png" alt="Infinite Care" width="280" height="105"></a>
  <nav class="menu">
-  {% for n in nav %}<a href="{{ n.href }}" class="{% if n.key == nav_key %}active{% endif %}"{% if n.external %} target="_blank" rel="noopener noreferrer"{% endif %}>{{ n.label }}{% if n.external %}<span class="vh"> ({{ ui.newtab }})</span>{% endif %}</a>{% endfor %}
+  {% for n in nav %}<a href="{{ n.href }}" class="{% if n.key == nav_key %}active{% endif %}"{% if n.external %} target="_blank" rel="noopener noreferrer" data-s="offers"{% endif %}>{{ n.label }}{% if n.external %}<span class="vh"> ({{ ui.newtab }})</span>{% endif %}</a>{% endfor %}
   <div class="langsw" role="group" aria-label="Language">
    <a href="{{ switch.en }}" hreflang="en" lang="en" data-lang="en" class="{% if lang == 'en' %}on{% endif %}"{% if lang == 'en' %} aria-current="true"{% endif %}>EN</a><a href="{{ switch.hu }}" hreflang="hu" lang="hu" data-lang="hu" class="{% if lang == 'hu' %}on{% endif %}"{% if lang == 'hu' %} aria-current="true"{% endif %}>HU</a>
   </div>
   {% if site.booking_url %}{% include "site/book_link.html" with label=ui.book_now cls="btn-sm menu-book" %}{% endif %}
-  <a class="menu-tel" href="{{ site.phone_href }}">{{ site.phone }}</a>
+  <a class="menu-tel" href="{{ site.phone_href }}" data-s="phone">{{ site.phone }}</a>
  </nav>
- {% if site.booking_url %}{% include "site/book_link.html" with label=ui.book_now cls="btn-sm nav-cta" %}{% else %}<a class="btn btn-sm nav-cta" href="{{ site.phone_href }}">{{ site.phone }}</a>{% endif %}
+ {% if site.booking_url %}{% include "site/book_link.html" with label=ui.book_now cls="btn-sm nav-cta" %}{% else %}<a class="btn btn-sm nav-cta" href="{{ site.phone_href }}" data-s="phone">{{ site.phone }}</a>{% endif %}
  <button class="burger" aria-label="{{ ui.menu }}"><span></span><span></span></button>
 </header>
 {% block content %}{% endblock %}
 <footer class="footer">
  <div class="wrap fgrid">
   <div class="reveal"><img src="{{ S }}assets/images/infinitecare-logo-2.png" alt="Infinite Care" class="flogo" width="240" height="120" loading="lazy"><p class="script">Beauty Clinic</p><p class="flinks">{% for n in nav %}{% if n.key != 'offers' %}<a href="{{ n.href }}">{{ n.label }}</a>{% endif %}{% endfor %}</p></div>
-  <div class="reveal"><h3>{{ ui.hours }}</h3><p>{% for l in site.hours %}{{ l }}{% if not forloop.last %}<br>{% endif %}{% endfor %}</p></div>
-  <div class="reveal"><h3>{{ ui.res }}</h3><p><a href="{{ site.phone_href }}">{{ site.phone }}</a><br>{{ site.address }}<br><a href="mailto:{{ site.email }}">{{ site.email }}</a></p></div>
+  <div class="reveal"><h3>{{ ui.hours }}</h3><p data-s="hours">{% for l in site.hours %}{{ l }}{% if not forloop.last %}<br>{% endif %}{% endfor %}</p></div>
+  <div class="reveal"><h3>{{ ui.res }}</h3><p><a href="{{ site.phone_href }}" data-s="phone">{{ site.phone }}</a><br><span data-s="address">{{ site.address }}</span><br><a href="mailto:{{ site.email }}" data-s="email">{{ site.email }}</a></p></div>
   <div class="reveal"><h3>{{ ui.follow }}</h3><div class="social">{% include "site/social.html" %}</div></div>
  </div>
- <div class="wrap fbottom"><span>{{ site.city }}</span><span>{{ site.tagline }}</span></div>
+ <div class="wrap fbottom"><span data-s="city">{{ site.city }}</span><span data-s="tagline">{{ site.tagline }}</span></div>
 </footer>
 <script src="{{ S }}js/main.js?v={{ v }}" defer></script>
 </body>
