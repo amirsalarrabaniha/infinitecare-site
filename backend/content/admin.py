@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import SiteSettings, HomePage, Counter, Service, Package, PriceCategory, PriceItem, GalleryItem, VideoClip, YouTubeVideo, BlogPost
+from .models import SiteSettings, HomePage, Counter, Service, Package, GalleryItem, VideoClip, YouTubeVideo, BlogPost
 
 admin.site.site_header = 'Infinite Care admin'
 admin.site.site_title = 'Infinite Care'
@@ -52,7 +52,7 @@ class ServiceAdmin(Thumb, admin.ModelAdmin):
     list_editable = ['order', 'is_active']
     list_display_links = ['thumb', 'title_en']
     search_fields = ['title_en', 'title_hu']
-    fields = ['image', ('order', 'is_active', 'show_details'), *pairs('eyebrow', 'title', 'description')]
+    fields = ['image', ('order', 'is_active'), *pairs('eyebrow', 'title', 'description')]
 
 
 @admin.register(Package)
@@ -67,24 +67,6 @@ class CounterAdmin(admin.ModelAdmin):
     list_display = ['value', 'suffix', 'label_en', 'label_hu', 'order', 'is_active']
     list_editable = ['suffix', 'label_en', 'label_hu', 'order', 'is_active']
     list_display_links = ['value']
-
-
-class PriceItemInline(admin.TabularInline):
-    model = PriceItem
-    extra = 1
-    fields = ['order', 'label_en', 'label_hu', 'price_en', 'price_hu', 'is_subheading']
-
-
-@admin.register(PriceCategory)
-class PriceCategoryAdmin(admin.ModelAdmin):
-    list_display = ['title_en', 'title_hu', 'item_count', 'order', 'is_active']
-    list_editable = ['order', 'is_active']
-    inlines = [PriceItemInline]
-    fields = [('order', 'is_active'), ('title_en', 'title_hu')]
-
-    @admin.display(description='Items')
-    def item_count(self, obj):
-        return obj.items.count()
 
 
 @admin.register(GalleryItem)

@@ -143,7 +143,6 @@ class Service(Ordered):
     title_hu = models.CharField(max_length=150, blank=True)
     description_en = models.TextField()
     description_hu = models.TextField(blank=True)
-    show_details = models.BooleanField('Show "Details" link', default=True)
 
     class Meta(Ordered.Meta):
         pass
@@ -165,33 +164,6 @@ class Package(Ordered):
 
     def __str__(self):
         return self.name_en
-
-
-class PriceCategory(Ordered):
-    title_en = models.CharField(max_length=150)
-    title_hu = models.CharField(max_length=150, blank=True)
-
-    class Meta(Ordered.Meta):
-        verbose_name_plural = 'Price categories'
-
-    def __str__(self):
-        return self.title_en
-
-
-class PriceItem(Bilingual):
-    category = models.ForeignKey(PriceCategory, related_name='items', on_delete=models.CASCADE)
-    order = models.PositiveIntegerField(default=0)
-    label_en = models.CharField(max_length=250)
-    label_hu = models.CharField(max_length=250, blank=True)
-    price_en = models.CharField(max_length=40, blank=True, help_text='e.g. 70.000 HUF (empty for sub-headings)')
-    price_hu = models.CharField(max_length=40, blank=True, help_text='e.g. 70.000 Ft')
-    is_subheading = models.BooleanField(default=False)
-
-    class Meta:
-        ordering = ['order', 'id']
-
-    def __str__(self):
-        return self.label_en
 
 
 GALLERY_CATEGORIES = [('clinic', 'Clinic'), ('treatments', 'Treatments'), ('events', 'Events'),

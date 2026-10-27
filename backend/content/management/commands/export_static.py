@@ -1,6 +1,6 @@
 """Render the site from the database into plain HTML files for GitHub Pages (fallback without backend).
 
-    python manage.py export_static            # writes ../index.html, ../services.html, ../prices.html, ../hu/*.html, ../blog/<slug>.html, ../hu/blog/<slug>.html
+    python manage.py export_static            # writes ../index.html, ../services.html, ../hu/*.html, ../blog/<slug>.html, ../hu/blog/<slug>.html
     python manage.py export_static --api-url https://your-backend.example.com/api/contact/
 
 Uploaded images are copied to ../assets/media/ so the exported pages work with relative paths.
@@ -77,11 +77,10 @@ class Command(BaseCommand):
                  '## Pages', '',
                  f'- [Home]({en("index")}): clinic introduction, photo gallery, treatment videos and the contact form',
                  f'- [Our treatments]({en("services")}): all treatments and current packages',
-                 f'- [Our prices]({en("prices")}): price list in HUF',
                  f'- [Blog]({en("blog")}): articles about treatments and skin care']
         lines += [f'- [{p.tr("title", "en")}]({en("blog", p.slug)})' for p in posts]
         lines += ['', '## Magyar', '',
-                  f'- [Főoldal]({hu("index")})', f'- [Szolgáltatásaink]({hu("services")})', f'- [Áraink]({hu("prices")})', f'- [Blog]({hu("blog")})',
+                  f'- [Főoldal]({hu("index")})', f'- [Szolgáltatásaink]({hu("services")})', f'- [Blog]({hu("blog")})',
                   '', '## Contact', '', f'- Phone: {s["phone"]}', f'- E-mail: {s["email"]}', f'- Address: {s["address"]}, {s["city"]}']
         lines += [f'- Opening hours: {h}' for h in s['hours']]
         (out / 'llms.txt').write_text('\n'.join(lines) + '\n', encoding='utf-8')

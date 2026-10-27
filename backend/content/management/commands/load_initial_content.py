@@ -12,7 +12,7 @@ from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from content.models import (SiteSettings, HomePage, Counter, Service, Package, PriceCategory, PriceItem,
+from content.models import (SiteSettings, HomePage, Counter, Service, Package,
                             GalleryItem, VideoClip, YouTubeVideo, BlogPost)
 
 SEED = Path(__file__).resolve().parents[2] / 'seed' / 'initial_content.json'
@@ -76,7 +76,7 @@ def load_youtube(d):
 
 
 class Command(BaseCommand):
-    help = 'Load the original site content (texts, prices, images) into the database'
+    help = 'Load the original site content (texts, images) into the database'
 
     def add_arguments(self, parser):
         parser.add_argument('--force', action='store_true', help='Delete existing content first')
@@ -86,7 +86,7 @@ class Command(BaseCommand):
         if Service.objects.exists() and not force:
             self.stdout.write('Content already present – nothing to do (use --force to reload).')
             return
-        for m in (BlogPost, GalleryItem, VideoClip, YouTubeVideo, PriceItem, PriceCategory, Package, Service, Counter, HomePage, SiteSettings):
+        for m in (BlogPost, GalleryItem, VideoClip, YouTubeVideo, Package, Service, Counter, HomePage, SiteSettings):
             m.objects.all().delete() if m not in (HomePage, SiteSettings) else m.objects.filter().delete()
         for folder in ('home', 'services', 'packages', 'gallery', 'video', 'youtube', 'blog') if getattr(settings, 'CONTENT_SEED_FILES', True) else ():
             shutil.rmtree(Path(settings.MEDIA_ROOT) / folder, ignore_errors=True)
@@ -107,18 +107,13 @@ class Command(BaseCommand):
         for i, s in enumerate(d['services']):
             s = dict(s)
             obj = Service(order=(i + 1) * 10, **{k: v for k, v in s.items() if k != 'image'})
-            obj.show_details = s['title_en'] != 'Esthetic treatments'
             attach(obj, 'image', s['image'], 'services')
             obj.save()
         for i, p in enumerate(d['packages']):
             Package.objects.create(order=(i + 1) * 10, **{k: v for k, v in p.items() if k != 'image'})
-        for i, c in enumerate(d['price_categories']):
-            cat = PriceCategory.objects.create(order=(i + 1) * 10, title_en=c['title_en'], title_hu=c['title_hu'])
-            PriceItem.objects.bulk_create(PriceItem(category=cat, order=j, **it) for j, it in enumerate(c['items']))
         photos, clips = load_gallery(d)
         posts = load_blog(d)
         load_youtube(d)
         self.stdout.write(self.style.SUCCESS(
             f"Loaded {Service.objects.count()} services, {Package.objects.count()} packages, "
-            f"{PriceCategory.objects.count()} price categories / {PriceItem.objects.count()} items, "
             f"{Counter.objects.count()} counters, {photos} gallery photos, {clips} video clips, {posts} blog posts, site settings and home page."))

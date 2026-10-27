@@ -16,7 +16,7 @@ python3 -m venv .venv && . .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env            # set SECRET_KEY, DEBUG=True for local
 python manage.py migrate
-python manage.py load_initial_content   # seeds all original texts, prices, images (EN+HU)
+python manage.py load_initial_content   # seeds all original texts, images (EN+HU)
 python manage.py createsuperuser
 python manage.py runserver      # http://localhost:8000/en/ , /hu/ , /admin/
 python manage.py test           # contact API, pages, gallery, blog, JSON API, export
@@ -25,15 +25,15 @@ python manage.py test           # contact API, pages, gallery, blog, JSON API, e
 ## URLs
 | URL | |
 |---|---|
-| `/en/`, `/en/services/`, `/en/prices/`, `/en/blog/` (and `/hu/…`) | pages rendered from the DB |
+| `/en/`, `/en/services/`, `/en/blog/` (and `/hu/…`) | pages rendered from the DB |
 | `/en/blog/<slug>/`, `/hu/blog/<slug>/` | one blog post (same slug in both languages; unpublished posts return 404) |
 | `/` | redirects to the remembered language (`ic-lang` cookie) or `/en/` |
-| `/admin/` | Django admin: site settings, home page texts, counters, services, packages, price categories/items, **gallery photos, video clips, blog posts**, contact messages (mark read/unread, delete) |
+| `/admin/` | Django admin: site settings, home page texts, counters, services, packages, **gallery photos, video clips, blog posts**, contact messages (mark read/unread, delete) |
 | `POST /api/contact/` | JSON `{name,email,phone,message,lang,website}` → 201 / 422 (validation) / 429 (rate limit). `website` is a honeypot. |
-| `GET /api/settings/?lang=hu`, `/api/home/`, `/api/services/`, `/api/packages/`, `/api/prices/`, `/api/gallery/` (photos + videos), `/api/blog/`, `/api/blog/<slug>/` | read-only JSON |
+| `GET /api/settings/?lang=hu`, `/api/home/`, `/api/services/`, `/api/packages/`, `/api/gallery/` (photos + videos), `/api/blog/`, `/api/blog/<slug>/` | read-only JSON |
 
-Language switcher: every page links to the same page in the other language (`/en/prices/` ↔ `/hu/prices/`,
-`prices.html` ↔ `hu/prices.html` in the static copy). The choice is stored in `localStorage` + cookie; visiting the
+Language switcher: every page links to the same page in the other language (`/en/services/` ↔ `/hu/services/`,
+`services.html` ↔ `hu/services.html` in the static copy). The choice is stored in `localStorage` + cookie; visiting the
 site later from outside opens the remembered language. `<html lang>` and `hreflang` alternates are set.
 
 ## Environment (`backend/.env`, see `.env.example`)
@@ -59,7 +59,7 @@ site later from outside opens the remembered language. `<html lang>` and `hrefla
 ```bash
 cd backend && python manage.py export_static [--api-url https://your-backend/api/contact/]
 ```
-Regenerates `index.html`, `services.html`, `prices.html`, `blog.html`, `blog/<slug>.html`, `hu/*.html`, `hu/blog/<slug>.html` and copies uploaded images to `assets/media/`.
+Regenerates `index.html`, `services.html`, `blog.html`, `blog/<slug>.html`, `hu/*.html`, `hu/blog/<slug>.html` and copies uploaded images to `assets/media/`.
 Without an API URL the contact form opens the visitor's mail app (mailto). With one, add the Pages origin to `CORS_ALLOWED_ORIGINS`.
 
 Also written by the export: `sitemap.xml` (with hreflang alternates), `robots.txt` and `llms.txt` (use `--site-url` so they and the
@@ -135,3 +135,5 @@ curl -XPOST -H "X-Mgmt-Token: $MGMT_TOKEN" -H 'content-type: application/json' \
 Admin: https://infinitecare-api.amyrsalarr.workers.dev/admin/
 Site (DB-rendered): https://infinitecare-api.amyrsalarr.workers.dev/en/ and `/hu/`
 The static Worker `infinitecare-site` posts its contact form to this Django `/api/contact/` (CORS allow-listed).
+
+`_redirects` sends the retired `/prices` and `/hu/prices` URLs (the Prices page was removed) to `/services` and `/hu/services`.
