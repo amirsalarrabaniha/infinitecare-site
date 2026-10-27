@@ -18,6 +18,8 @@ RedirectMatch 404 /(backend|cf-django|cloudflare|scripts|\.git|\.wrangler|node_m
 # --- clean URLs (/services -> services.html) and the old /prices pages; links in the pages are .html so this is only a convenience ---
 <IfModule mod_rewrite.c>
 RewriteEngine On
+# explicit base: without it some hosts (e.g. Rackhost/ISPConfig) build redirect URLs from the filesystem path
+RewriteBase /
 RewriteRule ^(hu/)?prices(\.html|/)?$ $1services [R=301,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
