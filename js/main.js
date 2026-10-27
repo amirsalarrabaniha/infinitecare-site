@@ -29,9 +29,9 @@ document.querySelectorAll('[data-tilt]').forEach(el=>{const t=el.closest('.f-img
 
 // gallery: filters + lightbox, reels
 const gg=document.querySelector('.g-grid');
-if(gg){const items=[...gg.querySelectorAll('.g-item')],fb=[...document.querySelectorAll('.g-filters button')];
- const vis=()=>items.filter(i=>!i.hidden);
- fb.forEach(x=>x.addEventListener('click',()=>{fb.forEach(y=>{y.classList.toggle('on',y===x);y.setAttribute('aria-pressed',y===x)});items.forEach(i=>{i.hidden=x.dataset.filter!=='all'&&!i.dataset.cat.split(' ').includes(x.dataset.filter)});const st=document.querySelector('.g-status');if(st)st.textContent=st.dataset.tpl.replace('{n}',vis().length)}));
+if(gg){const items=[...gg.querySelectorAll('.g-item')],photos=items.filter(i=>!i.classList.contains('g-vid')),fb=[...document.querySelectorAll('.g-filters button')];
+ const vis=()=>photos.filter(i=>!i.hidden);
+ fb.forEach(x=>x.addEventListener('click',()=>{fb.forEach(y=>{y.classList.toggle('on',y===x);y.setAttribute('aria-pressed',y===x)});items.forEach(i=>{i.hidden=x.dataset.filter!=='all'&&!i.dataset.cat.split(' ').includes(x.dataset.filter)});const st=document.querySelector('.g-status');if(st)st.textContent=st.dataset.tpl.replace('{n}',items.filter(i=>!i.hidden).length);const bar=x.parentElement;if(bar.scrollWidth>bar.clientWidth)bar.scrollTo({left:x.offsetLeft-bar.offsetLeft-12,behavior:'smooth'})}));
  let lb,cur=-1,last;
  const build=()=>{lb=document.createElement('div');lb.className='lb';lb.setAttribute('role','dialog');lb.setAttribute('aria-modal','true');lb.hidden=true;
   lb.innerHTML='<button type="button" class="lb-x"></button><button type="button" class="lb-p"></button><button type="button" class="lb-n"></button><figure><img alt=""><figcaption></figcaption></figure>';
@@ -43,7 +43,7 @@ if(gg){const items=[...gg.querySelectorAll('.g-item')],fb=[...document.querySele
  const go=d=>{const n=vis().length;cur=(cur+d+n)%n;show()};
  const open=it=>{if(!lb)build();last=it;cur=vis().indexOf(it);show();lb.hidden=false;b.classList.add('lb-open');lb.querySelector('.lb-x').focus()};
  const close=()=>{lb.hidden=true;b.classList.remove('lb-open');if(last)last.focus()};
- items.forEach(i=>i.addEventListener('click',()=>open(i)));
+ photos.forEach(i=>i.addEventListener('click',()=>open(i)));
  addEventListener('keydown',e=>{if(!lb||lb.hidden)return;if(e.key==='Escape')close();else if(e.key==='ArrowLeft')go(-1);else if(e.key==='ArrowRight')go(1)})}
 const reels=[...document.querySelectorAll('[data-reel]')];
 if(reels.length){const still=matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -51,6 +51,10 @@ if(reels.length){const still=matchMedia('(prefers-reduced-motion:reduce)').match
  reels.forEach(v=>{if(!still)vo.observe(v);const bt=v.parentElement.querySelector('.reel-btn');
   const sync=()=>v.parentElement.classList.toggle('paused',v.paused);v.addEventListener('play',sync);v.addEventListener('pause',sync);sync();
   bt.addEventListener('click',()=>{v.paused?v.play().catch(()=>{}):v.pause()})})}
+
+// YouTube: the poster is ours; the player (youtube-nocookie.com) is only added after a click
+document.querySelectorAll('.yt[data-yt]').forEach(w=>{const bt=w.querySelector('.yt-btn');
+ bt.addEventListener('click',()=>{const f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+w.dataset.yt+'?autoplay=1&rel=0&playsinline=1&hl='+b.dataset.lang;f.title=w.dataset.title;f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;f.referrerPolicy='strict-origin-when-cross-origin';bt.replaceWith(f);f.focus()})});
 
 // map: load Google Maps only after a click (no third-party requests/cookies on page load)
 document.querySelectorAll('[data-map]').forEach(w=>{const bt=w.querySelector('.map-btn');if(!bt)return;

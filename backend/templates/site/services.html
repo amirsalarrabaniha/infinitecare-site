@@ -6,4 +6,5 @@
 {% for p in packages %}<div class="pk reveal" data-tilt>{% if p.image %}<img class="pk-img" src="{{ p.image }}" alt="">{% endif %}<h3>{{ p.name }}<span class="script">{{ ui.pk_w }}</span></h3><ul>{% for i in p.items %}<li>{{ i }}</li>{% endfor %}</ul><b class="price">{{ p.price }} <small>{{ ui.cur }}</small></b><a class="btn" href="{{ site.phone_href }}">{{ ui.book }}</a></div>{% endfor %}
 </div></div></section>{% endif %}
 {% for s in services_after %}{% include "site/service.html" with n=forloop.counter|add:5 %}{% endfor %}
+{% include "site/book_band.html" %}
 </main>{% endblock %}

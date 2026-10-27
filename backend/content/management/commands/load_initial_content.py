@@ -13,7 +13,7 @@ from django.core.management.base import BaseCommand
 from django.db import transaction
 
 from content.models import (SiteSettings, HomePage, Counter, Service, Package, PriceCategory, PriceItem,
-                            GalleryItem, VideoClip, BlogPost)
+                            GalleryItem, VideoClip, YouTubeVideo, BlogPost)
 
 SEED = Path(__file__).resolve().parents[2] / 'seed' / 'initial_content.json'
 IMAGES = settings.SITE_ROOT / 'assets' / 'images'   # seed images (may be in a sub-folder, e.g. gallery/x.webp)
@@ -59,6 +59,22 @@ def load_gallery(d):
     return GalleryItem.objects.count(), VideoClip.objects.count()
 
 
+def load_youtube(d):
+    """Create the YouTube videos from the seed data (only those whose ID is not in the database yet). Returns how many were created."""
+    n = 0
+    for i, v in enumerate(d.get('youtube', [])):
+        if YouTubeVideo.objects.filter(youtube_id=v['youtube_id'], language=v['language']).exists():
+            continue
+        f = {k: x for k, x in v.items() if k not in ('poster', 'service', 'post')}
+        obj = YouTubeVideo(order=(i + 1) * 10, **f)
+        obj.service = Service.objects.filter(title_en=v['service']).first() if v.get('service') else None
+        obj.post = BlogPost.objects.filter(slug=v['post']).first() if v.get('post') else None
+        attach(obj, 'poster', v['poster'], 'youtube')
+        obj.save()
+        n += 1
+    return n
+
+
 class Command(BaseCommand):
     help = 'Load the original site content (texts, prices, images) into the database'
 
@@ -70,9 +86,9 @@ class Command(BaseCommand):
         if Service.objects.exists() and not force:
             self.stdout.write('Content already present – nothing to do (use --force to reload).')
             return
-        for m in (BlogPost, GalleryItem, VideoClip, PriceItem, PriceCategory, Package, Service, Counter, HomePage, SiteSettings):
+        for m in (BlogPost, GalleryItem, VideoClip, YouTubeVideo, PriceItem, PriceCategory, Package, Service, Counter, HomePage, SiteSettings):
             m.objects.all().delete() if m not in (HomePage, SiteSettings) else m.objects.filter().delete()
-        for folder in ('home', 'services', 'packages', 'gallery', 'video', 'blog') if getattr(settings, 'CONTENT_SEED_FILES', True) else ():
+        for folder in ('home', 'services', 'packages', 'gallery', 'video', 'youtube', 'blog') if getattr(settings, 'CONTENT_SEED_FILES', True) else ():
             shutil.rmtree(Path(settings.MEDIA_ROOT) / folder, ignore_errors=True)
         if SEED.exists():
             d = json.loads(SEED.read_text(encoding='utf-8'))
@@ -101,6 +117,7 @@ class Command(BaseCommand):
             PriceItem.objects.bulk_create(PriceItem(category=cat, order=j, **it) for j, it in enumerate(c['items']))
         photos, clips = load_gallery(d)
         posts = load_blog(d)
+        load_youtube(d)
         self.stdout.write(self.style.SUCCESS(
             f"Loaded {Service.objects.count()} services, {Package.objects.count()} packages, "
             f"{PriceCategory.objects.count()} price categories / {PriceItem.objects.count()} items, "

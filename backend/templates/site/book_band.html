@@ -1,0 +1,2 @@
+{% if site.booking_url %}<section class="bookband wrap reveal" id="book-online"><div class="bb-in"><div class="bb-t"><span class="eyebrow">{{ ui.bk_eyebrow }}</span><h2>{{ ui.bk_title }}</h2><p>{{ ui.bk_text }}</p></div>
+<div class="bb-act">{% include "site/book_link.html" with label=ui.book_online cls="" %}<p>{{ ui.bk_call }} <a href="{{ site.phone_href }}">{{ site.phone }}</a></p></div></div></section>{% endif %}

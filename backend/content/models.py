@@ -1,5 +1,6 @@
 import datetime
 
+from django.core.validators import RegexValidator
 from django.db import models
 
 LANGS = ('en', 'hu')
@@ -47,6 +48,8 @@ class SiteSettings(Singleton):
     instagram = models.URLField(blank=True)
     youtube = models.URLField(blank=True)
     tiktok = models.URLField(blank=True)
+    booking_url = models.URLField('Online booking link (Fresha)', max_length=500, default='https://l.fresha.com/3dvz3n7j6',
+                                  help_text='Opens in a new tab from the "Book now" buttons. Leave empty to hide all online-booking buttons and sections.')
     map_embed = models.URLField('Google Maps embed URL', max_length=1000, blank=True)
 
     class Meta:
@@ -192,8 +195,10 @@ class PriceItem(Bilingual):
 
 
 GALLERY_CATEGORIES = [('clinic', 'Clinic'), ('treatments', 'Treatments'), ('events', 'Events'),
-                      ('whitening', 'Teeth Whitening'), ('facial', 'Facial'), ('laser', 'Laser')]
-TREATMENT_TYPES = ('whitening', 'facial', 'laser')   # specific treatment categories; their items also show under "Treatments"
+                      ('whitening', 'Teeth Whitening'), ('facial', 'Facial'), ('laser', 'Laser'),
+                      ('emsculpt', 'Emsculpt'), ('carbon', 'Carbon Peeling'), ('cellulite', 'Cellulite'), ('brazilift', 'Brazilift')]
+# specific treatment categories (one per service that has gallery content); their items also show under "Treatments"
+TREATMENT_TYPES = ('whitening', 'facial', 'laser', 'emsculpt', 'carbon', 'cellulite', 'brazilift')
 
 
 class GalleryItem(Ordered):
@@ -201,7 +206,7 @@ class GalleryItem(Ordered):
     CATEGORIES = GALLERY_CATEGORIES
     image = models.ImageField(upload_to='gallery/', help_text='Landscape or portrait photo, ideally max 1600 px on the long edge (WebP/JPG)')
     category = models.CharField(max_length=20, choices=CATEGORIES, default='clinic',
-                                help_text='Teeth Whitening, Facial and Laser items also appear under "Treatments"')
+                                help_text='Treatment categories (Teeth Whitening, Facial, Laser, Emsculpt, ...) also appear under "Treatments"')
     alt_en = models.CharField('Caption / alt text (EN)', max_length=200)
     alt_hu = models.CharField('Caption / alt text (HU)', max_length=200, blank=True)
     width = models.PositiveIntegerField(default=0, editable=False)
@@ -253,6 +258,39 @@ class BlogPost(Bilingual):
     class Meta:
         ordering = ['-published_at', '-id']
         verbose_name = 'Blog post'
+
+    def __str__(self):
+        return self.title_en
+
+
+class YouTubeVideo(Ordered):
+    """A video from the clinic's YouTube channel. Nothing is loaded from YouTube until a visitor clicks play: the page shows
+    the poster below (hosted on this site) and only then adds the youtube-nocookie.com player."""
+    LANGUAGES = [('', 'Both languages'), ('en', 'English site only'), ('hu', 'Hungarian site only')]
+    youtube_id = models.CharField('YouTube video ID', max_length=11, validators=[RegexValidator(r'^[A-Za-z0-9_-]{11}$', 'The 11-character ID from the video address.')],
+                                  help_text='The 11 characters after v= in youtube.com/watch?v=..., or at the end of a youtu.be / Shorts link')
+    title_en = models.CharField('Title (EN)', max_length=150)
+    title_hu = models.CharField('Title (HU)', max_length=150, blank=True)
+    caption_en = models.CharField('Short note (EN)', max_length=200, blank=True, help_text='Optional line under the video')
+    caption_hu = models.CharField('Short note (HU)', max_length=200, blank=True)
+    poster = models.ImageField(upload_to='youtube/', width_field='poster_width', height_field='poster_height',
+                               help_text='Still image shown before the video is played (WebP/JPG). 16:9 for normal videos, 9:16 for Shorts')
+    poster_width = models.PositiveIntegerField(default=0, editable=False)
+    poster_height = models.PositiveIntegerField(default=0, editable=False)
+    vertical = models.BooleanField('Vertical (Short)', default=False, help_text='Tick for 9:16 videos / YouTube Shorts')
+    language = models.CharField('Show on', max_length=2, blank=True, choices=LANGUAGES, default='',
+                                help_text='Use this when there is a separate English and Hungarian version of the same video')
+    category = models.CharField('Gallery category', max_length=20, choices=GALLERY_CATEGORIES, default='treatments')
+    featured = models.BooleanField('Featured on home page', default=False, help_text='Large video at the top of the home page "Watch us" section')
+    show_on_home = models.BooleanField('Home page "Watch us" row', default=False)
+    show_in_gallery = models.BooleanField('Show in the gallery', default=True, help_text='Appears under its category tab (and under "Treatments" for treatment categories)')
+    service = models.ForeignKey(Service, null=True, blank=True, on_delete=models.SET_NULL, related_name='videos',
+                                help_text='Optional: show this video next to this service on the Services page')
+    post = models.ForeignKey(BlogPost, null=True, blank=True, on_delete=models.SET_NULL, related_name='videos',
+                             help_text='Optional: show this video inside this blog post')
+
+    class Meta(Ordered.Meta):
+        verbose_name = 'YouTube video'
 
     def __str__(self):
         return self.title_en

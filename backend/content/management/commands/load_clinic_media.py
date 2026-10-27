@@ -11,7 +11,7 @@ import json
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from content.management.commands.load_initial_content import SEED, attach, load_blog, load_gallery
+from content.management.commands.load_initial_content import SEED, attach, load_blog, load_gallery, load_youtube
 from content.models import TREATMENT_TYPES, GalleryItem, HomePage, Service, SiteSettings, VideoClip
 
 
@@ -20,7 +20,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('--update-social', action='store_true',
-                            help='Overwrite the Facebook / Instagram / YouTube / TikTok links with the seed values (blank ones are always filled in)')
+                            help='Overwrite the Facebook / Instagram / YouTube / TikTok / online-booking links with the seed values (blank ones are always filled in)')
         parser.add_argument('--update-images', action='store_true',
                             help='Replace the home page (hero, sections, contact) and service images with the seed images')
 
@@ -44,13 +44,15 @@ class Command(BaseCommand):
         for c in d.get('clips', []):
             if c.get('category') in TREATMENT_TYPES:
                 moved += VideoClip.objects.filter(title_en=c['title_en'], category='treatments').update(category=c['category'])
-        self.stdout.write(f'Gallery items / clips moved to Teeth Whitening, Facial or Laser: {moved}')
+        self.stdout.write(f'Gallery items / clips moved to a specific treatment category: {moved}')
+        yt = load_youtube(d)
+        self.stdout.write(f'YouTube videos added: {yt} (existing ones are left alone).')
         ss = SiteSettings.load()
-        for k in ('facebook', 'instagram', 'youtube', 'tiktok'):
+        for k in ('facebook', 'instagram', 'youtube', 'tiktok', 'booking_url'):
             if d['settings'].get(k) and (update_social or not getattr(ss, k)):
                 setattr(ss, k, d['settings'][k])
         ss.save()
-        self.stdout.write('Social links: ' + ', '.join(f'{k}={getattr(ss, k) or "-"}' for k in ('facebook', 'instagram', 'youtube', 'tiktok')))
+        self.stdout.write('Social links: ' + ', '.join(f'{k}={getattr(ss, k) or "-"}' for k in ('facebook', 'instagram', 'youtube', 'tiktok', 'booking_url')))
         n = load_blog(d)
         self.stdout.write(f'Blog posts in the database: {n} (starter posts are only added when their slug is missing).')
         if update_images:

@@ -12,18 +12,25 @@
 {% include "site/feature.html" with f=h.f1 rev=False href=urls.services %}
 {% if counters %}<section class="stats wrap">{% for c in counters %}<div class="stat reveal"><b data-count="{{ c.value }}" data-suffix="{{ c.suffix }}">0</b><span>{{ c.label }}</span></div>{% endfor %}</section>{% endif %}
 {% include "site/feature.html" with f=h.f2 rev=True href=urls.prices %}
-{% if gallery %}<section class="gallery wrap" id="gallery">
+{% include "site/book_band.html" %}
+{% if gallery or gallery_videos %}<section class="gallery wrap" id="gallery">
  <div class="g-head"><span class="eyebrow reveal">{{ ui.gal_eyebrow }}</span><h2 class="split">{{ ui.gal_title }}</h2><p class="reveal">{{ ui.gal_text }}</p>
   <div class="g-filters reveal" role="group" aria-label="{{ ui.gal_eyebrow }}">{% for key, label in gallery_filters %}<button type="button" data-filter="{{ key }}"{% if forloop.first %} class="on" aria-pressed="true"{% else %} aria-pressed="false"{% endif %}>{{ label }}</button>{% endfor %}</div></div>
  <p class="g-status" role="status" aria-live="polite" data-tpl="{{ ui.gal_count }}"></p>
- <div class="g-grid" data-lb-close="{{ ui.lb.close }}" data-lb-prev="{{ ui.lb.prev }}" data-lb-next="{{ ui.lb.next }}">{% for g in gallery %}<button type="button" class="g-item reveal" data-cat="{{ g.cats }}" data-full="{{ g.image }}" data-caption="{{ g.alt }}"><img src="{{ g.image }}" alt="{{ g.alt }}" loading="lazy" decoding="async"{% if g.width %} width="{{ g.width }}" height="{{ g.height }}"{% endif %}><span>{{ g.alt }}</span></button>{% endfor %}</div>
+ <div class="g-grid" data-lb-close="{{ ui.lb.close }}" data-lb-prev="{{ ui.lb.prev }}" data-lb-next="{{ ui.lb.next }}">{% for g in gallery %}<button type="button" class="g-item reveal" data-cat="{{ g.cats }}" data-full="{{ g.image }}" data-caption="{{ g.alt }}"><img src="{{ g.image }}" alt="{{ g.alt }}" loading="lazy" decoding="async"{% if g.width %} width="{{ g.width }}" height="{{ g.height }}"{% endif %}><span>{{ g.alt }}</span></button>{% endfor %}{% for v in gallery_videos %}<div class="g-item g-vid reveal" data-cat="{{ v.cats }}">{% include "site/yt.html" %}</div>{% endfor %}</div>
 </section>{% endif %}
 {% if clips %}<section class="reels"><div class="wrap reel-wrap"><div class="reel-text"><span class="eyebrow light reveal">{{ ui.reel_eyebrow }}</span><h2 class="split">{{ ui.reel_title }}</h2><p class="reveal">{{ ui.reel_text }}</p></div>
  <div class="reel-grid">{% for c in clips %}<figure class="reel reveal"><video muted loop playsinline preload="none" poster="{{ c.poster }}" aria-label="{{ c.title }}" data-reel><source src="{{ c.video }}" type="video/mp4"></video><button type="button" class="reel-btn" aria-label="{{ ui.lb.play }}"></button><figcaption>{{ c.title }}</figcaption></figure>{% endfor %}</div></div></section>{% endif %}
+{% if watch_featured or watch_shorts %}<section class="watch wrap" id="watch">
+ <div class="w-top">{% if watch_featured %}<div class="w-main reveal">{% with v=watch_featured %}{% include "site/yt.html" %}{% endwith %}</div>{% endif %}
+  <div class="w-text"><span class="eyebrow reveal">{{ ui.yt_eyebrow }}</span><h2 class="split">{{ ui.yt_title }}</h2><p class="reveal">{{ ui.yt_text }}</p>{% if site.youtube %}<a class="btn reveal" href="{{ site.youtube }}" rel="noopener me">{{ ui.yt_sub }}</a>{% endif %}</div></div>
+ {% if watch_shorts %}<div class="w-shorts">{% for v in watch_shorts %}<div class="reveal">{% include "site/yt.html" %}</div>{% endfor %}</div>{% endif %}
+</section>{% endif %}
 <section class="cta"><div class="cta-bg" data-parallax><img src="{{ h.cta_image }}" alt="" {{ h.cta_image|imgsize }} loading="lazy" decoding="async"></div><div class="cta-in">
  <span class="script reveal">{{ h.cta_script }}</span><h2 class="split">{{ h.cta_title }}</h2><a class="btn reveal" href="{{ site.phone_href }}">{{ h.cta_button }}</a></div></section>
 <section class="contact wrap" id="contact"><div class="c-info"><span class="eyebrow reveal">{{ h.contact_eyebrow }}</span><h2 class="split">{{ h.contact_title }}</h2>
  <p class="reveal">{{ h.contact_text }}</p>
+ {% if site.booking_url %}<div class="c-book reveal">{% include "site/book_link.html" with label=ui.book_online cls="" %}<span>{{ ui.bk_call }} <a href="{{ site.phone_href }}">{{ site.phone }}</a></span></div>{% endif %}
  {% if socials %}<div class="c-social reveal"><span>{{ ui.follow }}</span><div class="social">{% include "site/social.html" %}</div></div>{% endif %}
  <form class="cform reveal" id="contact-form" toolname="send_message" tooldescription="{{ ui.form_tool }}" novalidate data-ok="{{ ui.ok }}" data-err="{{ ui.err }}" data-sending="{{ ui.sending }}" data-invalid="{{ ui.inv }}" data-mailto="{{ site.email }}">
   <label><input name="name" required maxlength="100" placeholder=" " autocomplete="name" toolparamdescription="{{ ui.form.0 }}"><span>{{ ui.form.0 }}</span></label>
