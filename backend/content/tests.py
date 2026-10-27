@@ -5,7 +5,7 @@ import tempfile
 from django.core.management import call_command
 from django.test import TestCase, override_settings
 
-from .models import BlogPost, GalleryItem, HomePage, PriceItem, Service, SiteSettings, VideoClip, YouTubeVideo
+from .models import BlogPost, GalleryItem, HomePage, Service, SiteSettings, VideoClip, YouTubeVideo
 
 TMP_MEDIA = tempfile.mkdtemp()
 
@@ -17,8 +17,7 @@ class ContentTests(TestCase):
         call_command('load_initial_content', verbosity=0)
 
     def test_seed(self):
-        self.assertEqual(Service.objects.count(), 11)
-        self.assertEqual(PriceItem.objects.count(), 63)
+        self.assertEqual(Service.objects.count(), 10)
         self.assertEqual(SiteSettings.load().phone, '+36 1 707 0075')
 
     def test_pages_both_languages(self):
@@ -27,12 +26,10 @@ class ContentTests(TestCase):
             self.assertContains(r, word)
             self.assertContains(r, f'<html lang="{lang}">')
         self.assertContains(self.client.get('/hu/services/'), 'Exoszóma Terápia')
-        self.assertContains(self.client.get('/en/prices/'), '70.000 HUF')
-        self.assertContains(self.client.get('/hu/prices/'), '70.000 Ft')
 
     def test_language_switch_links_point_to_same_page(self):
-        r = self.client.get('/en/prices/')
-        self.assertContains(r, 'href="/hu/prices/" hreflang="hu"')
+        r = self.client.get('/en/services/')
+        self.assertContains(r, 'href="/hu/services/" hreflang="hu"')
         r = self.client.get('/hu/services/')
         self.assertContains(r, 'href="/en/services/" hreflang="en"')
 
@@ -56,7 +53,7 @@ class ContentTests(TestCase):
     def test_social_links_everywhere(self):
         urls = ['https://www.youtube.com/@InfiniteCareBeautyClinic', 'https://www.instagram.com/infinitecarebeauty/',
                 'https://www.tiktok.com/@infinitecarebeautyclinic']
-        for path in ('/en/', '/hu/', '/en/services/', '/hu/prices/', '/en/blog/', '/hu/blog/'):
+        for path in ('/en/', '/hu/', '/en/services/', '/hu/services/', '/en/blog/', '/hu/blog/'):
             html = self.client.get(path).content.decode()
             for u in urls:
                 self.assertIn(f'href="{u}" target="_blank" rel="noopener noreferrer me"', html, (path, u))
@@ -80,7 +77,7 @@ class ContentTests(TestCase):
         r = self.client.get('/api/services/?lang=hu').json()
         self.assertEqual(r['results'][0]['title'], 'Exoszóma Terápia')
         self.assertTrue(r['results'][0]['image'].startswith('http://testserver/media/services/'))
-        self.assertEqual(len(self.client.get('/api/prices/').json()['results']), 10)
+        self.assertEqual(self.client.get('/api/prices/').status_code, 404)
         self.assertEqual(self.client.get('/api/packages/?lang=hu').json()['results'][1]['name'], 'Menyasszony')
         self.assertEqual(self.client.get('/api/settings/?lang=hu').json()['address'], 'Bp. VI. Podmaniczky u. 5.')
         self.assertEqual(len(self.client.get('/api/home/').json()['counters']), 4)
@@ -198,7 +195,7 @@ class ContentTests(TestCase):
         self.assertEqual(SiteSettings.load().booking_url, url)
         self.assertEqual(self.client.get('/api/settings/').json()['booking_url'], url)
         link = f'href="{url}" target="_blank" rel="noopener noreferrer"'
-        for path, n in [('/en/', 4), ('/hu/', 4), ('/en/services/', 14), ('/hu/prices/', 3), ('/en/blog/', 2),
+        for path, n in [('/en/', 4), ('/hu/', 4), ('/en/services/', 13), ('/hu/services/', 13), ('/en/blog/', 2),
                         ('/en/blog/laser-hair-removal-preparation-and-aftercare/', 3)]:
             html = self.client.get(path).content.decode()
             self.assertGreaterEqual(html.count(link), n, path)
@@ -225,6 +222,35 @@ class ContentTests(TestCase):
         call_command('load_clinic_media', update_social=True, verbosity=0)
         self.assertEqual(SiteSettings.load().booking_url, 'https://l.fresha.com/3dvz3n7j6')
 
+    # ---- removed sections: massage and prices ----
+
+    def test_massage_and_prices_are_gone(self):
+        self.assertFalse(Service.objects.filter(title_en='Massage').exists())
+        for lang, words in [('en', ['massage', 'our prices']), ('hu', ['masszázs', 'áraink'])]:
+            for path in ['', 'services/', 'blog/', 'blog/laser-hair-removal-preparation-and-aftercare/']:
+                html = self.client.get(f'/{lang}/{path}').content.decode().lower()
+                for w in words:
+                    self.assertNotIn(w, html, (lang, path, w))
+                self.assertNotIn('/prices', html)
+                self.assertNotIn('href=""', html)
+                self.assertNotIn('details →', html)
+                self.assertNotIn('részletek →', html)
+                self.assertNotIn('pricerange', html)
+        for path in ('/en/prices/', '/hu/prices/', '/api/prices/'):
+            self.assertEqual(self.client.get(path).status_code, 404, path)
+
+    def test_static_export_has_no_prices_page(self):
+        out = tempfile.mkdtemp()
+        call_command('export_static', out=out, api_url='', verbosity=0, site_url='https://example.com/', clean_urls=True)
+        p = pathlib.Path(out)
+        self.assertFalse((p / 'prices.html').exists() or (p / 'hu' / 'prices.html').exists())
+        for f in ('sitemap.xml', 'llms.txt', 'index.html', 'hu/index.html', 'services.html'):
+            txt = (p / f).read_text(encoding='utf-8').lower()
+            self.assertNotIn('prices', txt, f)
+            self.assertNotIn('massage', txt, f)
+            self.assertNotIn('masszázs', txt, f)
+        self.assertEqual((p / 'sitemap.xml').read_text(encoding='utf-8').count('<url>'), 12)   # (home, treatments, blog + 3 posts) x EN + HU
+
     # ---- blog ----
     def test_blog_seed(self):
         self.assertEqual(BlogPost.objects.count(), 3)
@@ -247,7 +273,7 @@ class ContentTests(TestCase):
 
     def test_blog_nav_and_footer_links_everywhere(self):
         for lang, label in [('en', 'Blog'), ('hu', 'Blog')]:
-            for path in ['', 'services/', 'prices/', 'blog/']:
+            for path in ['', 'services/', 'blog/']:
                 r = self.client.get(f'/{lang}/{path}')
                 self.assertContains(r, f'<a href="/{lang}/blog/" class="')
                 self.assertContains(r, f'<a href="/{lang}/blog/">{label}</a>')
@@ -305,7 +331,7 @@ class ContentTests(TestCase):
         self.assertNotIn('<h4', en)
         sm = (p / 'sitemap.xml').read_text(encoding='utf-8')
         self.assertIn('<loc>https://example.test/hu/blog</loc>', sm)
-        self.assertEqual(sm.count('<loc>'), 2 * (4 + BlogPost.objects.filter(is_published=True).count()))
+        self.assertEqual(sm.count('<loc>'), 2 * (3 + BlogPost.objects.filter(is_published=True).count()))
         self.assertIn('Sitemap: https://example.test/sitemap.xml', (p / 'robots.txt').read_text(encoding='utf-8'))
         llms = (p / 'llms.txt').read_text(encoding='utf-8')
         self.assertTrue(llms.startswith('# Infinite Care Beauty Clinic'))

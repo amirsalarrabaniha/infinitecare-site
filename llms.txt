@@ -6,7 +6,6 @@
 
 - [Home](https://infinitecare-site.amyrsalarr.workers.dev/): clinic introduction, photo gallery, treatment videos and the contact form
 - [Our treatments](https://infinitecare-site.amyrsalarr.workers.dev/services): all treatments and current packages
-- [Our prices](https://infinitecare-site.amyrsalarr.workers.dev/prices): price list in HUF
 - [Blog](https://infinitecare-site.amyrsalarr.workers.dev/blog): articles about treatments and skin care
 - [Professional teeth whitening: the basics](https://infinitecare-site.amyrsalarr.workers.dev/blog/professional-teeth-whitening-basics)
 - [Laser hair removal: how to prepare and what to do afterwards](https://infinitecare-site.amyrsalarr.workers.dev/blog/laser-hair-removal-preparation-and-aftercare)
@@ -16,7 +15,6 @@
 
 - [Főoldal](https://infinitecare-site.amyrsalarr.workers.dev/hu/)
 - [Szolgáltatásaink](https://infinitecare-site.amyrsalarr.workers.dev/hu/services)
-- [Áraink](https://infinitecare-site.amyrsalarr.workers.dev/hu/prices)
 - [Blog](https://infinitecare-site.amyrsalarr.workers.dev/hu/blog)
 
 ## Contact

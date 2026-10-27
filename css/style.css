@@ -112,14 +112,6 @@ body.menu-open .burger span{background:#fff!important}body.menu-open .burger spa
 .pk li:before{content:"✦ ";color:var(--gold)}
 .price{font:400 2rem "Playfair Display";color:var(--gold);margin-bottom:1.4rem}.price small{font-size:.9rem}
 .pk .btn{background:transparent;border-color:var(--gold);justify-content:center;padding:.9rem 1rem;font-size:.68rem}
-/* prices */
-.prices{columns:2;column-gap:2rem;padding-top:6rem;padding-bottom:7rem}
-.pcard{break-inside:avoid;background:#fff;border-radius:24px;padding:2.4rem;margin-bottom:2rem;box-shadow:0 30px 60px -45px rgba(15,58,50,.6);transition:transform .5s var(--ease),box-shadow .5s}
-.pcard:hover{transform:translateY(-6px);box-shadow:0 40px 70px -40px rgba(15,58,50,.6)}
-.pcard h2{margin-top:0;font-size:1.7rem;color:var(--g);margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:1px solid var(--gold)}
-.prow{display:flex;align-items:baseline;gap:.6rem;padding:.45rem 0;font-size:.92rem}
-.prow i{flex:1;border-bottom:1px dotted #c9bba6;min-width:20px}.prow b{font-weight:500;color:var(--g);white-space:nowrap}
-.psub{margin-top:.9rem;font-weight:500;color:#856a3f;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
 /* footer */
 .footer{background:var(--gd);color:#e8e2d6;padding:6rem 0 2rem}
 .fgrid{display:grid;grid-template-columns:1.3fr 1fr 1.3fr 1fr;gap:3rem}
@@ -150,9 +142,9 @@ body.menu-open .burger span{background:#fff!important}body.menu-open .burger spa
  .menu a,.nav.scrolled .menu a{color:#fff;font-size:1.3rem;font-family:"Playfair Display","Playfair Fallback",serif;letter-spacing:.05em;text-transform:none}
  .feature,.svc,.contact{grid-template-columns:1fr;gap:3rem;padding-top:5rem}
  .feature-rev .f-img,.svc-rev .f-img{order:0}
- .stats{grid-template-columns:1fr 1fr;padding-top:5rem}.prices{columns:1}
+ .stats{grid-template-columns:1fr 1fr;padding-top:5rem}
  .cta,.packages{margin-top:5rem}.brand img{height:44px}}
-@media (max-width:520px){.pk-grid,.fgrid{grid-template-columns:1fr}.pcard{padding:1.6rem}.prow{font-size:.85rem}}
+@media (max-width:520px){.pk-grid,.fgrid{grid-template-columns:1fr}}
 /* language switch */
 .langsw{display:inline-flex;border:1px solid rgba(255,255,255,.55);border-radius:30px;padding:3px;gap:2px}
 .nav.scrolled .langsw{border-color:rgba(25,81,70,.4)}

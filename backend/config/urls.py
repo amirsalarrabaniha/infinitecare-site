@@ -13,7 +13,6 @@ urlpatterns = [
     path('api/home/', v.api_home),
     path('api/services/', v.api_services),
     path('api/packages/', v.api_packages),
-    path('api/prices/', v.api_prices),
     re_path(r'^(?:hu/)?blog/(?P<slug>[-\w]+)\.html$', v.legacy_post),
     path('api/gallery/', v.api_gallery),
     path('api/blog/', v.api_blog),
@@ -21,7 +20,7 @@ urlpatterns = [
     # uploaded images (small site: served by Django itself; put a CDN/nginx in front for heavy traffic)
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     path('', v.root, name='root'),
-    re_path(r'^(?:hu/)?(?P<name>index|services|prices|blog)\.html$', v.legacy),
+    re_path(r'^(?:hu/)?(?P<name>index|services|blog)\.html$', v.legacy),
     path('<str:lang>/blog/<slug:slug>/', v.blog_post, name='blog-post'),
     path('<str:lang>/', v.page, name='home'),
     path('<str:lang>/<str:name>/', v.page, name='page'),

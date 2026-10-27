@@ -11,7 +11,7 @@
 {% if h.marquee %}<section class="marquee"><div class="marquee-track">{% for w in h.marquee %}<span>{{ w }}</span><i>✦</i>{% endfor %}{% for w in h.marquee %}<span>{{ w }}</span><i>✦</i>{% endfor %}</div></section>{% endif %}
 {% include "site/feature.html" with f=h.f1 rev=False href=urls.services %}
 {% if counters %}<section class="stats wrap">{% for c in counters %}<div class="stat reveal"><b data-count="{{ c.value }}" data-suffix="{{ c.suffix }}">0</b><span>{{ c.label }}</span></div>{% endfor %}</section>{% endif %}
-{% include "site/feature.html" with f=h.f2 rev=True href=urls.prices %}
+{% include "site/feature.html" with f=h.f2 rev=True href=urls.services %}
 {% include "site/book_band.html" %}
 {% if gallery or gallery_videos %}<section class="gallery wrap" id="gallery">
  <div class="g-head"><span class="eyebrow reveal">{{ ui.gal_eyebrow }}</span><h2 class="split">{{ ui.gal_title }}</h2><p class="reveal">{{ ui.gal_text }}</p>

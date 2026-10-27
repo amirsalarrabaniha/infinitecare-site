@@ -5,9 +5,9 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 
 from .ui import UI
-from .models import TREATMENT_TYPES, SiteSettings, HomePage, Counter, Service, Package, PriceCategory, GalleryItem, VideoClip, YouTubeVideo, BlogPost
+from .models import TREATMENT_TYPES, SiteSettings, HomePage, Counter, Service, Package, GalleryItem, VideoClip, YouTubeVideo, BlogPost
 
-PAGES = ('index', 'services', 'prices', 'blog')   # pages with one HTML file per language; blog posts are exported separately
+PAGES = ('index', 'services', 'blog')   # pages with one HTML file per language; blog posts are exported separately
 
 
 class LiveUrls:
@@ -101,20 +101,13 @@ def counters(lang):
 def services(lang, urls):
     vids = [v for v in youtube(lang, urls) if v['service_id']]
     return [dict(videos=[v for v in vids if v['service_id'] == s.id][:2], id=s.id, image=urls.media(s.image), eyebrow=s.tr('eyebrow', lang), title=s.tr('title', lang),
-                 description=lines(s.tr('description', lang)), show_details=s.show_details, order=s.order)
+                 description=lines(s.tr('description', lang)), order=s.order)
             for s in Service.objects.filter(is_active=True)]
 
 
 def packages(lang, urls):
     return [dict(id=p.id, name=p.tr('name', lang), items=lines(p.tr('items', lang)), price=p.price,
                  image=urls.media(p.image), order=p.order) for p in Package.objects.filter(is_active=True)]
-
-
-def prices(lang):
-    return [dict(id=c.id, title=c.tr('title', lang),
-                 items=[dict(label=i.tr('label', lang), price=i.tr('price', lang), is_subheading=i.is_subheading)
-                        for i in c.items.all()])
-            for c in PriceCategory.objects.filter(is_active=True).prefetch_related('items')]
 
 
 def gallery(lang, urls):

@@ -38,12 +38,11 @@ def page_context(lang, page, urls, api_url, post=None):
     other = 'hu' if lang == 'en' else 'en'
     ui = UI[lang]
     slug = post.slug if post else None
-    nav_keys = ['index', 'services', 'prices', 'blog']
+    nav_keys = ['index', 'services', 'blog']
     nav = [dict(key='index', label=ui['nav'][0], href=urls.page('index')),
            dict(key='services', label=ui['nav'][1], href=urls.page('services')),
-           dict(key='prices', label=ui['nav'][2], href=urls.page('prices')),
-           dict(key='offers', label=ui['nav'][3], href=urls.page('services') + '#packages'),
-           dict(key='blog', label=ui['nav'][4], href=urls.page('blog'))]
+           dict(key='offers', label=ui['nav'][2], href=urls.page('services') + '#packages'),
+           dict(key='blog', label=ui['nav'][3], href=urls.page('blog'))]
     site = data.site_settings(lang)
     socials = data.socials(site, lang)
     ctx = dict(lang=lang, other=other, page=page, nav_key='blog' if page == 'blog_post' else page, ui=ui,
@@ -80,8 +79,6 @@ def page_context(lang, page, urls, api_url, post=None):
                   publisher={'@type': 'Organization', 'name': 'Infinite Care Beauty Clinic', 'sameAs': [x['url'] for x in socials]})
         ctx.update(post=p, hero_image=p['cover'], canonical=ctx['alternates'][lang],
                    ld_json=json.dumps(ld, ensure_ascii=False).replace('<', '\\u003c'), og_image_url=og, description=p['excerpt'], more_posts=[x for x in data.blog_posts(lang, urls) if x['slug'] != post.slug][:2])
-    else:
-        ctx.update(categories=data.prices(lang), hero_image=urls.static + 'assets/images/prices.webp')
     return ctx
 
 
@@ -105,7 +102,7 @@ def page(request, lang, name='index'):
     return render(request, f'site/{name}.html', ctx)
 
 
-def legacy(request, name):  # old static URLs like /services.html, /hu/prices.html
+def legacy(request, name):  # old static URLs like /services.html, /hu/services.html
     return redirect(f'/{request.path.startswith("/hu/") and "hu" or "en"}/{"" if name == "index" else name + "/"}', permanent=True)
 
 
@@ -167,8 +164,6 @@ def api_blog_post(request, slug):
 
 
 @require_GET
-def api_prices(request):
-    return _json({'results': data.prices(_lang(request))})
 
 
 class _AbsUrls(data.LiveUrls):
