@@ -1,4 +1,5 @@
 // Contact API URL. Pages rendered by Django set <body data-api="/api/contact/">.
+// The Cloudflare site posts to the Django API Worker (scripts/sync_from_api.sh) and falls back to its own /api/contact/.
 // For the static GitHub Pages copy, set this to your deployed backend (e.g. 'https://infinitecare.onrender.com/api/contact/');
 // when empty and no data-api is present the form falls back to a mailto: link.
 const API_URL = '';
@@ -75,8 +76,12 @@ if(form){const st=form.querySelector('.form-status'),btn=form.querySelector('but
   if(!ok){show(form.dataset.invalid,'err');return}
   const d=Object.fromEntries(new FormData(form));d.lang=lang;const api=b.dataset.api||API_URL;if(!api){mailto(d);return}
   const label=btn.textContent;btn.disabled=true;btn.textContent=form.dataset.sending;
-  try{const ctl=new AbortController();const to=setTimeout(()=>ctl.abort(),10000);
-   const r=await fetch(api,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d),signal:ctl.signal});clearTimeout(to);
+  // the form posts to the Django API (other origin); if that is unreachable / failing, the same-origin Worker endpoint takes the message
+  const fb=/^https?:/.test(api)&&!api.startsWith(location.origin+'/')&&/^https?:/.test(location.origin);
+  const post=async u=>{const ctl=new AbortController();const to=setTimeout(()=>ctl.abort(),10000);
+   try{return await fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d),signal:ctl.signal})}finally{clearTimeout(to)}};
+  try{let r;
+   try{r=await post(api);if(fb&&r.status>=500)throw 0}catch(e){if(!fb)throw e;r=await post('/api/contact/')}
    const ct=r.headers.get('content-type')||'';
    if(!ct.includes('application/json')){mailto(d);return} // no backend (e.g. GitHub Pages)
    if(r.ok){show(form.dataset.ok,'ok');form.reset()}else show(r.status===422?form.dataset.invalid:form.dataset.err,'err');

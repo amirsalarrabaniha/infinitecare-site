@@ -408,3 +408,61 @@ class ContentTests(TestCase):
         BlogPost.objects.filter(slug=slug).update(is_published=False)
         call_command('export_static', out=out, api_url='', verbosity=0)
         self.assertFalse((p / 'blog' / f'{slug}.html').exists())
+
+
+@override_settings(MEDIA_ROOT=TMP_MEDIA)
+class ApiSourceTests(TestCase):
+    """`export_static --from-api` (content read from the JSON API) must render exactly what the database renders."""
+
+    @classmethod
+    def setUpTestData(cls):
+        call_command('load_initial_content', verbosity=0)
+        call_command('load_clinic_media', verbosity=0)
+
+    def _export(self, **kw):
+        out = tempfile.mkdtemp()
+        call_command('export_static', out=out, api_url='/api/contact/', site_url='https://example.test/', clean_urls=True, verbosity=0, **kw)
+        return pathlib.Path(out)
+
+    def test_api_export_equals_database_export(self):
+        from unittest import mock
+        from .api_source import ApiSource
+        import json
+
+        test = self
+
+        class LocalApi(ApiSource):   # same JSON as the live API, served by the Django test client instead of the network
+            def _want(self, name):
+                pass
+
+            def get(self, path, lang):
+                r = test.client.get(path, {'lang': lang})
+                assert r.status_code == 200, path
+                return json.loads(r.content)
+
+        db = self._export()
+        with mock.patch('content.management.commands.export_static.ApiSource', LocalApi):
+            api = self._export(from_api='http://testserver')
+        files = sorted(p.relative_to(db) for p in db.rglob('*') if p.is_file() and 'assets' not in p.parts)
+        self.assertIn(pathlib.Path('hu/blog.html'), files)
+        self.assertTrue(any(f.parts[0] == 'blog' for f in files))
+        for f in files:
+            self.assertEqual((db / f).read_text(encoding='utf-8'), (api / f).read_text(encoding='utf-8'), f)
+
+    def test_unpublished_post_is_not_exported_from_api(self):
+        from unittest import mock
+        from .api_source import ApiSource
+        import json
+        test = self
+
+        class LocalApi(ApiSource):
+            def _want(self, name):
+                pass
+
+            def get(self, path, lang):
+                return json.loads(test.client.get(path, {'lang': lang}).content)
+
+        BlogPost.objects.update(is_published=False)
+        with mock.patch('content.management.commands.export_static.ApiSource', LocalApi):
+            out = self._export(from_api='http://testserver')
+        self.assertEqual(list((out / 'blog').glob('*.html')), [])

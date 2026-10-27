@@ -90,6 +90,30 @@ Also written by the export: `sitemap.xml` (with hreflang alternates), `robots.tx
 * **VPS**: clone, create venv, `.env`, migrate/seed/collectstatic, run `gunicorn config.wsgi -b 127.0.0.1:8000`
   under systemd behind nginx (TLS via certbot). nginx may serve `/media/` directly from `MEDIA_ROOT`.
 
+## Publish changes made in the admin (API → static site)
+Content is edited in the admin of the API worker: <https://infinitecare-api.amyrsalarr.workers.dev/admin/>
+(site settings, home page, services, gallery/YouTube/clips, blog posts – EN and HU). The public site stays
+**static HTML** (best SEO, no layout shift, top Lighthouse), so an admin change goes live in two steps:
+
+```bash
+scripts/sync_from_api.sh        # 1. pulls /api/settings, /api/home, /api/services, /api/gallery, /api/blog (EN+HU)
+git diff --stat                 #    and regenerates the HTML, sitemap, llms.txt and downloads new images into assets/media/
+git add -A && git commit -m "Sync content from admin" && git push      # (or open a PR)
+CLOUDFLARE_ACCOUNT_ID=164584608fafa1395f843df7bb17e1c7 npx wrangler@4.40 deploy     # 2. publish (needs CLOUDFLARE_API_TOKEN)
+scripts/sync_from_api.sh --check   # optional: exit 1 if the committed site is behind the admin
+```
+* The script needs Python 3.11+ (it creates `.sync-venv/` with Django + Pillow, or set `SYNC_PYTHON=/path/to/python`).
+  `API_URL` / `SITE_URL` can be overridden by environment variables.
+* Only **published** posts / **active** items are in the API, so unpublishing in the admin removes the page on the next sync.
+  HU texts come from the same API responses (`?lang=hu`, falling back to EN when empty).
+* The contact form posts straight to `https://infinitecare-api.amyrsalarr.workers.dev/api/contact/` (messages appear in the
+  admin → *Contact messages*; CORS allows the site origin). If that request fails (network error / 5xx) the page
+  retries the same-origin Worker `POST /api/contact` (KV) and finally falls back to `mailto:`. The CSP `connect-src` in `_headers` allows the API origin.
+* **No live (browser) fetch of blog posts**: client-side rendering would hide the articles from crawlers/social previews
+  and add layout shift + an extra request to the critical path (worse SEO, LCP and CLS). Build-time rendering gives the same
+  data with none of that.
+* Images removed in the admin are not deleted from `assets/media/` automatically.
+
 ## Cloudflare Workers (live: https://infinitecare-site.amyrsalarr.workers.dev)
 The Worker `infinitecare-site` serves the exported static EN/HU site as Workers static assets and implements
 `POST /api/contact` itself (`cloudflare/worker.js`): same JSON contract, validation, honeypot and rate limit as Django.

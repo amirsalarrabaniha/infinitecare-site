@@ -33,19 +33,20 @@ def asset_version():
     return h.hexdigest()[:8]
 
 
-def page_context(lang, page, urls, api_url, post=None):
-    """`page` is one of data.PAGES, or 'blog_post' (then `post` is the BlogPost to show)."""
+def page_context(lang, page, urls, api_url, post=None, src=data):
+    """`page` is one of data.PAGES, or 'blog_post' (then `post` is the BlogPost to show).
+    `src` provides the content: `data` (database) or an `api_source.ApiSource` (JSON API of the Django backend)."""
     other = 'hu' if lang == 'en' else 'en'
     ui = UI[lang]
     slug = post.slug if post else None
     nav_keys = ['index', 'services', 'blog']
-    site = data.site_settings(lang)
+    site = src.site_settings(lang)
     nav = [dict(key='index', label=ui['nav'][0], href=urls.page('index')),
            dict(key='services', label=ui['nav'][1], href=urls.page('services'))]
     if site['offers_url']:   # external Fresha offers page, opens in a new tab
         nav.append(dict(key='offers', label=ui['nav'][2], href=site['offers_url'], external=True))
     nav.append(dict(key='blog', label=ui['nav'][3], href=urls.page('blog')))
-    socials = data.socials(site, lang)
+    socials = src.socials(site, lang)
     ctx = dict(lang=lang, other=other, page=page, nav_key='blog' if page == 'blog_post' else page, ui=ui,
                title=ui['titles'][page] if not post else post.tr('title', lang), nav=nav, S=urls.static, v=asset_version(),
                urls={k: urls.page(k) for k in nav_keys},
@@ -54,32 +55,32 @@ def page_context(lang, page, urls, api_url, post=None):
                site=site, socials=socials, api_url=api_url, description=f"{ui['desc']} {site['address']}")
     ctx['canonical'] = ctx['alternates'][lang]
     if page == 'index':
-        yt = data.youtube(lang, urls)
-        gallery = data.gallery(lang, urls)
+        yt = src.youtube(lang, urls)
+        gallery = src.gallery(lang, urls)
         gallery_videos = [v for v in yt if v['gallery']]
         org = {'@context': 'https://schema.org', '@type': 'HealthAndBeautyBusiness', 'name': 'Infinite Care Beauty Clinic',
                'url': settings.STATIC_EXPORT_SITE_URL, 'telephone': site['phone'], 'email': site['email'],
                'address': site['address'] + ', ' + site['city'], 'sameAs': [x['url'] for x in socials]}
         if site['booking_url']:
             org['potentialAction'] = {'@type': 'ReserveAction', 'name': ui['book_online'], 'target': {'@type': 'EntryPoint', 'urlTemplate': site['booking_url'], 'actionPlatform': ['http://schema.org/DesktopWebPlatform', 'http://schema.org/MobileWebPlatform']}}
-        ctx.update(ld_json=json.dumps(org, ensure_ascii=False).replace('<', '\\u003c'), home=data.home(lang, urls), counters=data.counters(lang),
-                   gallery=gallery, gallery_videos=gallery_videos, gallery_filters=data.gallery_filters(gallery + gallery_videos, ui), clips=data.clips(lang, urls),
+        ctx.update(ld_json=json.dumps(org, ensure_ascii=False).replace('<', '\\u003c'), home=src.home(lang, urls), counters=src.counters(lang),
+                   gallery=gallery, gallery_videos=gallery_videos, gallery_filters=src.gallery_filters(gallery + gallery_videos, ui), clips=src.clips(lang, urls),
                    watch_featured=next((v for v in yt if v['featured']), None), watch_shorts=[v for v in yt if v['home'] and not v['featured']][:4])
     elif page == 'services':
-        svcs = data.services(lang, urls)
+        svcs = src.services(lang, urls)
         ctx.update(services=svcs,
                    hero_image=urls.static + 'assets/images/services.webp')
     elif page == 'blog':
-        ctx.update(posts=data.blog_posts(lang, urls), hero_image=urls.static + 'assets/images/gallery/clinic-lounge.webp',
+        ctx.update(posts=src.blog_posts(lang, urls), hero_image=urls.static + 'assets/images/gallery/clinic-lounge.webp',
                    description=ui['blog_desc'])
     elif page == 'blog_post':
-        p = data.blog_post(post, lang, urls)
+        p = src.blog_post(post, lang, urls)
         og = settings.STATIC_EXPORT_SITE_URL + 'assets/media/' + post.cover.name
         ld = dict({'@context': 'https://schema.org', '@type': 'BlogPosting'}, headline=p['title'], description=p['excerpt'],
                   datePublished=p['iso_date'], image=og, inLanguage=lang,
                   publisher={'@type': 'Organization', 'name': 'Infinite Care Beauty Clinic', 'sameAs': [x['url'] for x in socials]})
         ctx.update(post=p, hero_image=p['cover'], canonical=ctx['alternates'][lang],
-                   ld_json=json.dumps(ld, ensure_ascii=False).replace('<', '\\u003c'), og_image_url=og, description=p['excerpt'], more_posts=[x for x in data.blog_posts(lang, urls) if x['slug'] != post.slug][:2])
+                   ld_json=json.dumps(ld, ensure_ascii=False).replace('<', '\\u003c'), og_image_url=og, description=p['excerpt'], more_posts=[x for x in src.blog_posts(lang, urls) if x['slug'] != post.slug][:2])
     return ctx
 
 

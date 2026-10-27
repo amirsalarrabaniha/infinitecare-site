@@ -13,6 +13,7 @@ from django.core.management.base import BaseCommand
 from django.template.loader import render_to_string
 
 from content import data
+from content.api_source import ApiSource
 from content.views import alt_url, page_context
 
 
@@ -25,38 +26,44 @@ class Command(BaseCommand):
                             help='Public origin (with trailing slash) used for canonical / hreflang / sitemap, e.g. https://example.com/')
         parser.add_argument('--clean-urls', action='store_true', default=settings.STATIC_EXPORT_CLEAN_URLS,
                             help='Use /services instead of /services.html in canonical / hreflang / sitemap (Cloudflare Workers assets)')
+        parser.add_argument('--from-api', default='',
+                            help='Base URL of the Django backend (e.g. https://infinitecare-api.amyrsalarr.workers.dev): '
+                                 'read all content from its JSON API instead of the local database; media files are downloaded to assets/media/')
         parser.add_argument('--api-url', default=settings.STATIC_EXPORT_API_URL,
                             help="Contact API URL baked into the pages ('' = mailto fallback)")
 
-    def handle(self, *args, out, api_url, site_url, clean_urls, **kw):
+    def handle(self, *args, out, api_url, site_url, clean_urls, from_api='', **kw):
         out = Path(out)
         settings.STATIC_EXPORT_SITE_URL = site_url if site_url.endswith('/') else site_url + '/'
         settings.STATIC_EXPORT_CLEAN_URLS = clean_urls
         for old in (out / 'blog', out / 'hu' / 'blog'):  # drop posts that were unpublished / deleted
             shutil.rmtree(old, ignore_errors=True)
         media_out = out / 'assets' / 'media'
-        if Path(settings.MEDIA_ROOT).exists():
+        src = ApiSource(from_api, media_dir=media_out) if from_api else data
+        if not from_api and Path(settings.MEDIA_ROOT).exists():
             shutil.copytree(settings.MEDIA_ROOT, media_out, dirs_exist_ok=True)   # keeps older files that live pages may still use
         n = 0
         for lang in settings.SITE_LANGUAGES:
             folder = out if lang == 'en' else out / lang
             folder.mkdir(parents=True, exist_ok=True)
             for page in data.PAGES:
-                html = render_to_string(f'site/{page}.html', page_context(lang, page, data.ExportUrls(lang), api_url))
+                html = render_to_string(f'site/{page}.html', page_context(lang, page, data.ExportUrls(lang), api_url, src=src))
                 (folder / f'{page}.html').write_text(html, encoding='utf-8')
                 n += 1
             (folder / 'blog').mkdir(exist_ok=True)
-            for post in data.published_posts():
-                ctx = page_context(lang, 'blog_post', data.ExportUrls(lang, 'blog'), api_url, post=post)
+            for post in src.published_posts():
+                ctx = page_context(lang, 'blog_post', data.ExportUrls(lang, 'blog'), api_url, post=post, src=src)
                 (folder / 'blog' / f'{post.slug}.html').write_text(render_to_string('site/blog_post.html', ctx), encoding='utf-8')
                 n += 1
-        self.write_discovery_files(out)
+        if from_api:
+            self.stdout.write(f'Media: {src.downloaded} downloaded, {len(src.media_names) - src.downloaded} already present')
+        self.write_discovery_files(out, src)
         self.stdout.write(self.style.SUCCESS(f'Exported {n} pages to {out} (API: {api_url or "mailto fallback"})'))
 
-    def write_discovery_files(self, out):
+    def write_discovery_files(self, out, src=data):
         """robots.txt, sitemap.xml (with hreflang alternates) and llms.txt, for the public origin."""
         base = settings.STATIC_EXPORT_SITE_URL
-        posts = list(data.published_posts())
+        posts = list(src.published_posts())
         pages = [(p, None) for p in data.PAGES] + [('blog', p.slug) for p in posts]
         rows = []
         for page, slug in pages:
@@ -69,7 +76,7 @@ class Command(BaseCommand):
         (out / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
                                          'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + '\n'.join(rows) + '\n</urlset>\n', encoding='utf-8')
         (out / 'robots.txt').write_text(f'User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: {base}sitemap.xml\n', encoding='utf-8')
-        s = data.site_settings('en')
+        s = src.site_settings('en')
         en = lambda page, slug=None: alt_url('en', page, slug)
         hu = lambda page, slug=None: alt_url('hu', page, slug)
         lines = [f'# Infinite Care Beauty Clinic', '',
