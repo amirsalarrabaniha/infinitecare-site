@@ -76,7 +76,7 @@ class Command(BaseCommand):
                  f'> Beauty and aesthetic clinic in Budapest ({s["address"]}). Treatments such as microneedling, laser hair removal, EMSCULPT and teeth whitening. The website is available in English and Hungarian.', '',
                  '## Pages', '',
                  f'- [Home]({en("index")}): clinic introduction, photo gallery, treatment videos and the contact form',
-                 f'- [Our treatments]({en("services")}): all treatments and current packages',
+                 f'- [Our treatments]({en("services")}): all treatments',
                  f'- [Blog]({en("blog")}): articles about treatments and skin care']
         lines += [f'- [{p.tr("title", "en")}]({en("blog", p.slug)})' for p in posts]
         lines += ['', '## Magyar', '',

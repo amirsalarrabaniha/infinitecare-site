@@ -12,7 +12,7 @@ from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from content.models import (SiteSettings, HomePage, Counter, Service, Package,
+from content.models import (SiteSettings, HomePage, Counter, Service,
                             GalleryItem, VideoClip, YouTubeVideo, BlogPost)
 
 SEED = Path(__file__).resolve().parents[2] / 'seed' / 'initial_content.json'
@@ -86,9 +86,9 @@ class Command(BaseCommand):
         if Service.objects.exists() and not force:
             self.stdout.write('Content already present – nothing to do (use --force to reload).')
             return
-        for m in (BlogPost, GalleryItem, VideoClip, YouTubeVideo, Package, Service, Counter, HomePage, SiteSettings):
+        for m in (BlogPost, GalleryItem, VideoClip, YouTubeVideo, Service, Counter, HomePage, SiteSettings):
             m.objects.all().delete() if m not in (HomePage, SiteSettings) else m.objects.filter().delete()
-        for folder in ('home', 'services', 'packages', 'gallery', 'video', 'youtube', 'blog') if getattr(settings, 'CONTENT_SEED_FILES', True) else ():
+        for folder in ('home', 'services', 'gallery', 'video', 'youtube', 'blog') if getattr(settings, 'CONTENT_SEED_FILES', True) else ():
             shutil.rmtree(Path(settings.MEDIA_ROOT) / folder, ignore_errors=True)
         if SEED.exists():
             d = json.loads(SEED.read_text(encoding='utf-8'))
@@ -109,11 +109,9 @@ class Command(BaseCommand):
             obj = Service(order=(i + 1) * 10, **{k: v for k, v in s.items() if k != 'image'})
             attach(obj, 'image', s['image'], 'services')
             obj.save()
-        for i, p in enumerate(d['packages']):
-            Package.objects.create(order=(i + 1) * 10, **{k: v for k, v in p.items() if k != 'image'})
         photos, clips = load_gallery(d)
         posts = load_blog(d)
         load_youtube(d)
         self.stdout.write(self.style.SUCCESS(
-            f"Loaded {Service.objects.count()} services, {Package.objects.count()} packages, "
+            f"Loaded {Service.objects.count()} services, "
             f"{Counter.objects.count()} counters, {photos} gallery photos, {clips} video clips, {posts} blog posts, site settings and home page."))

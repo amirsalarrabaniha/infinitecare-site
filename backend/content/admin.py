@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import SiteSettings, HomePage, Counter, Service, Package, GalleryItem, VideoClip, YouTubeVideo, BlogPost
+from .models import SiteSettings, HomePage, Counter, Service, GalleryItem, VideoClip, YouTubeVideo, BlogPost
 
 admin.site.site_header = 'Infinite Care admin'
 admin.site.site_title = 'Infinite Care'
@@ -25,7 +25,7 @@ class SiteSettingsAdmin(SingletonAdmin):
         ('Contact', {'fields': ['phone', 'email', *pairs('address'), 'city']}),
         ('Opening hours & footer', {'fields': pairs('hours', 'tagline')}),
         ('Social & map', {'fields': ['facebook', 'instagram', 'youtube', 'tiktok', 'map_embed']}),
-        ('Online booking', {'fields': ['booking_url']}),
+        ('Online booking', {'fields': ['booking_url', 'offers_url']}),
     ]
 
 
@@ -53,13 +53,6 @@ class ServiceAdmin(Thumb, admin.ModelAdmin):
     list_display_links = ['thumb', 'title_en']
     search_fields = ['title_en', 'title_hu']
     fields = ['image', ('order', 'is_active'), *pairs('eyebrow', 'title', 'description')]
-
-
-@admin.register(Package)
-class PackageAdmin(Thumb, admin.ModelAdmin):
-    list_display = ['name_en', 'name_hu', 'price', 'order', 'is_active']
-    list_editable = ['price', 'order', 'is_active']
-    fields = [('order', 'is_active'), *pairs('name', 'items'), 'price', 'image']
 
 
 @admin.register(Counter)

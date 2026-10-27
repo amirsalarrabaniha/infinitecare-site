@@ -28,9 +28,9 @@ python manage.py test           # contact API, pages, gallery, blog, JSON API, e
 | `/en/`, `/en/services/`, `/en/blog/` (and `/hu/…`) | pages rendered from the DB |
 | `/en/blog/<slug>/`, `/hu/blog/<slug>/` | one blog post (same slug in both languages; unpublished posts return 404) |
 | `/` | redirects to the remembered language (`ic-lang` cookie) or `/en/` |
-| `/admin/` | Django admin: site settings, home page texts, counters, services, packages, **gallery photos, video clips, blog posts**, contact messages (mark read/unread, delete) |
+| `/admin/` | Django admin: site settings, home page texts, counters, services, **gallery photos, video clips, blog posts**, contact messages (mark read/unread, delete) |
 | `POST /api/contact/` | JSON `{name,email,phone,message,lang,website}` → 201 / 422 (validation) / 429 (rate limit). `website` is a honeypot. |
-| `GET /api/settings/?lang=hu`, `/api/home/`, `/api/services/`, `/api/packages/`, `/api/gallery/` (photos + videos), `/api/blog/`, `/api/blog/<slug>/` | read-only JSON |
+| `GET /api/settings/?lang=hu`, `/api/home/`, `/api/services/`, `/api/gallery/` (photos + videos), `/api/blog/`, `/api/blog/<slug>/` | read-only JSON |
 
 Language switcher: every page links to the same page in the other language (`/en/services/` ↔ `/hu/services/`,
 `services.html` ↔ `hu/services.html` in the static copy). The choice is stored in `localStorage` + cookie; visiting the
@@ -137,3 +137,5 @@ Site (DB-rendered): https://infinitecare-api.amyrsalarr.workers.dev/en/ and `/hu
 The static Worker `infinitecare-site` posts its contact form to this Django `/api/contact/` (CORS allow-listed).
 
 `_redirects` sends the retired `/prices` and `/hu/prices` URLs (the Prices page was removed) to `/services` and `/hu/services`.
+
+The header "Offers" item is an external link (new tab) to the editable `SiteSettings.offers_url` (default https://l.fresha.com/3yv8307j6); it is separate from `booking_url` (the "Book now" buttons). The old on-site Offers/packages section and its models/API were removed.

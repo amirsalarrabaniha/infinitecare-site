@@ -12,7 +12,6 @@ urlpatterns = [
     path('api/settings/', v.api_settings),
     path('api/home/', v.api_home),
     path('api/services/', v.api_services),
-    path('api/packages/', v.api_packages),
     re_path(r'^(?:hu/)?blog/(?P<slug>[-\w]+)\.html$', v.legacy_post),
     path('api/gallery/', v.api_gallery),
     path('api/blog/', v.api_blog),

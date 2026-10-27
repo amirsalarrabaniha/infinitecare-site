@@ -78,9 +78,9 @@ class ContentTests(TestCase):
         self.assertEqual(r['results'][0]['title'], 'Exoszóma Terápia')
         self.assertTrue(r['results'][0]['image'].startswith('http://testserver/media/services/'))
         self.assertEqual(self.client.get('/api/prices/').status_code, 404)
-        self.assertEqual(self.client.get('/api/packages/?lang=hu').json()['results'][1]['name'], 'Menyasszony')
+        self.assertEqual(self.client.get('/api/packages/').status_code, 404)
         self.assertEqual(self.client.get('/api/settings/?lang=hu').json()['address'], 'Bp. VI. Podmaniczky u. 5.')
-        self.assertEqual(len(self.client.get('/api/home/').json()['counters']), 4)
+        self.assertEqual(len(self.client.get('/api/home/').json()['counters']), 2)
 
     def test_static_export(self):
         out = tempfile.mkdtemp()
@@ -217,10 +217,47 @@ class ContentTests(TestCase):
         s.booking_url = ''
         s.save()
         html = self.client.get('/en/').content.decode()
-        self.assertNotIn('Book online', html); self.assertNotIn('ReserveAction', html); self.assertNotIn('fresha', html)
+        self.assertNotIn('Book online', html); self.assertNotIn('ReserveAction', html); self.assertNotIn('3dvz3n7j6', html)
         self.assertIn('class="btn btn-sm nav-cta" href="tel:', html)   # header falls back to the phone button
         call_command('load_clinic_media', update_social=True, verbosity=0)
         self.assertEqual(SiteSettings.load().booking_url, 'https://l.fresha.com/3dvz3n7j6')
+
+    # ---- removed Offers/packages section; header "Offers" is an external Fresha link ----
+
+    OFFERS = 'https://l.fresha.com/3yv8307j6'
+
+    def test_offers_header_link_is_external_fresha(self):
+        for lang, label in [('en', 'Offers'), ('hu', 'Akciók')]:
+            for path in ['', 'services/', 'blog/']:
+                html = self.client.get(f'/{lang}/{path}').content.decode()
+                self.assertEqual(html.count(f'href="{self.OFFERS}"'), 1, (lang, path))
+                self.assertIn(f'<a href="{self.OFFERS}" class="" target="_blank" rel="noopener noreferrer">{label}', html)
+                # the "Book now" buttons keep the original booking URL
+                self.assertIn('href="https://l.fresha.com/3dvz3n7j6" target="_blank" rel="noopener noreferrer"', html)
+                self.assertNotIn('#packages', html)
+                self.assertNotIn('id="packages"', html)
+                self.assertNotIn('class="pk', html)
+
+    def test_offers_link_hidden_when_setting_empty(self):
+        ss = SiteSettings.load()
+        ss.offers_url = ''
+        ss.save()
+        self.assertNotContains(self.client.get('/en/'), 'Offers</a>')
+
+    def test_packages_are_gone(self):
+        self.assertEqual(self.client.get('/api/packages/').status_code, 404)
+        html = self.client.get('/en/services/').content.decode()
+        for w in ('309 000', 'Bridal', 'popular packages'):
+            self.assertNotIn(w, html)
+        self.assertNotContains(self.client.get('/hu/'), 'csomag')
+
+    def test_static_export_has_no_offers_section(self):
+        out = tempfile.mkdtemp()
+        call_command('export_static', out=out, api_url='', verbosity=0, site_url='https://example.com/', clean_urls=True)
+        for f in ('sitemap.xml', 'llms.txt', 'index.html', 'hu/index.html', 'services.html', 'hu/services.html'):
+            txt = (pathlib.Path(out) / f).read_text(encoding='utf-8')
+            self.assertNotIn('packages', txt.lower(), f)
+            self.assertNotIn('309 000', txt, f)
 
     # ---- removed sections: massage and prices ----
 

@@ -13,6 +13,7 @@
   "youtube": "https://www.youtube.com/@InfiniteCareBeautyClinic",
   "tiktok": "https://www.tiktok.com/@infinitecarebeautyclinic",
   "booking_url": "https://l.fresha.com/3dvz3n7j6",
+  "offers_url": "https://l.fresha.com/3yv8307j6",
   "map_embed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2695.108056800498!2d19.053390076740023!3d47.50728679483003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4741dd16d7887141%3A0x615a4db6ad2f2ed2!2sInfinite%20Care%20Beauty%20Clinic!5e0!3m2!1sen!2sen!4v1689769315232!5m2!1sen!2sen",
   "city": "Budapest, Hungary"
  },
@@ -67,22 +68,10 @@
    "suffix": "+"
   },
   {
-   "value": 4,
-   "label_en": "packages",
-   "label_hu": "csomag",
-   "suffix": ""
-  },
-  {
    "value": 6,
    "label_en": "days a week",
    "label_hu": "nap egy héten",
    "suffix": ""
-  },
-  {
-   "value": 70,
-   "label_en": "price items",
-   "label_hu": "ártétel",
-   "suffix": "+"
   }
  ],
  "services": [
@@ -175,40 +164,6 @@
    "title_hu": "Brazilift",
    "description_en": "If you don't like the shape of your buttocks or you want naturally plumped and bigger boobs you are in a right place! BRAZILIFT is the ultimate treatment for bigger and tighter buttocks and more plumped boobs. Try our painless Brazilian lift and your body will look like as a body of a Brazilian supermodel.",
    "description_hu": "Lapos a popsid? Elégedetlen vagy a melleid méretével, de félsz a plasztikai beavatkozástól? Nálunk van rá megoldás! Legyen olyan feneked, valamint dús és telt kebleid, mint a brazil nőknek!"
-  }
- ],
- "packages": [
-  {
-   "name_en": "Slim",
-   "name_hu": "Slim",
-   "items_en": "EMSCULPT 6 treatment\nU Shaping Cellulite Therapy 6 treatments",
-   "items_hu": "EMSCULPT kezelés 6 alkalom\nCellulit kezelés 6 alkalom",
-   "price": "309 000",
-   "image": ""
-  },
-  {
-   "name_en": "Bridal",
-   "name_hu": "Menyasszony",
-   "items_en": "Laser hair removal - 6 treatments (full body)\nEMSCULPT - 6 treatments\nCarbon Peeling - 2 treatments\nTeeth Whitening (60 minutes)",
-   "items_hu": "Lézeres szőrtelenítés 6 alkalom (teljes test)\nEMSCULPT kezelés 6 alkalom\nCarbon hámlasztás 2 alkalom\nFogfehérítés (összesen 60 perc)",
-   "price": "719 000",
-   "image": ""
-  },
-  {
-   "name_en": "Summer",
-   "name_hu": "Summer",
-   "items_en": "Laser hair removal - 6 treatments (full body)\nEMSCULPT - 6 treatments\nCellulite treatment 6 treatments\nTeeth Whitening (60 minutes)",
-   "items_hu": "Lézeres szőrtelenítés - 6 alkalom (teljes test)\nEMSCULPT kezelés 6 alkalom\nCellulit terápia 6 alkalom\nFogfehérítés (összesen 60 perc)",
-   "price": "799 000",
-   "image": ""
-  },
-  {
-   "name_en": "Business",
-   "name_hu": "Business",
-   "items_en": "Laser Hair Removal - 6 treatments\nEMSCULPT - 4 treatments\nCellulite therapy - 4 treatments\nTeeth Whitening - 4 treatments",
-   "items_hu": "Lézeres szőrtelenítés 4 alkalom\nEMSCULPT kezelés 4 alkalom\nCellulit terápia 4 alkalom\nFogfehérítés 4 alkalom",
-   "price": "459 000",
-   "image": ""
   }
  ],
  "gallery": [

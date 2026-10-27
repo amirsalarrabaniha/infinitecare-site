@@ -16,7 +16,7 @@
 <header class="nav">
  <a href="{{ urls.index }}" class="brand"><img class="logo-light" src="{{ S }}assets/images/infinitecare-logo-2.png" alt="Infinite Care" width="240" height="120"><img class="logo-dark" src="{{ S }}assets/images/infinitecare-logo-1.png" alt="Infinite Care" width="280" height="105"></a>
  <nav class="menu">
-  {% for n in nav %}<a href="{{ n.href }}" class="{% if n.key == nav_key %}active{% endif %}">{{ n.label }}</a>{% endfor %}
+  {% for n in nav %}<a href="{{ n.href }}" class="{% if n.key == nav_key %}active{% endif %}"{% if n.external %} target="_blank" rel="noopener noreferrer"{% endif %}>{{ n.label }}{% if n.external %}<span class="vh"> ({{ ui.newtab }})</span>{% endif %}</a>{% endfor %}
   <div class="langsw" role="group" aria-label="Language">
    <a href="{{ switch.en }}" hreflang="en" lang="en" data-lang="en" class="{% if lang == 'en' %}on{% endif %}"{% if lang == 'en' %} aria-current="true"{% endif %}>EN</a><a href="{{ switch.hu }}" hreflang="hu" lang="hu" data-lang="hu" class="{% if lang == 'hu' %}on{% endif %}"{% if lang == 'hu' %} aria-current="true"{% endif %}>HU</a>
   </div>
