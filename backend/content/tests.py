@@ -52,6 +52,29 @@ class ContentTests(TestCase):
         s.save()
         self.assertNotContains(self.client.get('/en/services/'), 'Brazilift')
 
+    def test_social_links_everywhere(self):
+        urls = ['https://www.youtube.com/@InfiniteCareBeautyClinic', 'https://www.instagram.com/infinitecarebeauty/',
+                'https://vm.tiktok.com/ZN8DVD2M3/']
+        for path in ('/en/', '/hu/', '/en/services/', '/hu/prices/', '/en/blog/', '/hu/blog/'):
+            html = self.client.get(path).content.decode()
+            for u in urls:
+                self.assertIn(f'href="{u}" target="_blank" rel="noopener noreferrer me"', html, (path, u))
+        home = self.client.get('/hu/').content.decode()
+        self.assertEqual(home.count('rel="noopener noreferrer me"'), 8)   # footer + contact section, 4 networks each
+        self.assertIn('aria-label="Infinite Care – TikTok (új lapon nyílik meg)"', home)
+        self.assertIn('aria-label="Infinite Care on YouTube (opens in a new tab)"', self.client.get('/en/').content.decode())
+        self.assertIn('"sameAs": ["https://www.facebook.com/', home)
+        self.assertEqual(self.client.get('/api/settings/').json()['tiktok'], urls[2])
+
+    def test_social_links_editable(self):
+        s = SiteSettings.load()
+        s.tiktok = ''
+        s.youtube = 'https://www.youtube.com/@other'
+        s.save()
+        html = self.client.get('/en/').content.decode()
+        self.assertNotIn('tiktok.com', html)
+        self.assertIn('https://www.youtube.com/@other', html)
+
     def test_json_api(self):
         r = self.client.get('/api/services/?lang=hu').json()
         self.assertEqual(r['results'][0]['title'], 'Exoszóma Terápia')

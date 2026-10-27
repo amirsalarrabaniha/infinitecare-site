@@ -1,5 +1,6 @@
 {% extends "site/base.html" %}
-{% load site_extras %}{% block content %}{% with h=home %}
+{% load site_extras %}{% block meta %}<script type="application/ld+json">{{ ld_json|safe }}</script>{% endblock %}
+{% block content %}{% with h=home %}
 <section class="hero"><div class="hero-bg" data-parallax><img src="{{ h.hero_image }}" alt="" {{ h.hero_image|imgsize }} fetchpriority="high" decoding="async"></div><div class="hero-veil"></div>
  <div class="hero-in"><img class="hero-logo" src="{{ S }}assets/images/infinitecare-logo-4.png" alt="" width="248" height="260">
   <span class="script hero-script">{{ h.hello }}</span>
@@ -22,6 +23,7 @@
  <span class="script reveal">{{ h.cta_script }}</span><h2 class="split">{{ h.cta_title }}</h2><a class="btn reveal" href="{{ site.phone_href }}">{{ h.cta_button }}</a></div></section>
 <section class="contact wrap" id="contact"><div class="c-info"><span class="eyebrow reveal">{{ h.contact_eyebrow }}</span><h2 class="split">{{ h.contact_title }}</h2>
  <p class="reveal">{{ h.contact_text }}</p>
+ {% if socials %}<div class="c-social reveal"><span>{{ ui.follow }}</span><div class="social">{% include "site/social.html" %}</div></div>{% endif %}
  <form class="cform reveal" id="contact-form" toolname="send_message" tooldescription="{{ ui.form_tool }}" novalidate data-ok="{{ ui.ok }}" data-err="{{ ui.err }}" data-sending="{{ ui.sending }}" data-invalid="{{ ui.inv }}" data-mailto="{{ site.email }}">
   <label><input name="name" required maxlength="100" placeholder=" " autocomplete="name" toolparamdescription="{{ ui.form.0 }}"><span>{{ ui.form.0 }}</span></label>
   <label><input name="email" type="email" required maxlength="200" placeholder=" " autocomplete="email" toolparamdescription="{{ ui.form.1 }}"><span>{{ ui.form.1 }}</span></label>
