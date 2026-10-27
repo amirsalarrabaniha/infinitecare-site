@@ -1,6 +1,6 @@
 {% extends "site/base.html" %}
 {% block content %}{% include "site/subhero.html" %}
 <main class="svcs">
-{% for s in services %}{% include "site/service.html" with n=forloop.counter %}{% endfor %}
+<div class="svlist" data-live="services" data-fp="{{ fp.services }}">{% for s in services %}{% include "site/service.html" with n=forloop.counter %}{% endfor %}</div>
 {% include "site/book_band.html" %}
 </main>{% endblock %}

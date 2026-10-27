@@ -14,7 +14,7 @@ from django.template.loader import render_to_string
 
 from content import data
 from content.api_source import ApiSource
-from content.views import alt_url, page_context
+from content.views import alt_url, page_context, shell_context
 
 
 class Command(BaseCommand):
@@ -54,6 +54,11 @@ class Command(BaseCommand):
             for post in src.published_posts():
                 ctx = page_context(lang, 'blog_post', data.ExportUrls(lang, 'blog'), api_url, post=post, src=src)
                 (folder / 'blog' / f'{post.slug}.html').write_text(render_to_string('site/blog_post.html', ctx), encoding='utf-8')
+                n += 1
+            posts = src.published_posts()
+            if posts:   # fallback page for posts published after this export (filled in by the browser, see README "Live content")
+                ctx = shell_context(lang, api_url, src, next(iter(posts)))
+                (folder / 'blog' / 'post.html').write_text(render_to_string('site/blog_post.html', ctx), encoding='utf-8')
                 n += 1
         if from_api:
             self.stdout.write(f'Media: {src.downloaded} downloaded, {len(src.media_names) - src.downloaded} already present')
