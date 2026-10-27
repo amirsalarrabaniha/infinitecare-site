@@ -54,12 +54,17 @@ def page_context(lang, page, urls, api_url, post=None):
                site=site, socials=socials, api_url=api_url, description=f"{ui['desc']} {site['address']}")
     ctx['canonical'] = ctx['alternates'][lang]
     if page == 'index':
+        yt = data.youtube(lang, urls)
         gallery = data.gallery(lang, urls)
+        gallery_videos = [v for v in yt if v['gallery']]
         org = {'@context': 'https://schema.org', '@type': 'HealthAndBeautyBusiness', 'name': 'Infinite Care Beauty Clinic',
                'url': settings.STATIC_EXPORT_SITE_URL, 'telephone': site['phone'], 'email': site['email'],
                'address': site['address'] + ', ' + site['city'], 'sameAs': [x['url'] for x in socials]}
+        if site['booking_url']:
+            org['potentialAction'] = {'@type': 'ReserveAction', 'name': ui['book_online'], 'target': {'@type': 'EntryPoint', 'urlTemplate': site['booking_url'], 'actionPlatform': ['http://schema.org/DesktopWebPlatform', 'http://schema.org/MobileWebPlatform']}}
         ctx.update(ld_json=json.dumps(org, ensure_ascii=False).replace('<', '\\u003c'), home=data.home(lang, urls), counters=data.counters(lang),
-                   gallery=gallery, gallery_filters=data.gallery_filters(gallery, ui), clips=data.clips(lang, urls))
+                   gallery=gallery, gallery_videos=gallery_videos, gallery_filters=data.gallery_filters(gallery + gallery_videos, ui), clips=data.clips(lang, urls),
+                   watch_featured=next((v for v in yt if v['featured']), None), watch_shorts=[v for v in yt if v['home'] and not v['featured']][:4])
     elif page == 'services':
         svcs = data.services(lang, urls)
         ctx.update(services_before=svcs[:5], services_after=svcs[5:], packages=data.packages(lang, urls),
@@ -145,7 +150,7 @@ def api_packages(request):
 def api_gallery(request):
     lang = _lang(request)
     urls = _AbsUrls(request, lang)
-    return _json({'photos': data.gallery(lang, urls), 'videos': data.clips(lang, urls)})
+    return _json({'photos': data.gallery(lang, urls), 'videos': data.clips(lang, urls), 'youtube': data.youtube(lang, urls)})
 
 
 @require_GET

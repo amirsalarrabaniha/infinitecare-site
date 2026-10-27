@@ -20,8 +20,10 @@
   <div class="langsw" role="group" aria-label="Language">
    <a href="{{ switch.en }}" hreflang="en" lang="en" data-lang="en" class="{% if lang == 'en' %}on{% endif %}"{% if lang == 'en' %} aria-current="true"{% endif %}>EN</a><a href="{{ switch.hu }}" hreflang="hu" lang="hu" data-lang="hu" class="{% if lang == 'hu' %}on{% endif %}"{% if lang == 'hu' %} aria-current="true"{% endif %}>HU</a>
   </div>
+  {% if site.booking_url %}{% include "site/book_link.html" with label=ui.book_now cls="btn-sm menu-book" %}{% endif %}
+  <a class="menu-tel" href="{{ site.phone_href }}">{{ site.phone }}</a>
  </nav>
- <a class="btn btn-sm nav-cta" href="{{ site.phone_href }}">{{ site.phone }}</a>
+ {% if site.booking_url %}{% include "site/book_link.html" with label=ui.book_now cls="btn-sm nav-cta" %}{% else %}<a class="btn btn-sm nav-cta" href="{{ site.phone_href }}">{{ site.phone }}</a>{% endif %}
  <button class="burger" aria-label="{{ ui.menu }}"><span></span><span></span></button>
 </header>
 {% block content %}{% endblock %}

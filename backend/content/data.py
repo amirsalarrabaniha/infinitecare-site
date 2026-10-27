@@ -5,7 +5,7 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 
 from .ui import UI
-from .models import TREATMENT_TYPES, SiteSettings, HomePage, Counter, Service, Package, PriceCategory, GalleryItem, VideoClip, BlogPost
+from .models import TREATMENT_TYPES, SiteSettings, HomePage, Counter, Service, Package, PriceCategory, GalleryItem, VideoClip, YouTubeVideo, BlogPost
 
 PAGES = ('index', 'services', 'prices', 'blog')   # pages with one HTML file per language; blog posts are exported separately
 
@@ -77,7 +77,7 @@ def site_settings(lang):
     s = SiteSettings.load()
     return dict(phone=s.phone, phone_href=s.phone_href, email=s.email, address=s.tr('address', lang),
                 hours=lines(s.tr('hours', lang)), tagline=s.tr('tagline', lang), city=s.city,
-                facebook=s.facebook, instagram=s.instagram, youtube=s.youtube, tiktok=s.tiktok, map_embed=s.map_embed)
+                facebook=s.facebook, instagram=s.instagram, youtube=s.youtube, tiktok=s.tiktok, booking_url=s.booking_url, map_embed=s.map_embed)
 
 
 def home(lang, urls):
@@ -99,7 +99,8 @@ def counters(lang):
 
 
 def services(lang, urls):
-    return [dict(id=s.id, image=urls.media(s.image), eyebrow=s.tr('eyebrow', lang), title=s.tr('title', lang),
+    vids = [v for v in youtube(lang, urls) if v['service_id']]
+    return [dict(videos=[v for v in vids if v['service_id'] == s.id][:2], id=s.id, image=urls.media(s.image), eyebrow=s.tr('eyebrow', lang), title=s.tr('title', lang),
                  description=lines(s.tr('description', lang)), show_details=s.show_details, order=s.order)
             for s in Service.objects.filter(is_active=True)]
 
@@ -118,8 +119,20 @@ def prices(lang):
 
 def gallery(lang, urls):
     return [dict(id=g.id, image=urls.media(g.image), category=g.category,
-                 cats=' '.join([g.category] + (['treatments'] if g.category in TREATMENT_TYPES else [])), alt=g.tr('alt', lang),
+                 cats=_cats(g.category), alt=g.tr('alt', lang),
                  width=g.width, height=g.height) for g in GalleryItem.objects.filter(is_active=True)]
+
+
+def _cats(category):
+    return ' '.join([category] + (['treatments'] if category in TREATMENT_TYPES else []))
+
+
+def youtube(lang, urls):
+    """YouTube videos for one site language: those for both languages plus the ones made for `lang`."""
+    return [dict(id=v.id, youtube_id=v.youtube_id, title=v.tr('title', lang), caption=v.tr('caption', lang), poster=urls.media(v.poster),
+                 width=v.poster_width, height=v.poster_height, vertical=v.vertical, category=v.category, cats=_cats(v.category),
+                 featured=v.featured, home=v.show_on_home, gallery=v.show_in_gallery, service_id=v.service_id, post_id=v.post_id)
+            for v in YouTubeVideo.objects.filter(is_active=True, language__in=['', lang])]
 
 
 def clips(lang, urls):
@@ -166,10 +179,11 @@ def blog_posts(lang, urls):
 
 
 def blog_post(post, lang, urls):
-    return dict(post_summary(post, lang, urls), blocks=body_blocks(post.tr('body', lang)))
+    return dict(post_summary(post, lang, urls), blocks=body_blocks(post.tr('body', lang)),
+                videos=[v for v in youtube(lang, urls) if v['post_id'] == post.id])
 
 
 def gallery_filters(items, ui):
-    """Filter tabs for the gallery: "All" plus every category that has at least one photo (never an empty tab)."""
+    """Filter tabs for the gallery: "All" plus every category that has at least one photo or video (never an empty tab)."""
     used = {c for g in items for c in g['cats'].split()}
     return [(k, label) for k, label in ui['gal_filters'] if k == 'all' or k in used]

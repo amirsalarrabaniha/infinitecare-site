@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import SiteSettings, HomePage, Counter, Service, Package, PriceCategory, PriceItem, GalleryItem, VideoClip, BlogPost
+from .models import SiteSettings, HomePage, Counter, Service, Package, PriceCategory, PriceItem, GalleryItem, VideoClip, YouTubeVideo, BlogPost
 
 admin.site.site_header = 'Infinite Care admin'
 admin.site.site_title = 'Infinite Care'
@@ -25,6 +25,7 @@ class SiteSettingsAdmin(SingletonAdmin):
         ('Contact', {'fields': ['phone', 'email', *pairs('address'), 'city']}),
         ('Opening hours & footer', {'fields': pairs('hours', 'tagline')}),
         ('Social & map', {'fields': ['facebook', 'instagram', 'youtube', 'tiktok', 'map_embed']}),
+        ('Online booking', {'fields': ['booking_url']}),
     ]
 
 
@@ -101,6 +102,19 @@ class VideoClipAdmin(admin.ModelAdmin):
     list_editable = ['category', 'order', 'is_active']
     list_filter = ['category']
     fields = [('order', 'is_active', 'category'), 'video', 'poster', *pairs('title')]
+
+
+@admin.register(YouTubeVideo)
+class YouTubeVideoAdmin(admin.ModelAdmin):
+    list_display = ['title_en', 'youtube_id', 'category', 'language', 'featured', 'show_on_home', 'show_in_gallery', 'service', 'post', 'order', 'is_active']
+    list_editable = ['category', 'language', 'featured', 'show_on_home', 'show_in_gallery', 'order', 'is_active']
+    list_filter = ['category', 'language', 'is_active']
+    search_fields = ['title_en', 'title_hu', 'youtube_id']
+    fieldsets = [
+        ('Video', {'fields': ['youtube_id', 'poster', ('vertical', 'language'), ('order', 'is_active')]}),
+        ('Text', {'fields': [*pairs('title', 'caption')]}),
+        ('Where it appears', {'fields': ['category', ('featured', 'show_on_home', 'show_in_gallery'), 'service', 'post']}),
+    ]
 
 
 @admin.register(BlogPost)

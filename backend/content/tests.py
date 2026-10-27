@@ -5,7 +5,7 @@ import tempfile
 from django.core.management import call_command
 from django.test import TestCase, override_settings
 
-from .models import BlogPost, GalleryItem, HomePage, PriceItem, Service, SiteSettings, VideoClip
+from .models import BlogPost, GalleryItem, HomePage, PriceItem, Service, SiteSettings, VideoClip, YouTubeVideo
 
 TMP_MEDIA = tempfile.mkdtemp()
 
@@ -115,10 +115,10 @@ class ContentTests(TestCase):
         self.assertEqual(cats['teeth-whitening-before-after'], 'whitening')
         self.assertEqual(cats['treatment-microneedling'], 'facial')
         self.assertEqual(cats['treatment-laser-hair-removal'], 'laser')
-        self.assertEqual(cats['treatment-emsculpt'], 'treatments')
+        self.assertEqual(cats['treatment-emsculpt'], 'emsculpt')
         self.assertEqual(set(VideoClip.objects.values_list('category', flat=True)), {'facial'})
-        for lang, labels in [('en', ['All', 'Clinic', 'Treatments', 'Events', 'Teeth Whitening', 'Facial', 'Laser']),
-                             ('hu', ['Mind', 'Klinika', 'Kezelések', 'Események', 'Fogfehérítés', 'Arckezelés', 'Lézer'])]:
+        for lang, labels in [('en', ['All', 'Clinic', 'Treatments', 'Events', 'Teeth Whitening', 'Facial', 'Laser', 'Emsculpt', 'Carbon Peeling', 'Cellulite', 'Brazilift']),
+                             ('hu', ['Mind', 'Klinika', 'Kezelések', 'Események', 'Fogfehérítés', 'Arckezelés', 'Lézer', 'Emsculpt', 'Carbon hámlasztás', 'Cellulit', 'Brazilift'])]:
             html = self.client.get(f'/{lang}/').content.decode()
             tabs = re.findall(r'data-filter="([a-z]+)"[^>]*>([^<]+)</button>', html)
             self.assertEqual([t[1] for t in tabs], labels)
@@ -128,22 +128,102 @@ class ContentTests(TestCase):
         self.assertRegex(html, r'data-cat="events"')
         self.assertIn('role="status"', html)
         r = self.client.get('/api/gallery/').json()
-        self.assertEqual({p['category'] for p in r['photos']} >= {'whitening', 'facial', 'laser'}, True)
+        self.assertEqual({p['category'] for p in r['photos']} >= {'whitening', 'facial', 'laser', 'emsculpt'}, True)
         self.assertEqual({v['category'] for v in r['videos']}, {'facial'})
 
     def test_load_clinic_media_recategorises_existing_items(self):
         GalleryItem.objects.exclude(category__in=['clinic', 'events']).update(category='treatments')
         VideoClip.objects.update(category='treatments')
         call_command('load_clinic_media', verbosity=0)
-        self.assertEqual(sorted(GalleryItem.objects.filter(category__in=['whitening', 'facial', 'laser']).values_list('category', flat=True)),
-                         ['facial', 'laser', 'whitening'])
+        self.assertEqual(sorted(GalleryItem.objects.filter(category__in=['whitening', 'facial', 'laser', 'emsculpt']).values_list('category', flat=True)),
+                         ['emsculpt', 'facial', 'laser', 'whitening'])
         self.assertEqual(set(VideoClip.objects.values_list('category', flat=True)), {'facial'})
 
     def test_empty_gallery_category_has_no_tab(self):
         GalleryItem.objects.filter(category='laser').delete()
+        self.assertIn('data-filter="laser"', self.client.get('/en/').content.decode())   # the laser videos still fill the tab
+        YouTubeVideo.objects.filter(category='laser').delete()
         html = self.client.get('/en/').content.decode()
         self.assertNotIn('data-filter="laser"', html)
         self.assertIn('data-filter="facial"', html)
+
+    # ---- YouTube videos ----
+
+    def test_youtube_seed_and_placements(self):
+        self.assertEqual(YouTubeVideo.objects.count(), 11)
+        ids = lambda html: re.findall(r'data-yt="([\w-]{11})"', html)
+        en, hu = self.client.get('/en/').content.decode(), self.client.get('/hu/').content.decode()
+        self.assertIn('TXip__AECX0', ids(en))                                   # featured welcome film
+        self.assertIn('ckGJs4jgLhI', ids(en)); self.assertNotIn('Miej6lMfoRk', ids(en))   # language variants
+        self.assertIn('Miej6lMfoRk', ids(hu)); self.assertNotIn('ckGJs4jgLhI', ids(hu))
+        self.assertIn('xr3tZAVtGsA', ids(en)); self.assertIn('GFkCHCBCbmU', ids(hu))
+        self.assertIn('Dt0dmmsswzc', ids(en)); self.assertIn('Dt0dmmsswzc', ids(hu))     # laser FAQ in the Laser category
+        self.assertRegex(en, r'class="g-item g-vid reveal" data-cat="laser treatments"')
+        self.assertIn('https://www.youtube.com/@InfiniteCareBeautyClinic', en)    # subscribe link
+        # nothing from YouTube is loaded until a click: no iframe / third-party URL in the HTML, posters are our own files
+        self.assertNotIn('<iframe', en)
+        self.assertNotRegex(en, r'src="https?://[^"]*(youtube|ytimg)')
+        self.assertIn('/media/youtube/', en)
+        svc = self.client.get('/en/services/').content.decode()
+        self.assertEqual(set(ids(svc)), {'ckGJs4jgLhI', 'xr3tZAVtGsA', 'RhWkw_mH0M8', 'HcqKo_QBSBo', 'otZDPSVBzZ8', 'jEYC7rDP6W8'})
+        post = self.client.get('/en/blog/laser-hair-removal-preparation-and-aftercare/').content.decode()
+        self.assertEqual(ids(post), ['Dt0dmmsswzc'])
+        self.assertEqual(ids(self.client.get('/hu/blog/professional-teeth-whitening-basics/').content.decode()), ['Miej6lMfoRk'])
+
+    def test_youtube_inactive_and_api(self):
+        YouTubeVideo.objects.filter(youtube_id='TXip__AECX0').update(is_active=False)
+        self.assertNotIn('TXip__AECX0', self.client.get('/en/').content.decode())
+        r = self.client.get('/api/gallery/?lang=hu').json()['youtube']
+        self.assertEqual(len(r), 8)   # 11 minus the inactive one minus the two English-only variants (whitening, laser)
+        v = next(x for x in r if x['youtube_id'] == 'RhWkw_mH0M8')
+        self.assertEqual((v['title'], v['category'], v['vertical'], v['width'], v['height']), ('Emsculpt testkezelés', 'emsculpt', True, 405, 720))
+
+    def test_load_clinic_media_adds_youtube_to_existing_db(self):
+        YouTubeVideo.objects.all().delete()
+        call_command('load_clinic_media', verbosity=0)
+        self.assertEqual(YouTubeVideo.objects.count(), 11)
+        call_command('load_clinic_media', verbosity=0)   # idempotent
+        self.assertEqual(YouTubeVideo.objects.count(), 11)
+
+    def test_csp_allows_only_youtube_nocookie_frames(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        csp = next(l for l in (root / '_headers').read_text().splitlines() if 'Content-Security-Policy' in l)
+        self.assertIn('frame-src https://www.google.com https://maps.google.com https://www.youtube-nocookie.com;', csp)
+        self.assertIn("script-src 'self';", csp)
+
+    # ---- online booking ----
+
+    def test_booking_links_everywhere(self):
+        url = 'https://l.fresha.com/3dvz3n7j6'
+        self.assertEqual(SiteSettings.load().booking_url, url)
+        self.assertEqual(self.client.get('/api/settings/').json()['booking_url'], url)
+        link = f'href="{url}" target="_blank" rel="noopener noreferrer"'
+        for path, n in [('/en/', 4), ('/hu/', 4), ('/en/services/', 14), ('/hu/prices/', 3), ('/en/blog/', 2),
+                        ('/en/blog/laser-hair-removal-preparation-and-aftercare/', 3)]:
+            html = self.client.get(path).content.decode()
+            self.assertGreaterEqual(html.count(link), n, path)
+            self.assertIn('nav-cta', html)
+        en, hu = self.client.get('/en/').content.decode(), self.client.get('/hu/').content.decode()
+        self.assertIn('Book online', en); self.assertIn('Book now', en)
+        self.assertIn('Online időpontfoglalás', hu); self.assertIn('>Foglalás<', hu)
+        self.assertIn('+36 1 707 0075', en)
+        self.assertNotIn('fresha.com/a/', en)   # short link only, no iframe / embed
+        self.assertNotIn('<iframe', en)
+        ld = re.search(r'application/ld\+json">(.*?)</script>', en, re.S).group(1)
+        self.assertIn('"ReserveAction"', ld); self.assertIn(url, ld)
+
+    def test_booking_url_editable_and_can_be_hidden(self):
+        s = SiteSettings.load()
+        s.booking_url = 'https://example.com/book'
+        s.save()
+        self.assertContains(self.client.get('/en/'), 'href="https://example.com/book" target="_blank"')
+        s.booking_url = ''
+        s.save()
+        html = self.client.get('/en/').content.decode()
+        self.assertNotIn('Book online', html); self.assertNotIn('ReserveAction', html); self.assertNotIn('fresha', html)
+        self.assertIn('class="btn btn-sm nav-cta" href="tel:', html)   # header falls back to the phone button
+        call_command('load_clinic_media', update_social=True, verbosity=0)
+        self.assertEqual(SiteSettings.load().booking_url, 'https://l.fresha.com/3dvz3n7j6')
 
     # ---- blog ----
     def test_blog_seed(self):
