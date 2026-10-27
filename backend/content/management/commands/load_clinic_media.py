@@ -2,6 +2,7 @@
 
     python manage.py load_clinic_media                # create gallery + clips if there are none yet
     python manage.py load_clinic_media --update-images  # also swap the hero / section / contact / service images
+    python manage.py load_clinic_media --update-social  # also overwrite the social links with the seed values
 
 (A fresh database gets all of this from `load_initial_content`.)
 """
@@ -11,18 +12,20 @@ from django.core.management.base import BaseCommand
 from django.db import transaction
 
 from content.management.commands.load_initial_content import SEED, attach, load_blog, load_gallery
-from content.models import GalleryItem, HomePage, Service, VideoClip
+from content.models import GalleryItem, HomePage, Service, SiteSettings, VideoClip
 
 
 class Command(BaseCommand):
     help = 'Add the gallery photos, video clips and clinic photos from the seed file to an existing database'
 
     def add_arguments(self, parser):
+        parser.add_argument('--update-social', action='store_true',
+                            help='Overwrite the Facebook / Instagram / YouTube / TikTok links with the seed values (blank ones are always filled in)')
         parser.add_argument('--update-images', action='store_true',
                             help='Replace the home page (hero, sections, contact) and service images with the seed images')
 
     @transaction.atomic
-    def handle(self, *args, update_images=False, **kw):
+    def handle(self, *args, update_images=False, update_social=False, **kw):
         if SEED.exists():
             d = json.loads(SEED.read_text(encoding='utf-8'))
         else:
@@ -32,6 +35,12 @@ class Command(BaseCommand):
         else:
             photos, clips = load_gallery(d)
             self.stdout.write(self.style.SUCCESS(f'Created {photos} gallery photos and {clips} video clips.'))
+        ss = SiteSettings.load()
+        for k in ('facebook', 'instagram', 'youtube', 'tiktok'):
+            if d['settings'].get(k) and (update_social or not getattr(ss, k)):
+                setattr(ss, k, d['settings'][k])
+        ss.save()
+        self.stdout.write('Social links: ' + ', '.join(f'{k}={getattr(ss, k) or "-"}' for k in ('facebook', 'instagram', 'youtube', 'tiktok')))
         n = load_blog(d)
         self.stdout.write(f'Blog posts in the database: {n} (starter posts are only added when their slug is missing).')
         if update_images:

@@ -127,7 +127,10 @@ body.menu-open .burger span{background:#fff!important}body.menu-open .burger spa
 .footer a:hover{color:var(--gold)}
 .social{display:flex;gap:.8rem;align-items:flex-start}
 .social a{width:44px;height:44px;border:1px solid rgba(220,191,148,.5);border-radius:50%;display:grid;place-items:center;font-size:.75rem;font-weight:500;transition:.4s var(--ease)}
-.social a:hover{background:var(--gold);color:var(--gd)!important;transform:translateY(-4px)}
+.social{flex-wrap:wrap}.social svg{display:block;width:20px;height:20px}
+.social a:hover,.social a:focus-visible{background:var(--gold);color:var(--gd)!important;transform:translateY(-4px)}
+.c-social{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin:0 0 1.6rem}.c-social>span{font:500 .75rem Montserrat,"Montserrat Fallback",sans-serif;letter-spacing:.25em;text-transform:uppercase;color:var(--g)}
+.c-social .social a{width:44px;height:44px;color:var(--g);border-color:rgba(25,81,70,.35)}.c-social .social a:hover{color:var(--gd)!important}
 .fbottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-top:4rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.1);font-size:.8rem;opacity:.7}
 /* reveal animations */
 .reveal{opacity:0;transform:translateY(40px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease)}

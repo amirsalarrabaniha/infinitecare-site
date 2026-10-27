@@ -46,6 +46,7 @@ class SiteSettings(Singleton):
     facebook = models.URLField(blank=True)
     instagram = models.URLField(blank=True)
     youtube = models.URLField(blank=True)
+    tiktok = models.URLField(blank=True)
     map_embed = models.URLField('Google Maps embed URL', max_length=1000, blank=True)
 
     class Meta:

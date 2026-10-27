@@ -24,7 +24,7 @@ class SiteSettingsAdmin(SingletonAdmin):
     fieldsets = [
         ('Contact', {'fields': ['phone', 'email', *pairs('address'), 'city']}),
         ('Opening hours & footer', {'fields': pairs('hours', 'tagline')}),
-        ('Social & map', {'fields': ['facebook', 'instagram', 'youtube', 'map_embed']}),
+        ('Social & map', {'fields': ['facebook', 'instagram', 'youtube', 'tiktok', 'map_embed']}),
     ]
 
 

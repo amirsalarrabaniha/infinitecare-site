@@ -45,15 +45,19 @@ def page_context(lang, page, urls, api_url, post=None):
            dict(key='offers', label=ui['nav'][3], href=urls.page('services') + '#packages'),
            dict(key='blog', label=ui['nav'][4], href=urls.page('blog'))]
     site = data.site_settings(lang)
+    socials = data.socials(site, lang)
     ctx = dict(lang=lang, other=other, page=page, nav_key='blog' if page == 'blog_post' else page, ui=ui,
                title=ui['titles'][page] if not post else post.tr('title', lang), nav=nav, S=urls.static, v=asset_version(),
                urls={k: urls.page(k) for k in nav_keys},
                switch={l: urls.page('blog' if post else page, l, slug) for l in LANGS},
                alternates={l: alt_url(l, 'blog' if post else page, slug) for l in LANGS},
-               site=site, api_url=api_url, description=f"{ui['desc']} {site['address']}")
+               site=site, socials=socials, api_url=api_url, description=f"{ui['desc']} {site['address']}")
     ctx['canonical'] = ctx['alternates'][lang]
     if page == 'index':
-        ctx.update(home=data.home(lang, urls), counters=data.counters(lang),
+        org = {'@context': 'https://schema.org', '@type': 'HealthAndBeautyBusiness', 'name': 'Infinite Care Beauty Clinic',
+               'url': settings.STATIC_EXPORT_SITE_URL, 'telephone': site['phone'], 'email': site['email'],
+               'address': site['address'] + ', ' + site['city'], 'sameAs': [x['url'] for x in socials]}
+        ctx.update(ld_json=json.dumps(org, ensure_ascii=False).replace('<', '\\u003c'), home=data.home(lang, urls), counters=data.counters(lang),
                    gallery=data.gallery(lang, urls), clips=data.clips(lang, urls))
     elif page == 'services':
         svcs = data.services(lang, urls)
@@ -67,7 +71,7 @@ def page_context(lang, page, urls, api_url, post=None):
         og = settings.STATIC_EXPORT_SITE_URL + 'assets/media/' + post.cover.name
         ld = dict({'@context': 'https://schema.org', '@type': 'BlogPosting'}, headline=p['title'], description=p['excerpt'],
                   datePublished=p['iso_date'], image=og, inLanguage=lang,
-                  publisher={'@type': 'Organization', 'name': 'Infinite Care Beauty Clinic'})
+                  publisher={'@type': 'Organization', 'name': 'Infinite Care Beauty Clinic', 'sameAs': [x['url'] for x in socials]})
         ctx.update(post=p, hero_image=p['cover'], canonical=ctx['alternates'][lang],
                    ld_json=json.dumps(ld, ensure_ascii=False).replace('<', '\\u003c'), og_image_url=og, description=p['excerpt'], more_posts=[x for x in data.blog_posts(lang, urls) if x['slug'] != post.slug][:2])
     else:

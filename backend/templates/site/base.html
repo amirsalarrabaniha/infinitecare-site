@@ -30,7 +30,7 @@
   <div class="reveal"><img src="{{ S }}assets/images/infinitecare-logo-2.png" alt="Infinite Care" class="flogo" width="240" height="120" loading="lazy"><p class="script">Beauty Clinic</p><p class="flinks">{% for n in nav %}{% if n.key != 'offers' %}<a href="{{ n.href }}">{{ n.label }}</a>{% endif %}{% endfor %}</p></div>
   <div class="reveal"><h3>{{ ui.hours }}</h3><p>{% for l in site.hours %}{{ l }}{% if not forloop.last %}<br>{% endif %}{% endfor %}</p></div>
   <div class="reveal"><h3>{{ ui.res }}</h3><p><a href="{{ site.phone_href }}">{{ site.phone }}</a><br>{{ site.address }}<br><a href="mailto:{{ site.email }}">{{ site.email }}</a></p></div>
-  <div class="reveal social">{% if site.facebook %}<a href="{{ site.facebook }}" aria-label="Facebook">f</a>{% endif %}{% if site.instagram %}<a href="{{ site.instagram }}" aria-label="Instagram">ig</a>{% endif %}{% if site.youtube %}<a href="{{ site.youtube }}" aria-label="YouTube">yt</a>{% endif %}</div>
+  <div class="reveal"><h3>{{ ui.follow }}</h3><div class="social">{% include "site/social.html" %}</div></div>
  </div>
  <div class="wrap fbottom"><span>{{ site.city }}</span><span>{{ site.tagline }}</span></div>
 </footer>
