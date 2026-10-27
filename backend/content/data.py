@@ -5,7 +5,7 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 
 from .ui import UI
-from .models import SiteSettings, HomePage, Counter, Service, Package, PriceCategory, GalleryItem, VideoClip, BlogPost
+from .models import TREATMENT_TYPES, SiteSettings, HomePage, Counter, Service, Package, PriceCategory, GalleryItem, VideoClip, BlogPost
 
 PAGES = ('index', 'services', 'prices', 'blog')   # pages with one HTML file per language; blog posts are exported separately
 
@@ -117,12 +117,13 @@ def prices(lang):
 
 
 def gallery(lang, urls):
-    return [dict(id=g.id, image=urls.media(g.image), category=g.category, alt=g.tr('alt', lang),
+    return [dict(id=g.id, image=urls.media(g.image), category=g.category,
+                 cats=' '.join([g.category] + (['treatments'] if g.category in TREATMENT_TYPES else [])), alt=g.tr('alt', lang),
                  width=g.width, height=g.height) for g in GalleryItem.objects.filter(is_active=True)]
 
 
 def clips(lang, urls):
-    return [dict(id=c.id, video=urls.media(c.video), poster=urls.media(c.poster), title=c.tr('title', lang))
+    return [dict(id=c.id, video=urls.media(c.video), poster=urls.media(c.poster), title=c.tr('title', lang), category=c.category)
             for c in VideoClip.objects.filter(is_active=True)]
 
 
@@ -166,3 +167,9 @@ def blog_posts(lang, urls):
 
 def blog_post(post, lang, urls):
     return dict(post_summary(post, lang, urls), blocks=body_blocks(post.tr('body', lang)))
+
+
+def gallery_filters(items, ui):
+    """Filter tabs for the gallery: "All" plus every category that has at least one photo (never an empty tab)."""
+    used = {c for g in items for c in g['cats'].split()}
+    return [(k, label) for k, label in ui['gal_filters'] if k == 'all' or k in used]

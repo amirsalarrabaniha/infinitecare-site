@@ -191,11 +191,17 @@ class PriceItem(Bilingual):
         return self.label_en
 
 
+GALLERY_CATEGORIES = [('clinic', 'Clinic'), ('treatments', 'Treatments'), ('events', 'Events'),
+                      ('whitening', 'Teeth Whitening'), ('facial', 'Facial'), ('laser', 'Laser')]
+TREATMENT_TYPES = ('whitening', 'facial', 'laser')   # specific treatment categories; their items also show under "Treatments"
+
+
 class GalleryItem(Ordered):
     """Photo shown in the "Our clinic" gallery on the home page (grid + lightbox)."""
-    CATEGORIES = [('clinic', 'Clinic'), ('treatments', 'Treatments'), ('events', 'Events')]
+    CATEGORIES = GALLERY_CATEGORIES
     image = models.ImageField(upload_to='gallery/', help_text='Landscape or portrait photo, ideally max 1600 px on the long edge (WebP/JPG)')
-    category = models.CharField(max_length=20, choices=CATEGORIES, default='clinic')
+    category = models.CharField(max_length=20, choices=CATEGORIES, default='clinic',
+                                help_text='Teeth Whitening, Facial and Laser items also appear under "Treatments"')
     alt_en = models.CharField('Caption / alt text (EN)', max_length=200)
     alt_hu = models.CharField('Caption / alt text (HU)', max_length=200, blank=True)
     width = models.PositiveIntegerField(default=0, editable=False)
@@ -220,6 +226,7 @@ class VideoClip(Ordered):
     """Short muted looping clip (vertical MP4, H.264, no audio, ideally < 3 MB) shown in the home page video section."""
     video = models.FileField(upload_to='video/', help_text='MP4 (H.264), portrait 720x1280, no audio, under ~3 MB')
     poster = models.ImageField(upload_to='video/', help_text='Still frame shown before the video plays')
+    category = models.CharField(max_length=20, choices=GALLERY_CATEGORIES, default='treatments')
     title_en = models.CharField('Caption (EN)', max_length=150)
     title_hu = models.CharField('Caption (HU)', max_length=150, blank=True)
 

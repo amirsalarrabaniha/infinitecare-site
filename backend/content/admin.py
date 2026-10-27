@@ -97,9 +97,10 @@ class GalleryItemAdmin(Thumb, admin.ModelAdmin):
 
 @admin.register(VideoClip)
 class VideoClipAdmin(admin.ModelAdmin):
-    list_display = ['title_en', 'title_hu', 'order', 'is_active']
-    list_editable = ['order', 'is_active']
-    fields = [('order', 'is_active'), 'video', 'poster', *pairs('title')]
+    list_display = ['title_en', 'title_hu', 'category', 'order', 'is_active']
+    list_editable = ['category', 'order', 'is_active']
+    list_filter = ['category']
+    fields = [('order', 'is_active', 'category'), 'video', 'poster', *pairs('title')]
 
 
 @admin.register(BlogPost)

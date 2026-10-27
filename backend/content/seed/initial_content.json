@@ -765,7 +765,7 @@
   },
   {
    "image": "gallery/treatment-microneedling.webp",
-   "category": "treatments",
+   "category": "facial",
    "alt_en": "Microneedling skin treatment",
    "alt_hu": "Mikrotűs bőrkezelés",
    "width": 1200,
@@ -773,7 +773,7 @@
   },
   {
    "image": "gallery/treatment-laser-hair-removal.webp",
-   "category": "treatments",
+   "category": "laser",
    "alt_en": "Laser hair removal",
    "alt_hu": "Lézeres szőrtelenítés",
    "width": 780,
@@ -789,7 +789,7 @@
   },
   {
    "image": "gallery/teeth-whitening-before-after.webp",
-   "category": "treatments",
+   "category": "whitening",
    "alt_en": "Teeth whitening, before and after",
    "alt_hu": "Fogfehérítés, előtte és utána",
    "width": 1080,
@@ -831,12 +831,14 @@
  "clips": [
   {
    "video": "facial-treatment-extraction.mp4",
+   "category": "facial",
    "poster": "facial-treatment-extraction-poster.webp",
    "title_en": "Facial treatment: steam and cleansing",
    "title_hu": "Arckezelés: gőz és tisztítás"
   },
   {
    "video": "facial-treatment-cleansing.mp4",
+   "category": "facial",
    "poster": "facial-treatment-cleansing-poster.webp",
    "title_en": "Facial treatment: gentle skin care",
    "title_hu": "Arckezelés: gyengéd bőrápolás"

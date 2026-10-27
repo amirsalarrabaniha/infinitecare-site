@@ -170,6 +170,7 @@ body.menu-open .burger span{background:#fff!important}body.menu-open .burger spa
 
 /* gallery */
 .gallery{padding-top:8rem}.g-head{max-width:640px;margin-bottom:2.4rem}.g-head p{color:#4a5a56;line-height:1.8}
+.g-status{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .g-filters{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.6rem}
 .g-filters button{font:500 .72rem Montserrat,"Montserrat Fallback",sans-serif;letter-spacing:.16em;text-transform:uppercase;padding:.7rem 1.4rem;border-radius:40px;border:1px solid rgba(25,81,70,.3);background:transparent;color:var(--g);cursor:pointer;transition:background .4s,color .4s,border-color .4s}
 .g-filters button:hover{border-color:var(--g)}.g-filters button.on{background:var(--g);color:#fff;border-color:var(--g)}

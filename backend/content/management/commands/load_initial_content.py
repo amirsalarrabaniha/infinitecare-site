@@ -52,7 +52,7 @@ def load_gallery(d):
         attach(obj, 'image', g['image'], 'gallery')
         obj.save()
     for i, c in enumerate(d.get('clips', [])):
-        obj = VideoClip(order=(i + 1) * 10, title_en=c['title_en'], title_hu=c['title_hu'])
+        obj = VideoClip(order=(i + 1) * 10, category=c.get('category', 'treatments'), title_en=c['title_en'], title_hu=c['title_hu'])
         attach(obj, 'video', c['video'], 'video', VIDEOS)
         attach(obj, 'poster', c['poster'], 'video', VIDEOS)
         obj.save()

@@ -54,11 +54,12 @@ def page_context(lang, page, urls, api_url, post=None):
                site=site, socials=socials, api_url=api_url, description=f"{ui['desc']} {site['address']}")
     ctx['canonical'] = ctx['alternates'][lang]
     if page == 'index':
+        gallery = data.gallery(lang, urls)
         org = {'@context': 'https://schema.org', '@type': 'HealthAndBeautyBusiness', 'name': 'Infinite Care Beauty Clinic',
                'url': settings.STATIC_EXPORT_SITE_URL, 'telephone': site['phone'], 'email': site['email'],
                'address': site['address'] + ', ' + site['city'], 'sameAs': [x['url'] for x in socials]}
         ctx.update(ld_json=json.dumps(org, ensure_ascii=False).replace('<', '\\u003c'), home=data.home(lang, urls), counters=data.counters(lang),
-                   gallery=data.gallery(lang, urls), clips=data.clips(lang, urls))
+                   gallery=gallery, gallery_filters=data.gallery_filters(gallery, ui), clips=data.clips(lang, urls))
     elif page == 'services':
         svcs = data.services(lang, urls)
         ctx.update(services_before=svcs[:5], services_after=svcs[5:], packages=data.packages(lang, urls),

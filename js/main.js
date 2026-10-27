@@ -31,7 +31,7 @@ document.querySelectorAll('[data-tilt]').forEach(el=>{const t=el.closest('.f-img
 const gg=document.querySelector('.g-grid');
 if(gg){const items=[...gg.querySelectorAll('.g-item')],fb=[...document.querySelectorAll('.g-filters button')];
  const vis=()=>items.filter(i=>!i.hidden);
- fb.forEach(x=>x.addEventListener('click',()=>{fb.forEach(y=>{y.classList.toggle('on',y===x);y.setAttribute('aria-pressed',y===x)});items.forEach(i=>{i.hidden=x.dataset.filter!=='all'&&i.dataset.cat!==x.dataset.filter})}));
+ fb.forEach(x=>x.addEventListener('click',()=>{fb.forEach(y=>{y.classList.toggle('on',y===x);y.setAttribute('aria-pressed',y===x)});items.forEach(i=>{i.hidden=x.dataset.filter!=='all'&&!i.dataset.cat.split(' ').includes(x.dataset.filter)});const st=document.querySelector('.g-status');if(st)st.textContent=st.dataset.tpl.replace('{n}',vis().length)}));
  let lb,cur=-1,last;
  const build=()=>{lb=document.createElement('div');lb.className='lb';lb.setAttribute('role','dialog');lb.setAttribute('aria-modal','true');lb.hidden=true;
   lb.innerHTML='<button type="button" class="lb-x"></button><button type="button" class="lb-p"></button><button type="button" class="lb-n"></button><figure><img alt=""><figcaption></figcaption></figure>';

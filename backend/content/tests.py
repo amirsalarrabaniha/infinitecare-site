@@ -1,4 +1,5 @@
 import pathlib
+import re
 import tempfile
 
 from django.core.management import call_command
@@ -108,6 +109,41 @@ class ContentTests(TestCase):
         r = self.client.get('/api/gallery/?lang=hu').json()
         self.assertEqual((len(r['photos']), len(r['videos'])), (13, 2))
         self.assertTrue(r['photos'][0]['image'].startswith('http://testserver/media/gallery/'))
+
+    def test_gallery_treatment_categories(self):
+        cats = {g.image.name.split('/')[-1].split('.')[0].split('_')[0]: g.category for g in GalleryItem.objects.all()}
+        self.assertEqual(cats['teeth-whitening-before-after'], 'whitening')
+        self.assertEqual(cats['treatment-microneedling'], 'facial')
+        self.assertEqual(cats['treatment-laser-hair-removal'], 'laser')
+        self.assertEqual(cats['treatment-emsculpt'], 'treatments')
+        self.assertEqual(set(VideoClip.objects.values_list('category', flat=True)), {'facial'})
+        for lang, labels in [('en', ['All', 'Clinic', 'Treatments', 'Events', 'Teeth Whitening', 'Facial', 'Laser']),
+                             ('hu', ['Mind', 'Klinika', 'Kezelések', 'Események', 'Fogfehérítés', 'Arckezelés', 'Lézer'])]:
+            html = self.client.get(f'/{lang}/').content.decode()
+            tabs = re.findall(r'data-filter="([a-z]+)"[^>]*>([^<]+)</button>', html)
+            self.assertEqual([t[1] for t in tabs], labels)
+            for key, _ in tabs[1:]:   # no tab is empty; specific treatments also show under "Treatments"
+                self.assertTrue(re.search(r'data-cat="[^"]*\b%s\b' % key, html), key)
+        self.assertRegex(html, r'data-cat="whitening treatments"')
+        self.assertRegex(html, r'data-cat="events"')
+        self.assertIn('role="status"', html)
+        r = self.client.get('/api/gallery/').json()
+        self.assertEqual({p['category'] for p in r['photos']} >= {'whitening', 'facial', 'laser'}, True)
+        self.assertEqual({v['category'] for v in r['videos']}, {'facial'})
+
+    def test_load_clinic_media_recategorises_existing_items(self):
+        GalleryItem.objects.exclude(category__in=['clinic', 'events']).update(category='treatments')
+        VideoClip.objects.update(category='treatments')
+        call_command('load_clinic_media', verbosity=0)
+        self.assertEqual(sorted(GalleryItem.objects.filter(category__in=['whitening', 'facial', 'laser']).values_list('category', flat=True)),
+                         ['facial', 'laser', 'whitening'])
+        self.assertEqual(set(VideoClip.objects.values_list('category', flat=True)), {'facial'})
+
+    def test_empty_gallery_category_has_no_tab(self):
+        GalleryItem.objects.filter(category='laser').delete()
+        html = self.client.get('/en/').content.decode()
+        self.assertNotIn('data-filter="laser"', html)
+        self.assertIn('data-filter="facial"', html)
 
     # ---- blog ----
     def test_blog_seed(self):
