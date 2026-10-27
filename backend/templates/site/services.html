@@ -1,10 +1,6 @@
 {% extends "site/base.html" %}
 {% block content %}{% include "site/subhero.html" %}
 <main class="svcs">
-{% for s in services_before %}{% include "site/service.html" with n=forloop.counter %}{% endfor %}
-{% if packages %}<section class="packages" id="packages"><div class="pk-bg" style="background-image:url({{ S }}assets/images/packages.webp)"></div><div class="wrap"><span class="eyebrow light reveal">{{ ui.offers }}</span><h2 class="split">{{ ui.pk_h }}</h2><div class="pk-grid">
-{% for p in packages %}<div class="pk reveal" data-tilt>{% if p.image %}<img class="pk-img" src="{{ p.image }}" alt="">{% endif %}<h3>{{ p.name }}<span class="script">{{ ui.pk_w }}</span></h3><ul>{% for i in p.items %}<li>{{ i }}</li>{% endfor %}</ul><b class="price">{{ p.price }} <small>{{ ui.cur }}</small></b><a class="btn" href="{{ site.phone_href }}">{{ ui.book }}</a></div>{% endfor %}
-</div></div></section>{% endif %}
-{% for s in services_after %}{% include "site/service.html" with n=forloop.counter|add:5 %}{% endfor %}
+{% for s in services %}{% include "site/service.html" with n=forloop.counter %}{% endfor %}
 {% include "site/book_band.html" %}
 </main>{% endblock %}

@@ -48,7 +48,7 @@ class Command(BaseCommand):
         yt = load_youtube(d)
         self.stdout.write(f'YouTube videos added: {yt} (existing ones are left alone).')
         ss = SiteSettings.load()
-        for k in ('facebook', 'instagram', 'youtube', 'tiktok', 'booking_url'):
+        for k in ('facebook', 'instagram', 'youtube', 'tiktok', 'booking_url', 'offers_url'):
             if d['settings'].get(k) and (update_social or not getattr(ss, k)):
                 setattr(ss, k, d['settings'][k])
         ss.save()

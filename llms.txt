@@ -5,7 +5,7 @@
 ## Pages
 
 - [Home](https://infinitecare-site.amyrsalarr.workers.dev/): clinic introduction, photo gallery, treatment videos and the contact form
-- [Our treatments](https://infinitecare-site.amyrsalarr.workers.dev/services): all treatments and current packages
+- [Our treatments](https://infinitecare-site.amyrsalarr.workers.dev/services): all treatments
 - [Blog](https://infinitecare-site.amyrsalarr.workers.dev/blog): articles about treatments and skin care
 - [Professional teeth whitening: the basics](https://infinitecare-site.amyrsalarr.workers.dev/blog/professional-teeth-whitening-basics)
 - [Laser hair removal: how to prepare and what to do afterwards](https://infinitecare-site.amyrsalarr.workers.dev/blog/laser-hair-removal-preparation-and-aftercare)

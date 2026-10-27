@@ -5,7 +5,7 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 
 from .ui import UI
-from .models import TREATMENT_TYPES, SiteSettings, HomePage, Counter, Service, Package, GalleryItem, VideoClip, YouTubeVideo, BlogPost
+from .models import TREATMENT_TYPES, SiteSettings, HomePage, Counter, Service, GalleryItem, VideoClip, YouTubeVideo, BlogPost
 
 PAGES = ('index', 'services', 'blog')   # pages with one HTML file per language; blog posts are exported separately
 
@@ -77,7 +77,7 @@ def site_settings(lang):
     s = SiteSettings.load()
     return dict(phone=s.phone, phone_href=s.phone_href, email=s.email, address=s.tr('address', lang),
                 hours=lines(s.tr('hours', lang)), tagline=s.tr('tagline', lang), city=s.city,
-                facebook=s.facebook, instagram=s.instagram, youtube=s.youtube, tiktok=s.tiktok, booking_url=s.booking_url, map_embed=s.map_embed)
+                facebook=s.facebook, instagram=s.instagram, youtube=s.youtube, tiktok=s.tiktok, booking_url=s.booking_url, offers_url=s.offers_url, map_embed=s.map_embed)
 
 
 def home(lang, urls):
@@ -103,11 +103,6 @@ def services(lang, urls):
     return [dict(videos=[v for v in vids if v['service_id'] == s.id][:2], id=s.id, image=urls.media(s.image), eyebrow=s.tr('eyebrow', lang), title=s.tr('title', lang),
                  description=lines(s.tr('description', lang)), order=s.order)
             for s in Service.objects.filter(is_active=True)]
-
-
-def packages(lang, urls):
-    return [dict(id=p.id, name=p.tr('name', lang), items=lines(p.tr('items', lang)), price=p.price,
-                 image=urls.media(p.image), order=p.order) for p in Package.objects.filter(is_active=True)]
 
 
 def gallery(lang, urls):

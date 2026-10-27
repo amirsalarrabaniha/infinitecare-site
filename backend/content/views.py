@@ -39,11 +39,12 @@ def page_context(lang, page, urls, api_url, post=None):
     ui = UI[lang]
     slug = post.slug if post else None
     nav_keys = ['index', 'services', 'blog']
-    nav = [dict(key='index', label=ui['nav'][0], href=urls.page('index')),
-           dict(key='services', label=ui['nav'][1], href=urls.page('services')),
-           dict(key='offers', label=ui['nav'][2], href=urls.page('services') + '#packages'),
-           dict(key='blog', label=ui['nav'][3], href=urls.page('blog'))]
     site = data.site_settings(lang)
+    nav = [dict(key='index', label=ui['nav'][0], href=urls.page('index')),
+           dict(key='services', label=ui['nav'][1], href=urls.page('services'))]
+    if site['offers_url']:   # external Fresha offers page, opens in a new tab
+        nav.append(dict(key='offers', label=ui['nav'][2], href=site['offers_url'], external=True))
+    nav.append(dict(key='blog', label=ui['nav'][3], href=urls.page('blog')))
     socials = data.socials(site, lang)
     ctx = dict(lang=lang, other=other, page=page, nav_key='blog' if page == 'blog_post' else page, ui=ui,
                title=ui['titles'][page] if not post else post.tr('title', lang), nav=nav, S=urls.static, v=asset_version(),
@@ -66,7 +67,7 @@ def page_context(lang, page, urls, api_url, post=None):
                    watch_featured=next((v for v in yt if v['featured']), None), watch_shorts=[v for v in yt if v['home'] and not v['featured']][:4])
     elif page == 'services':
         svcs = data.services(lang, urls)
-        ctx.update(services_before=svcs[:5], services_after=svcs[5:], packages=data.packages(lang, urls),
+        ctx.update(services=svcs,
                    hero_image=urls.static + 'assets/images/services.webp')
     elif page == 'blog':
         ctx.update(posts=data.blog_posts(lang, urls), hero_image=urls.static + 'assets/images/gallery/clinic-lounge.webp',
@@ -135,12 +136,6 @@ def api_home(request):
 def api_services(request):
     lang = _lang(request)
     return _json({'results': data.services(lang, _AbsUrls(request, lang))})
-
-
-@require_GET
-def api_packages(request):
-    lang = _lang(request)
-    return _json({'results': data.packages(lang, _AbsUrls(request, lang))})
 
 
 @require_GET

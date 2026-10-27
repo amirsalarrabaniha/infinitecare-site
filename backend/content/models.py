@@ -48,6 +48,8 @@ class SiteSettings(Singleton):
     instagram = models.URLField(blank=True)
     youtube = models.URLField(blank=True)
     tiktok = models.URLField(blank=True)
+    offers_url = models.URLField('"Offers" menu link', max_length=500, default='https://l.fresha.com/3yv8307j6', blank=True,
+                                 help_text='External page opened in a new tab from the "Offers" item in the header menu. Leave empty to hide the item.')
     booking_url = models.URLField('Online booking link (Fresha)', max_length=500, default='https://l.fresha.com/3dvz3n7j6',
                                   help_text='Opens in a new tab from the "Book now" buttons. Leave empty to hide all online-booking buttons and sections.')
     map_embed = models.URLField('Google Maps embed URL', max_length=1000, blank=True)
@@ -149,21 +151,6 @@ class Service(Ordered):
 
     def __str__(self):
         return self.title_en
-
-
-class Package(Ordered):
-    name_en = models.CharField(max_length=80)
-    name_hu = models.CharField(max_length=80, blank=True)
-    items_en = models.TextField('Description / items (EN)', help_text='One item per line')
-    items_hu = models.TextField('Description / items (HU)', blank=True)
-    price = models.CharField(max_length=40, help_text='e.g. 309 000')
-    image = models.ImageField(upload_to='packages/', blank=True)
-
-    class Meta(Ordered.Meta):
-        pass
-
-    def __str__(self):
-        return self.name_en
 
 
 GALLERY_CATEGORIES = [('clinic', 'Clinic'), ('treatments', 'Treatments'), ('events', 'Events'),
