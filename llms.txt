@@ -9,7 +9,7 @@
 - [Blog](https://infinitecare-site.amyrsalarr.workers.dev/blog): articles about treatments and skin care
 - [Professional teeth whitening: the basics](https://infinitecare-site.amyrsalarr.workers.dev/blog/professional-teeth-whitening-basics)
 - [Laser hair removal: how to prepare and what to do afterwards](https://infinitecare-site.amyrsalarr.workers.dev/blog/laser-hair-removal-preparation-and-aftercare)
-- [What to expect at your first visit to Infinite Care](https://infinitecare-site.amyrsalarr.workers.dev/blog/what-to-expect-at-your-first-visit)
+- [What to expect at your first visit to Infinite Care1](https://infinitecare-site.amyrsalarr.workers.dev/blog/what-to-expect-at-your-first-visit)
 
 ## Magyar
 
