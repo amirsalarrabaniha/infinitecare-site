@@ -9,7 +9,7 @@
   <div class="hero-btns reveal"><a class="btn" href="{{ urls.services }}">{{ ui.nav.1 }}</a><a class="btn btn-ghost" href="#contact">{{ h.contact_eyebrow }}</a></div>
  </div><div class="scroll-hint"><span></span></div></section>
 {% if h.marquee %}<section class="marquee" data-live="marquee" data-fp="{{ fp.marquee }}"><div class="marquee-track">{% for w in h.marquee %}<span>{{ w }}</span><i>✦</i>{% endfor %}{% for w in h.marquee %}<span>{{ w }}</span><i>✦</i>{% endfor %}</div></section>{% endif %}
-{% include "site/feature.html" with f=h.f1 rev=False href=urls.services live="f1" fp=fp.f1 %}
+{% include "site/feature_slider.html" with f=h.f1 rev=False href=urls.services live="f1" fp=fp.f1 %}
 {% if counters %}<section class="stats wrap" data-live="counters" data-fp="{{ fp.counters }}">{% for c in counters %}<div class="stat reveal"><b data-count="{{ c.value }}" data-suffix="{{ c.suffix }}">0</b><span>{{ c.label }}</span></div>{% endfor %}</section>{% endif %}
 {% include "site/feature.html" with f=h.f2 rev=True href=urls.services live="f2" fp=fp.f2 %}
 {% include "site/book_band.html" %}

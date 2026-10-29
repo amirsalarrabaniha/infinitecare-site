@@ -13,6 +13,16 @@ from .ui import UI
 LANGS = settings.SITE_LANGUAGES
 
 
+# Home "Our treatments" slider: extra slides after the admin f1 image (file in assets/media/home/slider/, alt EN, alt HU).
+HOME_SLIDES = [
+    ('facial-device', 'Facial treatment with a professional device', 'Arckezelés professzionális géppel'),
+    ('facial-care', 'Gentle facial care treatment', 'Kíméletes arcápoló kezelés'),
+    ('treatment-room', 'Treatment room at Infinite Care', 'Kezelőszoba az Infinite Care-ben'),
+    ('reception-hallway', 'Infinite Care clinic reception', 'Az Infinite Care klinika recepciója'),
+    ('clinic-lounge', 'Infinite Care clinic lounge', 'Az Infinite Care klinika váróterme'),
+]
+
+
 def alt_url(lang, page, slug=None):
     """Absolute URL (static export layout) of a page in a language, for hreflang / canonical / og tags.
     With STATIC_EXPORT_CLEAN_URLS (Cloudflare Workers assets: /services instead of /services.html) the .html is dropped."""
@@ -111,7 +121,8 @@ def page_context(lang, page, urls, api_url, post=None, src=data, service_id=None
         ctx.update(ld_json=json.dumps(org, ensure_ascii=False).replace('<', '\\u003c'), home=home, counters=counters,
                    fp=live.index_fps(home, counters, gallery, yt, clips),
                    gallery=gallery, gallery_videos=gallery_videos, gallery_filters=src.gallery_filters(gallery + gallery_videos, ui), clips=clips,
-                   watch_featured=next((v for v in yt if v['featured']), None), watch_shorts=[v for v in yt if v['home'] and not v['featured']][:4])
+                   watch_featured=next((v for v in yt if v['featured']), None), watch_shorts=[v for v in yt if v['home'] and not v['featured']][:4],
+                   slider_slides=HOME_SLIDES)
     elif page == 'services':
         svcs = src.services(lang, urls)
         f = live.fp(svcs)

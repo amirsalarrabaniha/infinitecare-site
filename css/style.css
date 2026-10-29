@@ -283,3 +283,26 @@ body.lb-open{overflow:hidden}
 .dp-m{min-height:1.2em;font-size:.9rem;margin:0}.dp-m.err{color:#a3261b}
 .dp-ok{display:grid;gap:.8rem;margin-top:1rem}.dp-code{font-weight:700;letter-spacing:.05em}
 @media (prefers-reduced-motion:reduce){.dp-wrap{transition:none}}
+
+/* home treatments slider (keeps the arched .f-img frame and its inner line) */
+.slider .sl-track{position:relative;aspect-ratio:4/5;overflow:hidden}
+.slider .sl-slide{position:absolute;inset:0;margin:0;opacity:0;transition:opacity 1.2s ease;z-index:0}
+.slider .sl-slide.on{opacity:1;z-index:1}
+.slider .sl-slide img{width:100%;height:100%;aspect-ratio:auto;object-fit:cover;display:block;transform:scale(1.001);transition:none}
+.slider .sl-slide.on img{animation:slKB 7s ease-out forwards}
+@keyframes slKB{from{transform:scale(1.001)}to{transform:scale(1.08)}}
+.f-img.slider:hover img{transform:none}
+.slider:after{z-index:3}
+.sl-arr{position:absolute;top:50%;z-index:4;width:42px;height:42px;margin-top:-21px;border-radius:50%;border:1px solid rgba(255,250,240,.7);background:rgba(25,81,70,.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);color:#fffaf0;display:grid;place-items:center;cursor:pointer;opacity:0;transition:opacity .4s,background .3s,transform .3s}
+.sl-arr svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.sl-prev{left:26px}.sl-next{right:26px}
+.slider:hover .sl-arr,.sl-arr:focus-visible{opacity:1}
+.sl-arr:hover{background:#195146;transform:scale(1.06)}
+.sl-arr:focus-visible,.sl-dots button:focus-visible{outline:2px solid #c9a96e;outline-offset:3px}
+.sl-dots{position:absolute;left:0;right:0;bottom:34px;z-index:4;display:flex;justify-content:center;gap:4px}
+.sl-dots button{width:24px;height:24px;padding:0;border:0;background:none;cursor:pointer;display:grid;place-items:center}
+.sl-dots button:before{content:"";width:7px;height:7px;border-radius:7px;background:rgba(255,250,240,.6);box-shadow:0 0 0 1px rgba(25,81,70,.25);transition:width .45s ease,background .3s}
+.sl-dots button[aria-current]:before{width:22px;background:#c9a96e}
+.sl-still .sl-slide{transition:none}.sl-still .sl-slide.on img{animation:none}
+@media (hover:none){.sl-arr{opacity:.85;width:36px;height:36px;margin-top:-18px}.sl-prev{left:20px}.sl-next{right:20px}}
+@media (prefers-reduced-motion:reduce){.slider .sl-slide{transition:none}.slider .sl-slide.on img{animation:none}}
