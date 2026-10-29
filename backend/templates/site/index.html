@@ -5,8 +5,8 @@
  <div class="hero-in"><img class="hero-logo" src="{{ S }}assets/images/infinitecare-logo-4.png" alt="" width="248" height="260">
   <span class="script hero-script">{{ h.hello }}</span>
   <h1 class="split">{{ h.h1_main }}{% if h.h1_em %}<br><em>{{ h.h1_em }}</em>{% endif %}</h1>
-  <p class="lead reveal">{{ h.lead }}</p>
-  <div class="hero-btns reveal"><a class="btn" href="{{ urls.services }}">{{ ui.nav.1 }}</a><a class="btn btn-ghost" href="#contact">{{ h.contact_eyebrow }}</a></div>
+  <p class="lead rise">{{ h.lead }}</p>
+  <div class="hero-btns rise"><a class="btn" href="{{ urls.services }}">{{ ui.nav.1 }}</a><a class="btn btn-ghost" href="#contact">{{ h.contact_eyebrow }}</a></div>
  </div><div class="scroll-hint"><span></span></div></section>
 {% if h.marquee %}<section class="marquee" data-live="marquee" data-fp="{{ fp.marquee }}"><div class="marquee-track">{% for w in h.marquee %}<span>{{ w }}</span><i>✦</i>{% endfor %}{% for w in h.marquee %}<span>{{ w }}</span><i>✦</i>{% endfor %}</div></section>{% endif %}
 {% include "site/feature_slider.html" with f=h.f1 rev=False href=urls.services live="f1" fp=fp.f1 %}

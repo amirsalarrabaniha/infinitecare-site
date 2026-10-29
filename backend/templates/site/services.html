@@ -1,4 +1,5 @@
 {% extends "site/base.html" %}
+{% block meta %}<script type="application/ld+json">{{ ld_json|safe }}</script>{% endblock %}
 {% block content %}{% include "site/subhero.html" %}
 <main class="svcs">
 <div class="svlist" data-live="services" data-fp="{{ fp.services }}">{% for s in services %}{% include "site/service.html" with n=forloop.counter %}{% endfor %}</div>

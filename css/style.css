@@ -306,3 +306,10 @@ body.lb-open{overflow:hidden}
 .sl-still .sl-slide{transition:none}.sl-still .sl-slide.on img{animation:none}
 @media (hover:none){.sl-arr{opacity:.85;width:36px;height:36px;margin-top:-18px}.sl-prev{left:20px}.sl-next{right:20px}}
 @media (prefers-reduced-motion:reduce){.slider .sl-slide{transition:none}.slider .sl-slide.on img{animation:none}}
+
+.dp-pv{margin:-.4rem 0 .9rem;font-size:.82rem}.dp-pv a{color:inherit;text-decoration:underline}
+@keyframes rise{from{opacity:.01;transform:translateY(24px)}}
+.rise{animation:rise 1s var(--ease) both}
+.rise+.rise{animation-delay:.12s}
+@media (prefers-reduced-motion:reduce){.rise{animation:none}}
+.prose{max-width:760px;margin:0 auto;padding:4rem 1.25rem}.prose h2{margin:2rem 0 .6rem}.prose p,.prose li{line-height:1.7}.prose ul{padding-left:1.2rem}.prose .note{padding:1rem;border-left:3px solid var(--g);background:rgba(25,81,70,.06)}

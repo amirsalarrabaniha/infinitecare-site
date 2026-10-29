@@ -286,7 +286,7 @@ class ContentTests(TestCase):
             self.assertNotIn('prices', txt, f)
             self.assertNotIn('massage', txt, f)
             self.assertNotIn('masszázs', txt, f)
-        self.assertEqual((p / 'sitemap.xml').read_text(encoding='utf-8').count('<url>'), 30)   # (home, treatments, blog + 3 posts + 9 service pages) x EN + HU
+        self.assertEqual((p / 'sitemap.xml').read_text(encoding='utf-8').count('<url>'), 32)   # (home, treatments, blog, privacy + 3 posts + 9 service pages) x EN + HU
 
     # ---- blog ----
     def test_blog_seed(self):
@@ -369,7 +369,7 @@ class ContentTests(TestCase):
         sm = (p / 'sitemap.xml').read_text(encoding='utf-8')
         self.assertIn('<loc>https://example.test/hu/blog</loc>', sm)
         n_svc = Service.objects.filter(is_active=True).exclude(slug_en='').count()
-        self.assertEqual(sm.count('<loc>'), 2 * (3 + BlogPost.objects.filter(is_published=True).count() + n_svc))
+        self.assertEqual(sm.count('<loc>'), 2 * (4 + BlogPost.objects.filter(is_published=True).count() + n_svc))
         self.assertIn('Sitemap: https://example.test/sitemap.xml', (p / 'robots.txt').read_text(encoding='utf-8'))
         llms = (p / 'llms.txt').read_text(encoding='utf-8')
         self.assertTrue(llms.startswith('# Infinite Care Beauty Clinic'))

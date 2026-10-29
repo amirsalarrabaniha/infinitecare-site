@@ -83,6 +83,10 @@ class Command(BaseCommand):
             links = ''.join(f'<xhtml:link rel="alternate" hreflang="{l}" href="{u}"/>' for l, u in alts.items())
             links += f'<xhtml:link rel="alternate" hreflang="x-default" href="{alts["en"]}"/>'
             lastmod = next((p.published_at.isoformat() for p in posts if p.slug == slug), '')
+            if not slug and page == 'blog' and posts:   # list pages change when a post / service changes
+                lastmod = max(p.published_at.isoformat() for p in posts)
+            elif not slug and page in ('index', 'services'):
+                lastmod = max((x.get('updated') or '' for x in src.services('en', data.ExportUrls('en', root=True))), default='')
             for l, u in alts.items():
                 rows.append(f'<url><loc>{u}</loc>{f"<lastmod>{lastmod}</lastmod>" if lastmod else ""}{links}</url>')
         urls = data.ExportUrls('en', root=True)
