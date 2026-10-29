@@ -1,0 +1,778 @@
+{
+  "laser-hair-removal-preparation-and-aftercare": {
+    "slug": "laser-hair-removal-preparation-and-aftercare",
+    "title": "Laser hair removal: how to prepare and what to do afterwards",
+    "excerpt": "General tips for getting ready for a laser hair removal session and looking after your skin once it is over.",
+    "cover": "https://infinitecare-api.amyrsalarr.workers.dev/media/blog/treatment-laser-hair-removal.webp",
+    "date": "October 19, 2026",
+    "iso_date": "2026-10-19",
+    "url": "/en/blog/laser-hair-removal-preparation-and-aftercare/",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Laser hair removal works best when you and your specialist prepare well and follow the aftercare advice. The tips below are general guidelines. Your specialist will give you personal instructions at the clinic, and those always come first."
+      },
+      {
+        "type": "h",
+        "text": "Before your session"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Shave the treatment area shortly before your appointment, as advised by your specialist. Avoid waxing, plucking or epilating beforehand, because the treatment works with the hair that is still in the skin.",
+          "Avoid strong sun exposure, solariums and self-tanning products on the area for a while before the session.",
+          "Come with clean skin, without creams, oils or deodorant on the area.",
+          "Tell your specialist about any medications, skin conditions, allergies or recent treatments."
+        ]
+      },
+      {
+        "type": "h",
+        "text": "What the session is like"
+      },
+      {
+        "type": "p",
+        "text": "Your specialist will start with a short consultation and prepare the area. During the treatment you may feel warmth or a light snapping sensation, and you can let your specialist know if it feels uncomfortable. The length of a session depends on the size of the area."
+      },
+      {
+        "type": "h",
+        "text": "Afterwards"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Skin can look slightly red or feel warm for a short time. A gentle, fragrance-free moisturiser can help it feel comfortable.",
+          "Protect the area from the sun and use sun protection as recommended.",
+          "It is usually advised to avoid very hot baths, saunas, intense exercise and harsh scrubs for a few days.",
+          "Do not pick at the skin, and avoid waxing or plucking between sessions."
+        ]
+      },
+      {
+        "type": "h",
+        "text": "Plan for several sessions"
+      },
+      {
+        "type": "p",
+        "text": "Hair grows in cycles, so laser hair removal is normally planned as a series of sessions with breaks in between. Your specialist will explain a schedule that suits your skin and hair type. Results differ from person to person."
+      },
+      {
+        "type": "p",
+        "text": "If anything feels unusual after your session, please contact the clinic."
+      }
+    ],
+    "videos": [
+      {
+        "id": 7,
+        "youtube_id": "Dt0dmmsswzc",
+        "title": "Laser hair removal: what to know (video in Hungarian)",
+        "caption": "",
+        "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/Dt0dmmsswzc.webp",
+        "width": 405,
+        "height": 720,
+        "vertical": true,
+        "category": "laser",
+        "cats": "laser treatments",
+        "featured": false,
+        "home": false,
+        "gallery": true,
+        "service_id": null,
+        "post_id": 2
+      }
+    ]
+  },
+  "professional-teeth-whitening-basics": {
+    "slug": "professional-teeth-whitening-basics",
+    "title": "Professional teeth whitening: the basics",
+    "excerpt": "What professional teeth whitening is, how a visit usually goes and how to look after your smile afterwards.",
+    "cover": "https://infinitecare-api.amyrsalarr.workers.dev/media/blog/blog-teeth-whitening-cover.webp",
+    "date": "October 26, 2026",
+    "iso_date": "2026-10-26",
+    "url": "/en/blog/professional-teeth-whitening-basics/",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "A brighter smile is one of the most popular wishes we hear. Here are the basics of professional teeth whitening, so you can decide whether it is right for you."
+      },
+      {
+        "type": "h",
+        "text": "What is professional whitening?"
+      },
+      {
+        "type": "p",
+        "text": "Professional whitening is carried out by a trained specialist, who uses products and methods designed for use in a clinic. It lightens the natural colour of your teeth. It does not change the colour of crowns, veneers or fillings."
+      },
+      {
+        "type": "h",
+        "text": "Is it right for me?"
+      },
+      {
+        "type": "p",
+        "text": "A consultation comes first. Your specialist will look at your teeth and gums and ask about your history. In some cases, for example when there are cavities or gum problems, it may be better to see a dentist first. Tell us if you are pregnant or breastfeeding, if you have sensitive teeth or if you have any dental work."
+      },
+      {
+        "type": "h",
+        "text": "How a visit usually goes"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Your specialist checks the starting shade and protects your gums and lips.",
+          "The whitening product is applied and left for the planned time.",
+          "The shade is checked again, and you will get advice for the following days."
+        ]
+      },
+      {
+        "type": "h",
+        "text": "Looking after your smile afterwards"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Teeth can feel a little sensitive for a short while. Let your specialist know if this bothers you.",
+          "For the first day or two it is usually advised to avoid strongly coloured food and drinks, such as coffee, tea, red wine and berries, and to avoid smoking.",
+          "Keep up a good routine of brushing twice a day, cleaning between your teeth and regular dental check-ups."
+        ]
+      },
+      {
+        "type": "h",
+        "text": "What to keep in mind"
+      },
+      {
+        "type": "p",
+        "text": "The result depends on your natural tooth colour and your daily habits, and it is not the same for everyone. Whitening is not permanent, and you can discuss with your specialist how to keep your smile looking fresh."
+      }
+    ],
+    "videos": [
+      {
+        "id": 3,
+        "youtube_id": "ckGJs4jgLhI",
+        "title": "Teeth whitening: Hollywood smile",
+        "caption": "",
+        "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/ckGJs4jgLhI.webp",
+        "width": 405,
+        "height": 720,
+        "vertical": true,
+        "category": "whitening",
+        "cats": "whitening treatments",
+        "featured": false,
+        "home": true,
+        "gallery": true,
+        "service_id": 7,
+        "post_id": 3
+      }
+    ]
+  },
+  "what-to-expect-at-your-first-visit": {
+    "slug": "what-to-expect-at-your-first-visit",
+    "title": "What to expect at your first visit to Infinite Care",
+    "excerpt": "A friendly walk-through of your first visit: arriving, the consultation, your treatment and what happens afterwards.",
+    "cover": "https://infinitecare-api.amyrsalarr.workers.dev/media/blog/clinic-lounge.webp",
+    "date": "October 12, 2026",
+    "iso_date": "2026-10-12",
+    "url": "/en/blog/what-to-expect-at-your-first-visit/",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Visiting a beauty clinic for the first time can feel like a big step. Here is a simple overview of how a first visit to Infinite Care Beauty Clinic usually goes, so you know what to expect."
+      },
+      {
+        "type": "h",
+        "text": "Before you arrive"
+      },
+      {
+        "type": "p",
+        "text": "The clinic is in the 6th district of Budapest, at Podmaniczky street 5. We are open Monday to Friday from 9 to 20 and on Saturdays from 9 to 15. You can book by phone, so please call us or send an email to choose a time that suits you."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Arrive a few minutes early so you can settle in without rushing.",
+          "Come with clean skin if you are booked for a facial or another skin treatment.",
+          "Bring a list of any medications, allergies or skin conditions you would like us to know about."
+        ]
+      },
+      {
+        "type": "h",
+        "text": "The consultation"
+      },
+      {
+        "type": "p",
+        "text": "Every visit starts with a conversation. Your specialist will ask about your goals, your skin or health background and any questions you have. Together you will talk through the options, so you can decide what feels right for you. Nobody will pressure you to choose anything."
+      },
+      {
+        "type": "h",
+        "text": "Your treatment"
+      },
+      {
+        "type": "p",
+        "text": "Treatments take place in a calm, private treatment room. Your specialist will explain each step before it begins and will adjust things to keep you comfortable. If you feel unsure at any point, simply say so."
+      },
+      {
+        "type": "h",
+        "text": "After your visit"
+      },
+      {
+        "type": "p",
+        "text": "You will receive aftercare advice that fits the treatment you chose. If you have questions once you are home, you are welcome to contact us. Some treatments are planned as a series, and your specialist can talk you through a schedule that suits you."
+      },
+      {
+        "type": "p",
+        "text": "We look forward to welcoming you."
+      }
+    ],
+    "videos": []
+  },
+  "collagen-exosome-therapy-and-mesotherapy": {
+    "slug": "collagen-exosome-therapy-and-mesotherapy",
+    "title": "Collagen and skin quality: how exosome therapy and mesotherapy fit in",
+    "excerpt": "Collagen keeps skin firm and supple. Learn why it declines with age, which daily habits protect it, and how exosome therapy and microneedle mesotherapy may help.",
+    "cover": "https://infinitecare-api.amyrsalarr.workers.dev/media/blog/cover-collagen-exosome-mesotherapy-v2.webp",
+    "date": "October 29, 2026",
+    "iso_date": "2026-10-29",
+    "url": "/en/blog/collagen-exosome-therapy-and-mesotherapy/",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Collagen is a structural protein that gives the skin its firmness and elasticity. Understanding how it changes over time helps in choosing sensible skincare and clinic treatments."
+      },
+      {
+        "type": "h",
+        "text": "Why does collagen decline?"
+      },
+      {
+        "type": "p",
+        "text": "The body's own collagen production gradually slows with age. Several external factors can accelerate this process:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "unprotected sun exposure",
+          "smoking",
+          "insufficient sleep and chronic stress",
+          "a diet low in protein and fresh produce"
+        ]
+      },
+      {
+        "type": "h",
+        "text": "Everyday habits that protect your skin"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "daily sunscreen",
+          "a consistent, gentle skincare routine",
+          "balanced nutrition and adequate sleep"
+        ]
+      },
+      {
+        "type": "h",
+        "text": "Mesotherapy with microneedles"
+      },
+      {
+        "type": "p",
+        "text": "Microneedle mesotherapy creates very fine, controlled micro-channels in the skin's surface. This process is intended to support the skin's natural renewal and allows carefully selected active ingredients to be applied. Mild redness for a short period afterwards is common. Your therapist will explain what to expect and how to care for your skin."
+      },
+      {
+        "type": "h",
+        "text": "Exosome therapy"
+      },
+      {
+        "type": "p",
+        "text": "Exosome therapy is a newer approach in aesthetic skincare. Exosome-based products are applied to the skin, often in combination with microneedling, with the aim of supporting skin quality, radiance and texture. As research in this field is still developing, we discuss the treatment, its aims and its limitations openly with every client during the consultation."
+      },
+      {
+        "type": "h",
+        "text": "Which option is right for you?"
+      },
+      {
+        "type": "p",
+        "text": "The choice depends on your skin condition, goals and medical history. Some clients benefit from one method; others from a combined plan. Pregnancy, active skin infections and certain medical conditions may be contraindications."
+      },
+      {
+        "type": "h",
+        "text": "Frequently asked questions"
+      },
+      {
+        "type": "h",
+        "text": "When can I see a change?"
+      },
+      {
+        "type": "p",
+        "text": "The skin renews gradually, so changes develop over the weeks following treatment and vary individually."
+      },
+      {
+        "type": "h",
+        "text": "Is there downtime?"
+      },
+      {
+        "type": "p",
+        "text": "Temporary redness or sensitivity may occur; most clients resume normal activities quickly. Your therapist will give personal aftercare instructions."
+      },
+      {
+        "type": "h",
+        "text": "Can collagen supplements replace treatments?"
+      },
+      {
+        "type": "p",
+        "text": "Supplements are not a substitute for professional treatment or sun protection. Please consult your doctor before taking supplements."
+      },
+      {
+        "type": "p",
+        "text": "Learn more: [Exosome therapy](/exosome-therapy) and [Microneedling mesotherapy](/mesotherapy)"
+      },
+      {
+        "type": "h",
+        "text": "Book a consultation"
+      },
+      {
+        "type": "p",
+        "text": "To find out whether this treatment is suitable for you, please [book a consultation with our team online](https://l.fresha.com/3dvz3n7j6)."
+      }
+    ],
+    "videos": []
+  },
+  "autumn-winter-skincare-routine": {
+    "slug": "autumn-winter-skincare-routine",
+    "title": "Your autumn and winter skincare routine: professional advice",
+    "excerpt": "Cold air and indoor heating challenge the skin barrier. A clear daily routine for the colder months, and when a professional facial treatment can add value.",
+    "cover": "https://infinitecare-api.amyrsalarr.workers.dev/media/blog/cover-autumn-skincare-routine.webp",
+    "date": "October 29, 2026",
+    "iso_date": "2026-10-29",
+    "url": "/en/blog/autumn-winter-skincare-routine/",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "As temperatures drop in Budapest, many clients notice that their skin feels tighter, drier or more sensitive. Cold outdoor air, wind and dry indoor heating all place extra demands on the skin barrier. A few adjustments to your routine can help keep the skin comfortable."
+      },
+      {
+        "type": "h",
+        "text": "Why skin changes in the colder months"
+      },
+      {
+        "type": "p",
+        "text": "The skin barrier helps retain moisture and protect against irritants. Lower humidity outdoors and heated indoor air increase water loss from the skin, which may lead to dryness, flaking and redness."
+      },
+      {
+        "type": "h",
+        "text": "A simple daily routine"
+      },
+      {
+        "type": "p",
+        "text": "Morning:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "cleanse with a mild, non-stripping cleanser",
+          "apply a hydrating serum if your skin is dehydrated",
+          "use a moisturiser suited to your skin type",
+          "finish with broad-spectrum sunscreen, even on grey days"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Evening:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "remove make-up and sunscreen gently",
+          "apply a richer moisturiser if your skin feels tight",
+          "introduce active ingredients gradually and avoid combining too many at once"
+        ]
+      },
+      {
+        "type": "h",
+        "text": "Common mistakes to avoid"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "very hot water when washing the face",
+          "over-exfoliating dry or sensitive skin",
+          "skipping sunscreen in winter"
+        ]
+      },
+      {
+        "type": "h",
+        "text": "When a professional facial can help"
+      },
+      {
+        "type": "p",
+        "text": "A professional facial treatment allows a therapist to assess your skin in person and recommend appropriate care. Depending on your skin, options may include a deep-cleansing facial or carbon peeling. Autumn and winter are also a practical time for treatments that require careful sun avoidance afterwards. Your therapist will advise which approach suits your skin."
+      },
+      {
+        "type": "h",
+        "text": "Frequently asked questions"
+      },
+      {
+        "type": "h",
+        "text": "Should I change my moisturiser in winter?"
+      },
+      {
+        "type": "p",
+        "text": "Many people benefit from a slightly richer texture in colder months, but this depends on your skin type."
+      },
+      {
+        "type": "h",
+        "text": "Is sunscreen really necessary in winter?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. Ultraviolet radiation is present all year round, so daily protection remains important."
+      },
+      {
+        "type": "h",
+        "text": "How often should I have a professional facial?"
+      },
+      {
+        "type": "p",
+        "text": "This depends on your skin condition and goals; your therapist will recommend a suitable interval."
+      },
+      {
+        "type": "p",
+        "text": "Learn more: [Our treatments](/services) and [Carbon peeling](/carbon-peeling)"
+      },
+      {
+        "type": "h",
+        "text": "Book a consultation"
+      },
+      {
+        "type": "p",
+        "text": "To find out whether this treatment is suitable for you, please [book a consultation with our team online](https://l.fresha.com/3dvz3n7j6)."
+      }
+    ],
+    "videos": []
+  },
+  "carbon-peeling-and-pigmentation": {
+    "slug": "carbon-peeling-and-pigmentation",
+    "title": "Carbon peeling and uneven skin tone: prevention and professional care",
+    "excerpt": "Why pigmentation appears, how daily sun protection helps prevent it, and how carbon peeling can support a clearer, more even-looking complexion.",
+    "cover": "https://infinitecare-api.amyrsalarr.workers.dev/media/blog/cover-carbon-peeling-pigmentation.webp",
+    "date": "October 29, 2026",
+    "iso_date": "2026-10-29",
+    "url": "/en/blog/carbon-peeling-and-pigmentation/",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Uneven skin tone and dark spots are among the most common reasons clients visit a skin clinic. Prevention and professional care work best together. This article outlines the main causes of pigmentation, the everyday habits that help, and the role of carbon peeling."
+      },
+      {
+        "type": "h",
+        "text": "Why does pigmentation appear?"
+      },
+      {
+        "type": "p",
+        "text": "Pigmentation results from an increased or uneven production of melanin, the pigment that gives skin its colour. Common triggers include:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "ultraviolet exposure from the sun",
+          "hormonal changes",
+          "marks left after acne or skin irritation",
+          "natural skin ageing"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Any new, changing or irregular spot should be examined by a dermatologist before any cosmetic treatment."
+      },
+      {
+        "type": "h",
+        "text": "Prevention starts with sun protection"
+      },
+      {
+        "type": "p",
+        "text": "Daily broad-spectrum sunscreen is the single most important habit for preventing new pigmentation, including on cloudy days and in winter. Reapply during long periods outdoors, and wear a hat and sunglasses in strong sun."
+      },
+      {
+        "type": "h",
+        "text": "What is carbon peeling?"
+      },
+      {
+        "type": "p",
+        "text": "Carbon peeling is a non-invasive laser facial. A thin layer of carbon lotion is applied to the skin, and a laser then passes over the treated area. The treatment is commonly used to deep-cleanse pores, refine the look of skin texture and support a brighter, more even complexion. It is often described as comfortable, and there is generally no downtime."
+      },
+      {
+        "type": "h",
+        "text": "Is carbon peeling suitable for me?"
+      },
+      {
+        "type": "p",
+        "text": "Suitability depends on your skin type, current skincare and medical history. Your therapist will assess your skin at the consultation. Recent sun exposure, certain medications or active skin conditions may mean postponing the treatment."
+      },
+      {
+        "type": "h",
+        "text": "Aftercare"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "use a gentle cleanser and moisturiser for the following days",
+          "apply sunscreen every morning",
+          "avoid strong exfoliants unless your therapist advises otherwise"
+        ]
+      },
+      {
+        "type": "h",
+        "text": "Frequently asked questions"
+      },
+      {
+        "type": "h",
+        "text": "How many sessions are recommended?"
+      },
+      {
+        "type": "p",
+        "text": "A course of several sessions is often suggested; the number depends on your skin goals and is discussed individually."
+      },
+      {
+        "type": "h",
+        "text": "Can I wear make-up afterwards?"
+      },
+      {
+        "type": "p",
+        "text": "Your therapist will advise you; many clients prefer to let the skin rest for the remainder of the day."
+      },
+      {
+        "type": "h",
+        "text": "Does carbon peeling remove pigmentation permanently?"
+      },
+      {
+        "type": "p",
+        "text": "No treatment can guarantee permanent removal. Consistent sun protection is essential to maintain any improvement."
+      },
+      {
+        "type": "p",
+        "text": "Learn more about the treatment: [Carbon peeling](/carbon-peeling)"
+      },
+      {
+        "type": "h",
+        "text": "Book a consultation"
+      },
+      {
+        "type": "p",
+        "text": "To find out whether this treatment is suitable for you, please [book a consultation with our team online](https://l.fresha.com/3dvz3n7j6)."
+      }
+    ],
+    "videos": []
+  },
+  "ingrown-hairs-and-laser-hair-removal": {
+    "slug": "ingrown-hairs-and-laser-hair-removal",
+    "title": "Ingrown hairs and laser hair removal: a practical guide",
+    "excerpt": "Why ingrown hairs develop after shaving or waxing, how to care for irritated skin, and how laser hair removal may reduce the problem over a treatment course.",
+    "cover": "https://infinitecare-api.amyrsalarr.workers.dev/media/blog/cover-ingrown-hairs-laser-v2.webp",
+    "date": "October 29, 2026",
+    "iso_date": "2026-10-29",
+    "url": "/en/blog/ingrown-hairs-and-laser-hair-removal/",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Ingrown hairs are a frequent and uncomfortable consequence of shaving and waxing. This guide explains why they appear, how to care for the skin, and why many clients consider laser hair removal."
+      },
+      {
+        "type": "h",
+        "text": "What is an ingrown hair?"
+      },
+      {
+        "type": "p",
+        "text": "An ingrown hair is a hair that curls back or grows sideways into the skin instead of growing out of the follicle. This can cause small red bumps, itching or tenderness. Curly or coarse hair and areas such as the bikini line, underarms, legs and beard area are more prone to it."
+      },
+      {
+        "type": "h",
+        "text": "Common causes"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "shaving against the direction of hair growth",
+          "blunt razors or repeated passes over the same area",
+          "waxing, which may break hairs below the skin surface",
+          "tight clothing that rubs freshly treated skin"
+        ]
+      },
+      {
+        "type": "h",
+        "text": "Caring for irritated skin"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "avoid picking or squeezing the area",
+          "keep the skin clean and moisturised",
+          "use gentle exfoliation only once irritation has settled",
+          "consult a doctor if the area becomes painful, swollen or shows signs of infection"
+        ]
+      },
+      {
+        "type": "h",
+        "text": "How laser hair removal can help"
+      },
+      {
+        "type": "p",
+        "text": "Laser hair removal targets the pigment in the hair follicle with light energy, aiming to reduce regrowth over time. Because fewer hairs grow back and shaving becomes less frequent, many clients find that ingrown hairs occur less often. Results vary with hair colour, skin type and hormonal factors, and a course of sessions is required because hair grows in cycles."
+      },
+      {
+        "type": "h",
+        "text": "Before your first session"
+      },
+      {
+        "type": "p",
+        "text": "Shave the area a day before your appointment, but do not wax, epilate or pluck in the weeks beforehand, as the follicle must remain intact. Avoid tanning and self-tanner. Our earlier article on preparation and aftercare covers this in more detail."
+      },
+      {
+        "type": "h",
+        "text": "Frequently asked questions"
+      },
+      {
+        "type": "h",
+        "text": "Can I have laser treatment on an area with ingrown hairs?"
+      },
+      {
+        "type": "p",
+        "text": "This depends on the condition of the skin. Inflamed or broken skin must heal first; your therapist will assess it."
+      },
+      {
+        "type": "h",
+        "text": "Is laser hair removal permanent?"
+      },
+      {
+        "type": "p",
+        "text": "It is designed to achieve long-term hair reduction. Occasional maintenance sessions may be needed."
+      },
+      {
+        "type": "h",
+        "text": "Which areas can be treated?"
+      },
+      {
+        "type": "p",
+        "text": "Most body areas and the face can be treated. Your therapist will confirm suitability at the consultation."
+      },
+      {
+        "type": "p",
+        "text": "Learn more about the treatment: [Diode laser hair removal](/laser-hair-removal)"
+      },
+      {
+        "type": "h",
+        "text": "Book a consultation"
+      },
+      {
+        "type": "p",
+        "text": "To find out whether this treatment is suitable for you, please [book a consultation with our team online](https://l.fresha.com/3dvz3n7j6)."
+      }
+    ],
+    "videos": []
+  },
+  "cellulite-therapy-what-to-know": {
+    "slug": "cellulite-therapy-what-to-know",
+    "title": "Cellulite therapy: what to know before you start",
+    "excerpt": "Cellulite is common and not a medical condition. Learn what causes it, what a clinic treatment course involves and how to set realistic expectations.",
+    "cover": "https://infinitecare-api.amyrsalarr.workers.dev/media/blog/cover-cellulite-therapy-v2.webp",
+    "date": "October 29, 2026",
+    "iso_date": "2026-10-29",
+    "url": "/en/blog/cellulite-therapy-what-to-know/",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Cellulite is one of the most frequent concerns raised during body consultations. It is important to state at the outset that cellulite is a common, natural feature of the skin and not a disease. Many people of every body type have it. This article explains how cellulite develops and what to expect from a professional treatment course at our clinic."
+      },
+      {
+        "type": "h",
+        "text": "What is cellulite?"
+      },
+      {
+        "type": "p",
+        "text": "Cellulite describes the dimpled, uneven appearance of the skin, most often on the thighs, hips and buttocks. It occurs where fat tissue beneath the skin pushes against the connective tissue bands that anchor the skin to deeper layers. Hormones, genetics, circulation, skin thickness and lifestyle all play a role, which is why its appearance differs so much from one person to another."
+      },
+      {
+        "type": "h",
+        "text": "Who may benefit from cellulite therapy?"
+      },
+      {
+        "type": "p",
+        "text": "A clinic treatment may be considered by clients who:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "would like smoother-looking skin texture in specific areas",
+          "have a stable body weight and a balanced routine",
+          "understand that results are gradual and vary individually"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "During the consultation we review your health history. Certain conditions, pregnancy or implanted devices may mean that a treatment is not recommended."
+      },
+      {
+        "type": "h",
+        "text": "How a treatment course works"
+      },
+      {
+        "type": "p",
+        "text": "Cellulite therapy is generally planned as a series of sessions rather than a single appointment. Your therapist will assess the area, explain the method and agree on a schedule with you. Most clients can return to their normal activities straight after a session."
+      },
+      {
+        "type": "h",
+        "text": "Supporting the results at home"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "stay well hydrated",
+          "keep active with regular movement",
+          "follow a balanced diet",
+          "follow the aftercare advice given by your therapist"
+        ]
+      },
+      {
+        "type": "h",
+        "text": "Realistic expectations"
+      },
+      {
+        "type": "p",
+        "text": "No method removes cellulite permanently. The aim of treatment is a visible improvement in the smoothness and firmness of the skin. Maintenance sessions are often recommended. For body toning, some clients combine their plan with our Emsculpt treatment; your therapist will advise whether this is appropriate."
+      },
+      {
+        "type": "h",
+        "text": "Frequently asked questions"
+      },
+      {
+        "type": "h",
+        "text": "Is cellulite therapy painful?"
+      },
+      {
+        "type": "p",
+        "text": "Most clients describe the sensation as comfortable. Your therapist adjusts the treatment to your tolerance."
+      },
+      {
+        "type": "h",
+        "text": "How many sessions will I need?"
+      },
+      {
+        "type": "p",
+        "text": "This depends on the area and your individual skin condition. A personal plan is agreed during the consultation."
+      },
+      {
+        "type": "h",
+        "text": "Will cellulite come back?"
+      },
+      {
+        "type": "p",
+        "text": "Cellulite is influenced by genetics and hormones, so maintenance is usually needed to keep results."
+      },
+      {
+        "type": "p",
+        "text": "Learn more about the treatment: [Cellulite therapy](/cellulite-therapy)"
+      },
+      {
+        "type": "h",
+        "text": "Book a consultation"
+      },
+      {
+        "type": "p",
+        "text": "To find out whether this treatment is suitable for you, please [book a consultation with our team online](https://l.fresha.com/3dvz3n7j6)."
+      }
+    ],
+    "videos": []
+  }
+}

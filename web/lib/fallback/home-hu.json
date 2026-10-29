@@ -1,0 +1,57 @@
+{
+  "hero_image": "https://infinitecare-api.amyrsalarr.workers.dev/media/home/clinic-lounge.webp",
+  "hello": "Hello Beautiful!",
+  "h1_main": "Infinite Care",
+  "h1_em": "az egészség szépsége",
+  "lead": "Budapest legújabb esztétikai klinikája szeretettel várja minden kedves szépülni vágyó vendégét. Teremtsük meg közösen a harmóniát test és lélek között. Infinite Care az egészség szépsége.",
+  "marquee": [
+    "Exoszóma Terápia",
+    "Lézeres szőrtelenítés",
+    "Mezoterápia",
+    "Emsculpt",
+    "Carbon hámlasztás",
+    "Fogfehérítés",
+    "Face lifting",
+    "Brazilift"
+  ],
+  "f1": {
+    "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/home/service-microneedling.webp",
+    "eyebrow": "Szolgáltatásaink",
+    "title": "Még gyönörűbbé varázsolunk",
+    "paragraphs": [
+      "Engedd, hogy a bőröd, az arcod és az egész tested mosolyogjon a világra! Hadd ragyogj még fényesebben! Megérdemled, hogy szép legyél, életed minden pillanatában.",
+      "Felkészült csapatunk, világelső berendezéseink és legújabb klinikánk csak rád vár!"
+    ],
+    "button": "Szolgáltatásaink"
+  },
+  "f2": {
+    "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/home/home-treatment-room.webp",
+    "eyebrow": "Tökéletes harmónia",
+    "title": "A gyönyörű test rád vár!",
+    "paragraphs": [
+      "Mikor érezted utoljára, hogy a tested és a lelked is tökéletes harmóniában van egymással? Amikor úgy érezted, hogy nincs szükséged többre, csak megélni a pillanatot?",
+      "Mi segítünk megtalálni a harmóniát test és lélek egyensúlya között!"
+    ],
+    "button": "Tudj meg többet!"
+  },
+  "cta_image": "https://infinitecare-api.amyrsalarr.workers.dev/media/home/services.webp",
+  "cta_script": "A szépség egészsége",
+  "cta_title": "Várunk konzultációra",
+  "cta_button": "Jelentkezem",
+  "contact_eyebrow": "Kapcsolat",
+  "contact_title": "A szépség egészsége",
+  "contact_text": "Kérdésed van? tudj meg rólunk többet! Felvesszük veled a kapcsolatot!",
+  "contact_image": "https://infinitecare-api.amyrsalarr.workers.dev/media/home/clinic-facade.webp",
+  "counters": [
+    {
+      "value": 11,
+      "suffix": "+",
+      "label": "kezelés"
+    },
+    {
+      "value": 6,
+      "suffix": "",
+      "label": "nap egy héten"
+    }
+  ]
+}

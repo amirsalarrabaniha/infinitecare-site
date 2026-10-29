@@ -1,0 +1,594 @@
+{
+  "results": [
+    {
+      "videos": [],
+      "id": 1,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/box-14.webp",
+      "eyebrow": "Világújdonság a szépségápolásban",
+      "title": "Exoszóma Terápia",
+      "description": [
+        "Az exoszómák a szépségiparban új és ígéretes területet jelentenek. A növényi exoszómák különböző biológiai és farmakológiai hatásokat fejtenek ki, mint például sebgyógyítás, antioxidáns és gyulladáscsökkentő hatások, pigment kezelés, haj és fejbőr problémák."
+      ],
+      "order": 10,
+      "slug": "exoszoma-terapia",
+      "slugs": {
+        "en": "exosome-therapy",
+        "hu": "exoszoma-terapia"
+      },
+      "meta_title": "Exoszóma terápia Budapesten",
+      "meta_description": "Exoszóma terápia az Infinite Care Beauty Clinicben, Budapest: sebgyógyító, antioxidáns és gyulladáscsökkentő hatás ráncokra, pigmentfoltokra, hegekre, haj- és fejbőrproblémákra.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Világújdonság a szépségápolásban az exoszómák őssejtjeinek erejével!"
+        },
+        {
+          "type": "p",
+          "text": "Az exoszómák a szépségiparban új és ígéretes területet jelentenek. A növényi exoszómák különböző biológiai és farmakológiai hatásokat fejtenek ki, mint például sebgyógyítás, antioxidáns és gyulladáscsökkentő hatások, pigmentkezelés, haj- és fejbőrproblémák kezelése."
+        },
+        {
+          "type": "h",
+          "text": "Előnyei"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Sebgyógyító hatás",
+            "Antioxidáns és gyulladáscsökkentő hatás",
+            "Pigmentfoltok kezelése",
+            "Haj- és fejbőrproblémák kezelése"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "Mi az az exoszóma?"
+        },
+        {
+          "type": "p",
+          "text": "Az exoszómás komplexum egy olyan biológiai rendszer, amely sejtekben található, és olyan apró vezikulumokat, azaz membránnal borított kis \"hólyagokat\" tartalmaz, amelyek információt vagy más anyagokat hordoznak más sejtekhez. Ezek a komplexek különféle feladatokat látnak el, mint például az üzenetek továbbítása, az immunrendszer működésének szabályozása vagy a sejtek környezetével való kommunikáció."
+        },
+        {
+          "type": "h",
+          "text": "Milyen gyakran kell exoszóma kezelésre járnom?"
+        },
+        {
+          "type": "p",
+          "text": "A bőr állapotától függően általában kéthetente ajánljuk az exoszóma terápiát 3-4 alkalommal, de egyes esetekben szükség lehet heti egy kezelésre. Ezt minden esetben egy előzetes, ingyenes konzultáción beszéljük meg pácienseinkkel."
+        }
+      ],
+      "gallery_category": "facial",
+      "updated": "2026-10-29"
+    },
+    {
+      "videos": [
+        {
+          "id": 6,
+          "youtube_id": "GFkCHCBCbmU",
+          "title": "Diódalézeres tartós szőrtelenítés",
+          "caption": "",
+          "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/GFkCHCBCbmU.webp",
+          "width": 405,
+          "height": 720,
+          "vertical": true,
+          "category": "laser",
+          "cats": "laser treatments",
+          "featured": false,
+          "home": true,
+          "gallery": true,
+          "service_id": 2,
+          "post_id": null
+        }
+      ],
+      "id": 2,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/service-laser-hair-removal.webp",
+      "eyebrow": "Lágy és végtelenül sima",
+      "title": "Dióda lézeres tartós szörtelenítés",
+      "description": [
+        "Tökéletes simaság egész évben? Létezik ilyen? Mi hölgyek ismerjük az érzést, amikor nincs tökéletesen szőrtelenítve testünk azon része, amit szívesen megmutatnánk a külvilágnak. Mi megoldjuk ezt a problémát! Nem csak hölgyeknek, de férfiaknak is ideális megoldás!"
+      ],
+      "order": 20,
+      "slug": "lezeres-tartos-szortelenites",
+      "slugs": {
+        "en": "laser-hair-removal",
+        "hu": "lezeres-tartos-szortelenites"
+      },
+      "meta_title": "Lézeres tartós szőrtelenítés Budapesten",
+      "meta_description": "Fájdalommentes, gyors lézeres tartós szőrtelenítés a legújabb dióda lézerrel Budapesten. 6-12 alkalom a tartós eredményért. Tudnivalók a kezelés előtt és után.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Fájdalommentes, gyors eljárás, melyet a legújabb dióda lézeres kezelőegységünkkel végzünk."
+        },
+        {
+          "type": "h",
+          "text": "Hogyan működik?"
+        },
+        {
+          "type": "p",
+          "text": "Téli időszakban érdemes elkezdeni, 4 hetente ismételve. Bőr- és szőrtípustól függően minimum 6-12 alkalmat javasolunk a tartós és végleges eredmény eléréséhez."
+        },
+        {
+          "type": "h",
+          "text": "Kezelés előtt"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Borotvával szőrtelenítsük a kezelendő felületet egy nappal a lézeres szőrtelenítés előtt.",
+            "A kezelés napján ne legyen a szőrtelenítendő bőrfelületen sem dezodor, sem testápoló."
+          ]
+        },
+        {
+          "type": "h",
+          "text": "Kezelés után"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Kerüljük a közvetlen napsugárzást és a forró kádfürdőt 1-2 napig!",
+            "Használjunk magas faktorszámú naptejet!"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "Két kezelés között"
+        },
+        {
+          "type": "p",
+          "text": "Csak borotvával szőrtelenítsünk, ne használjunk sem epilátort, sem gyantát."
+        }
+      ],
+      "gallery_category": "laser",
+      "updated": "2026-10-29"
+    },
+    {
+      "videos": [],
+      "id": 3,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/service-microneedling.webp",
+      "eyebrow": "Bio-rejuvenáció a ragyogó arcbőrért",
+      "title": "Mikrotűs mezoterápia",
+      "description": [
+        "A ragyogóan tiszta és egységes bőrkép a fiatalság megőrzésének egyik legfontosabb eleme. Ebben nyújt segítséget az orvosi tisztaságú Revitalize szérumainkkal végzett mikrotűs mezoterápiás kezelésünk."
+      ],
+      "order": 30,
+      "slug": "mezoterapia",
+      "slugs": {
+        "en": "mesotherapy",
+        "hu": "mezoterapia"
+      },
+      "meta_title": "Mezoterápia Revitalize szérumokkal Budapesten",
+      "meta_description": "A mezoterápia műtét nélküli technika: vitaminokat, növényi kivonatokat és egyéb összetevőket juttat mikrotűkkel a bőrbe. Revitalize szérumok bőrre, testre és hajra Budapesten.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "A mezoterápia egy műtét nélküli technika, amely gyógyszerészeti vagy homeopátiás készítményeket, növényi kivonatokat, vitaminokat és egyéb összetevőket juttat mikrotűk segítségével a bőrbe és a bőr alatti zsírrétegbe. Számos publikált tanulmány található ezen készítmények klinikai kezeléséről és hatásairól."
+        },
+        {
+          "type": "h",
+          "text": "Tartóssága"
+        },
+        {
+          "type": "p",
+          "text": "A mezoterápiás kezelés általában 3-5 hónapos kúrákban ajánlott, az eredmények megőrzéséhez kiegészítő kezelések szükségesek, a kezelési protokollok pedig az indikációtól és a használt szérumtól függően változnak."
+        },
+        {
+          "type": "h",
+          "text": "Kinek ajánljuk?"
+        },
+        {
+          "type": "p",
+          "text": "Ideális azoknak, akik általában jó egészségnek örvendenek, de zavarja őket a ráncok megjelenése, az egyenetlen bőrszerkezet, a megereszkedett bőr vagy a narancsbőr, illetve azoknak, akik szeretnék láthatóan javítani az arcbőrük tónusát."
+        },
+        {
+          "type": "h",
+          "text": "Mire számíthatsz a Revitalize mezoterápiás kezelés után?"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Bőrfiatalítás: ragyogó arcszín, hidratáltabb bőr, kevésbé látható ráncok",
+            "Bőrfeszesítés: a bőr tónusa javul, rugalmasabbá válik, ahogy a kollagén és elasztin rostok beépülnek a bőr szerkezetébe",
+            "Cellulit: a zsírsejtek feloldódnak, javul a narancsbőr megjelenése, a makacs zsírpárnák összezsugorodnak",
+            "Hajfiatalítás: egészségesebb fejbőr, erősebb haj, az alvó hajhagymák serkentése az új haj növekedéséért",
+            "Akne és hegesedés: a hegek simábbá és kevésbé láthatóvá válnak, a pattanások és foltok megszűnnek"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "A Revitalize titka"
+        },
+        {
+          "type": "p",
+          "text": "A MyFiller Revitalize-t egy szakértői csapat fejlesztette ki, amelynek célja, hogy \"új életet vigyen a bőrbe\". Ez lett a mi mottónk is!"
+        },
+        {
+          "type": "h",
+          "text": "Választható szérumok"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Essence – azonnali és hosszan tartó eredmények: a nagy és kis molekulasúlyú hialuronsav egyensúlya hidratál és simítja a ráncokat",
+            "Pure – a bőrhibák és az erőteljes hidratálás szakértője: kollagén és hialuronsav striákra, aknés hegekre, bőregyenetlenségekre",
+            "Vitamins – belülről táplálja a bőrt: revitalizál és ragyogást biztosít",
+            "Body – feszesíti a megereszkedett bőrt: petyhüdtség, striák, lézer és peeling utáni helyreállítás",
+            "Slim – célzott zsírbontás: zsírfelhalmozódás a hason, a felkar hátsó részén, a nyakon és a lábakon",
+            "White skin – halványítja a hiperpigmentált foltokat: bőrtónus világosítása és foltok halványítása",
+            "Hair – erősíti a hajmátrixot: táplálja a fejbőrt, elősegíti a haj, a szakáll és a szemöldök növekedését"
+          ]
+        }
+      ],
+      "gallery_category": "facial",
+      "updated": "2026-10-29"
+    },
+    {
+      "videos": [
+        {
+          "id": 8,
+          "youtube_id": "RhWkw_mH0M8",
+          "title": "Emsculpt testkezelés",
+          "caption": "",
+          "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/RhWkw_mH0M8.webp",
+          "width": 405,
+          "height": 720,
+          "vertical": true,
+          "category": "emsculpt",
+          "cats": "emsculpt treatments",
+          "featured": false,
+          "home": true,
+          "gallery": true,
+          "service_id": 4,
+          "post_id": null
+        }
+      ],
+      "id": 4,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/service-emsculpt.webp",
+      "eyebrow": "Tökéletes alak egész évben",
+      "title": "Emsculpt testkezelés",
+      "description": [
+        "Az elektromos izom stimuláció (EMS), talán a legtökéletesebb módja annak, hogy igazán formába lendülj nagyon rövid idő alatt! Nem csak formás és izmos testet kölcsönöz, de még zsírbontásra is nagyon jó!"
+      ],
+      "order": 40,
+      "slug": "ems-testkezeles",
+      "slugs": {
+        "en": "ems-treatment",
+        "hu": "ems-testkezeles"
+      },
+      "meta_title": "EMSCULPT EMS testkezelés Budapesten",
+      "meta_description": "EMSCULPT testkezelés: az EMS, azaz elektromos izomstimuláció hatékony alakformáló edzésforma. Egy 20 perces kezelés kb. 60-90 perc edzéssel egyenértékű. Budapest.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Az EMS, azaz elektromos izomstimuláció egy nagyon hatékony alakformáló edzésforma, melyben elektromos impulzusok segítségével stimuláljuk az izmokat."
+        },
+        {
+          "type": "h",
+          "text": "Előnyei"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Egy 20 perces kezelés megegyezik egy kb. 60-90 perces konditermi edzéssel, mivel az EMS az izmokat mélyen és intenzíven stimulálja",
+            "Tökéletes időhiányban szenvedő vendégeink számára, akik gyors és hatékony eredményeket szeretnének elérni az alakformálás területén",
+            "Nincs plusz terhelés, így az ízületeket sem terheli"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "Hogyan működik?"
+        },
+        {
+          "type": "p",
+          "text": "Elektromos impulzusok stimulálják mélyen és intenzíven az izmokat. Izomépítés és zsírégetés egyszerre."
+        }
+      ],
+      "gallery_category": "emsculpt",
+      "updated": "2026-10-29"
+    },
+    {
+      "videos": [
+        {
+          "id": 10,
+          "youtube_id": "otZDPSVBzZ8",
+          "title": "Cellulit terápia",
+          "caption": "",
+          "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/otZDPSVBzZ8.webp",
+          "width": 405,
+          "height": 720,
+          "vertical": true,
+          "category": "cellulite",
+          "cats": "cellulite treatments",
+          "featured": false,
+          "home": false,
+          "gallery": true,
+          "service_id": 5,
+          "post_id": null
+        }
+      ],
+      "id": 5,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/box-4.webp",
+      "eyebrow": "Viszlát narancsbőr",
+      "title": "Cellulit terápia",
+      "description": [
+        "Az Ultrasape célzott ultrahang technológiájának segítségével nem csak a zsírt távolítjuk el a szövetekből, de a bőrt is feszesítjük, ezáltal sokkal simább és tónusosabb testet kapunk."
+      ],
+      "order": 50,
+      "slug": "cellulit-terapia",
+      "slugs": {
+        "en": "cellulite-therapy",
+        "hu": "cellulit-terapia"
+      },
+      "meta_title": "Cellulit (narancsbőr) terápia Budapesten",
+      "meta_description": "Cellulit terápia rádiófrekvenciás, infravörös és vákuumos kezeléssel: segíti a zsírsejtek lebontását, feszesebb bőr, jobb vérkeringés. Infinite Care, Budapest.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "A cellulit terápiánál egy rádiófrekvenciás, infravörös és vákuumos kezelés kombinációját használjuk."
+        },
+        {
+          "type": "h",
+          "text": "Hogyan működik?"
+        },
+        {
+          "type": "p",
+          "text": "A kezelés segíti a zsírsejtek feltörését, majd a nyirokáramba juttatását."
+        },
+        {
+          "type": "h",
+          "text": "Előnyei"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Rövid időn belül a narancsbőr eltűnik",
+            "A bőr feszesebb lesz",
+            "A vérkeringés helyreáll"
+          ]
+        }
+      ],
+      "gallery_category": "cellulite",
+      "updated": "2026-10-29"
+    },
+    {
+      "videos": [
+        {
+          "id": 9,
+          "youtube_id": "HcqKo_QBSBo",
+          "title": "Carbon hámlasztás",
+          "caption": "",
+          "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/HcqKo_QBSBo.webp",
+          "width": 405,
+          "height": 720,
+          "vertical": true,
+          "category": "carbon",
+          "cats": "carbon treatments",
+          "featured": false,
+          "home": true,
+          "gallery": true,
+          "service_id": 6,
+          "post_id": null
+        }
+      ],
+      "id": 6,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/box-5.webp",
+      "eyebrow": "Ragyogóan gyönyörű bőr érzése",
+      "title": "Carbon hámlasztás",
+      "description": [
+        "A bőrtökéletesítő carbon hámlasztás megadja az örök fiatalság érzését. A feszesebb és hibátlan arcbőr többé már nem elérhetetlen! Heggek, ráncok és pgmentfoltok eltüntetésére is ideális. A test bármely területén alkalmazható."
+      ],
+      "order": 60,
+      "slug": "carbon-hamlasztas",
+      "slugs": {
+        "en": "carbon-peeling",
+        "hu": "carbon-hamlasztas"
+      },
+      "meta_title": "Carbon hámlasztás – lézeres mélyhámlasztás Budapesten",
+      "meta_description": "Speciális lézeres mélyhámlasztás, mely teljesen fájdalommentes és gyors eljárás: feszesebb, tisztább bőr, egységesebb bőrtónus, halványuló pigmentfoltok. Budapest.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Speciális lézeres mélyhámlasztás, mely teljesen fájdalommentes és gyors eljárás."
+        },
+        {
+          "type": "h",
+          "text": "Hogyan zajlik a kezelés?"
+        },
+        {
+          "type": "p",
+          "text": "A vendég egy szénnel és ásványi anyagokkal teli, fekete színű maszkot kap, melyet száradás után lézerrel \"lepattogtatunk\" az arcról."
+        },
+        {
+          "type": "h",
+          "text": "Előnyei"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "A bőr feszesebb, tisztább, tónusosabb lesz",
+            "Az apróbb ráncok eltűnnek",
+            "A zsíros területek kitisztulnak, javul a bőrminőség",
+            "A bőrtónus egységesebbé válik, halványulnak a pigmentfoltok"
+          ]
+        }
+      ],
+      "gallery_category": "carbon",
+      "updated": "2026-10-29"
+    },
+    {
+      "videos": [
+        {
+          "id": 4,
+          "youtube_id": "Miej6lMfoRk",
+          "title": "Fogfehérítés",
+          "caption": "",
+          "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/Miej6lMfoRk.webp",
+          "width": 405,
+          "height": 720,
+          "vertical": true,
+          "category": "whitening",
+          "cats": "whitening treatments",
+          "featured": false,
+          "home": true,
+          "gallery": true,
+          "service_id": 7,
+          "post_id": 3
+        }
+      ],
+      "id": 7,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/service-teeth-whitening.webp",
+      "eyebrow": "A tökéletes mosoly titka",
+      "title": "Fogfehérítés",
+      "description": [
+        "A Hollywood-i mosoly elengedhetetlen kelléke a vakító fehérség, amit egy ilyen fogfehérítő eljárás során végeredményként kapunk. Mosolyogj rá a világra és az mindig visszamosolyog rád!"
+      ],
+      "order": 70,
+      "slug": "fogfeherites",
+      "slugs": {
+        "en": "teeth-whitening",
+        "hu": "fogfeherites"
+      },
+      "meta_title": "Lézeres fogfehérítés Budapesten – hollywoodi mosoly",
+      "meta_description": "Speciális, fájdalommentes, gyors és rendkívül látványos lézeres fogfehérítő eljárás, mely 60 perc alatt igazi hollywoodi mosolyt varázsol. Budapest.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Speciális, fájdalommentes, gyors és rendkívül látványos lézeres fogfehérítő eljárás, mely 60 perc alatt igazi hollywoodi mosolyt varázsol."
+        },
+        {
+          "type": "h",
+          "text": "Hogyan zajlik a kezelés?"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Kezelés előtt megkérjük kedves vendégünket, hogy alaposan mosson fogat az általunk biztosított fogkrémmel és fogkefével.",
+            "Feltesszük a fogínyvédő zselét, majd felkenjük a speciális fogfehérítő szérumunkat.",
+            "Beállítjuk a lézert, amit a fogak közelébe helyezünk.",
+            "Ezek után nincs más dolgod, csak relaxálni 60 percig, majd élvezni a hófehér hollywoodi mosolyt!"
+          ]
+        }
+      ],
+      "gallery_category": "whitening",
+      "updated": "2026-10-29"
+    },
+    {
+      "videos": [],
+      "id": 8,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/box-7.webp",
+      "eyebrow": "A ránctalan élet öröme",
+      "title": "Face lifting (ultrahang)",
+      "description": [
+        "Az arc a karakterünk talán legmeghatározóbb eleme. Rugalmasságának visszaállítása és természetességének megőrzése a vágyott cél, amit a legmodernebb facelifting technológiával kezelünk."
+      ],
+      "order": 80,
+      "slug": "face-lifting",
+      "slugs": {
+        "en": "face-lifting-en",
+        "hu": "face-lifting"
+      },
+      "meta_title": "Facelifting – gépi arcfeszesítés Budapesten",
+      "meta_description": "Kellemes, pihentető arckezelés, mely egyesíti a rádiófrekvencia, az infravörös fény és a vákuum jótékony hatásait. Budapest.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Kellemes, pihentető arckezelés."
+        },
+        {
+          "type": "h",
+          "text": "Hogyan működik?"
+        },
+        {
+          "type": "p",
+          "text": "A kezelés során olyan gépi technológiát alkalmazunk, mely egyesíti a rádiófrekvencia, az infravörös fény és a vákuum jótékony hatásait."
+        }
+      ],
+      "gallery_category": "facial",
+      "updated": "2026-10-29"
+    },
+    {
+      "videos": [],
+      "id": 9,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/box-8.webp",
+      "eyebrow": "Teltebb ajkak, ránctalan arcbőr",
+      "title": "Esztétikai kezeléseink",
+      "description": [
+        "Válogasson esztétikai kezeléseink széles skálájáról:",
+        "Botox, szájfeltöltés, \"russian lips\", arc és áll feltöltés, műtét nélküli orr plasztika, arc vékonyítás, face lift, toka feszesítés, kollagén terápia, skin booster, mezoterápia, zsírbontó injekciók"
+      ],
+      "order": 90,
+      "slug": "",
+      "slugs": {
+        "en": "",
+        "hu": ""
+      },
+      "meta_title": "Esztétikai kezeléseink",
+      "meta_description": "",
+      "blocks": [],
+      "gallery_category": "",
+      "updated": "2026-10-29"
+    },
+    {
+      "videos": [
+        {
+          "id": 11,
+          "youtube_id": "jEYC7rDP6W8",
+          "title": "Brazilift",
+          "caption": "",
+          "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/jEYC7rDP6W8.webp",
+          "width": 405,
+          "height": 720,
+          "vertical": true,
+          "category": "brazilift",
+          "cats": "brazilift treatments",
+          "featured": false,
+          "home": false,
+          "gallery": true,
+          "service_id": 10,
+          "post_id": null
+        }
+      ],
+      "id": 10,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/box-9.webp",
+      "eyebrow": "Feszesebb fenék, teltebb keblek",
+      "title": "Brazilift",
+      "description": [
+        "Lapos a popsid? Elégedetlen vagy a melleid méretével, de félsz a plasztikai beavatkozástól? Nálunk van rá megoldás! Legyen olyan feneked, valamint dús és telt kebleid, mint a brazil nőknek!"
+      ],
+      "order": 100,
+      "slug": "brazilift",
+      "slugs": {
+        "en": "brazilift-en",
+        "hu": "brazilift"
+      },
+      "meta_title": "Brazilift – fenék- és mellkezelés Budapesten",
+      "meta_description": "Egyedülállóan új fenék- és mellkezelés: vákuumkezeléssel fokozzuk a vér- és nyirokáramlást, így a popsi vagy a mell tónusosabbá, feszesebbé válik. Budapest.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Egyedülállóan új fenék- és mellkezelés."
+        },
+        {
+          "type": "h",
+          "text": "Hogyan működik?"
+        },
+        {
+          "type": "p",
+          "text": "Vákuumkezeléssel fokozzuk a vér- és nyirokáramlást."
+        },
+        {
+          "type": "h",
+          "text": "Eredmény"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "A popsi tónusosabbá, feszesebbé válik",
+            "A mell tónusosabbá, feszesebbé válik"
+          ]
+        }
+      ],
+      "gallery_category": "brazilift",
+      "updated": "2026-10-29"
+    }
+  ]
+}
