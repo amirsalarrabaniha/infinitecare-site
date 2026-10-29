@@ -41,11 +41,15 @@ class ExportUrls:
 
     def page(self, name, lang=None, slug=None):
         lang = lang or self.lang
+        if settings.STATIC_EXPORT_CLEAN_URLS:   # root-relative, extension-less: /, /services, /hu/, /hu/blog/<slug>
+            return '/' + ('hu/' if lang == 'hu' else '') + (f'blog/{slug}' if slug else ('' if name == 'index' else name))
         target = ('hu/' if lang == 'hu' else '') + (f'blog/{slug}.html' if slug else f'{name}.html')
         return posixpath.relpath(target, self.cur.rstrip('/') or '.')
 
     def service(self, slug):
         """Service pages of both languages are in the site root, so the old URLs (/carbon-hamlasztas, /laser-hair-removal) keep working."""
+        if settings.STATIC_EXPORT_CLEAN_URLS:
+            return f'/{slug}'
         return posixpath.relpath(f'{slug}.html', self.cur.rstrip('/') or '.')
 
     def media(self, f):

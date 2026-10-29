@@ -262,3 +262,5 @@ body.lb-open{overflow:hidden}
 .sp-others ul{list-style:none;padding:0;margin:0 0 2rem;display:flex;flex-wrap:wrap;gap:.6rem}
 .sp-others li a{display:inline-block;padding:.55rem 1.1rem;border:1px solid var(--gold);border-radius:999px;font-size:.85rem;color:var(--g);transition:background .3s}.sp-others li a:hover{background:#f3eee4}
 .svc-more{margin-top:1.2rem}
+.post-in h3.faq-q{font-size:clamp(1.1rem,1.8vw,1.25rem);margin:1.8rem 0 .6rem;line-height:1.35}
+.pbody p a,.pbody li a{color:var(--green,#195146);text-decoration:underline;text-underline-offset:3px}

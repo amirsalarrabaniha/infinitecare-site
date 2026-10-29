@@ -34,6 +34,12 @@ RewriteRule ^hu/prices(\.html|/)?$ https://www.infinitecare.hu/hu/services [R=30
 # one host: infinitecare.hu -> www.infinitecare.hu
 RewriteCond %{HTTP_HOST} ^infinitecare\.hu$ [NC]
 RewriteRule ^(.*)$ https://www.infinitecare.hu/$1 [R=301,L]
+# requests for the .html files themselves -> the clean URL (THE_REQUEST = what the browser asked for, so the internal
+# clean -> .html rewrite below never loops back here). Query strings (blog/post.html?p=…) are kept.
+RewriteCond %{THE_REQUEST} \s/[^\s?]*\.html[\s?]
+RewriteRule ^(.*/)?index\.html$ https://www.infinitecare.hu/$1 [R=301,L]
+RewriteCond %{THE_REQUEST} \s/[^\s?]*\.html[\s?]
+RewriteRule ^(.+)\.html$ https://www.infinitecare.hu/$1 [R=301,L]
 # folder with an index page: /hu -> /hu/
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteCond %{REQUEST_FILENAME}/index.html -f

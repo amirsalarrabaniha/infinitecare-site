@@ -35,3 +35,49 @@ def imgsize(url):
     p = _resolve(url)
     s = _size(str(p)) if p else None
     return mark_safe(f'width="{s[0]}" height="{s[1]}"') if s else ''
+
+
+_LINK_RE = None
+
+
+FAQ_RE = r'^\s*(frequently asked questions|gyakran ism[eé]telt k[eé]rd[eé]sek|faq)\b'
+
+
+@register.filter
+def faq_marked(blocks):
+    """Blog body for rendering: '## ' headings ending in '?' that follow a 'Frequently asked questions' /
+    'Gyakran ismételt kérdések' heading become FAQ questions (rendered as a smaller <h3>), until the next
+    non-question heading. Same rule as faqMark() in js/main.js. Rendering only: the data (and fingerprints) are unchanged."""
+    import re
+    out, faq = [], False
+    for b in blocks or []:
+        b = dict(b)
+        if b.get('type') == 'h':
+            t = str(b.get('text', '')).rstrip()
+            if re.match(FAQ_RE, t, re.I):
+                faq = True
+            elif faq and t.endswith('?'):
+                b['type'] = 'q'
+            else:
+                faq = False
+        out.append(b)
+    return out
+
+
+@register.filter
+def linkify(text):
+    """Escape a paragraph, then turn [label](url) and bare http(s) URLs into links. Only http(s) URLs and root-relative
+    paths are linked; external links open in a new tab with rel=noopener. Must match linkify() in js/main.js."""
+    import re
+    from django.utils.html import escape
+    from django.utils.safestring import mark_safe
+    out, pos = [], 0
+    pat = re.compile(r'\[([^\]\n]{1,200})\]\(((?:https?://|/)[^\s()<>"]*)\)|(https?://[^\s<>"]+[^\s<>".,;:!?)])')
+    for m in pat.finditer(str(text)):
+        out.append(escape(text[pos:m.start()]))
+        label, url = (m.group(1), m.group(2)) if m.group(2) else (m.group(3), m.group(3))
+        ext = url.startswith('http') and not url.startswith('https://www.infinitecare.hu')
+        out.append('<a href="%s"%s>%s</a>' % (escape(url), ' target="_blank" rel="noopener"' if ext else '', escape(label)))
+        pos = m.end()
+    out.append(escape(text[pos:]))
+    return mark_safe(''.join(out))
