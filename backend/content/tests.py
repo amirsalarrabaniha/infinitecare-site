@@ -583,8 +583,10 @@ class ServicePageTests(TestCase):
         self.assertIn('<html lang="hu">', hu)
         self.assertIn('hreflang="en" href="https://www.infinitecare.hu/carbon-peeling"', hu)
         self.assertIn('hreflang="hu" href="https://www.infinitecare.hu/carbon-hamlasztas"', en)
-        self.assertIn('href="carbon-peeling.html" hreflang="en"', hu)            # language switch -> counterpart page
-        self.assertIn('href="hu/services.html"', hu)                              # HU nav from the site root
+        self.assertIn('href="/carbon-peeling" hreflang="en"', hu)                # language switch -> counterpart page (clean URL)
+        self.assertIn('href="/hu/services"', hu)                                  # HU nav, extension-less
+        self.assertNotRegex(en + hu, r'href="[^"]*\.html')                       # no .html links with --clean-urls
+        self.assertIn('href="/" class="brand"', en)
         self.assertIn('"@type": "BreadcrumbList"', hu)
         self.assertIn('"@type": "Service"', en)
         self.assertIn('<meta property="og:url" content="https://www.infinitecare.hu/carbon-peeling">', en)
@@ -594,8 +596,9 @@ class ServicePageTests(TestCase):
         titles = [re.search(r'<title>(.*?)</title>', f.read_text(encoding='utf-8')).group(1) for f in p.glob('*.html')]
         self.assertEqual(len(titles), len(set(titles)))                           # unique titles
         cards = (p / 'services.html').read_text(encoding='utf-8')
-        self.assertIn('href="carbon-peeling.html"', cards)
-        self.assertIn('href="../carbon-hamlasztas.html"', (p / 'hu' / 'services.html').read_text(encoding='utf-8'))
+        self.assertIn('href="/carbon-peeling"', cards)
+        self.assertIn('data-post="/hu/blog/__SLUG__"', (p / 'hu' / 'services.html').read_text(encoding='utf-8'))
+        self.assertIn('href="/carbon-hamlasztas"', (p / 'hu' / 'services.html').read_text(encoding='utf-8'))
         sm = (p / 'sitemap.xml').read_text(encoding='utf-8')
         self.assertIn('<loc>https://www.infinitecare.hu/cellulit-terapia</loc><lastmod>', sm)
         self.assertIn('Sitemap: https://www.infinitecare.hu/sitemap.xml', (p / 'robots.txt').read_text(encoding='utf-8'))
@@ -609,3 +612,20 @@ class ServicePageTests(TestCase):
         self.assertEqual(self.client.get('/no-such-page/').status_code, 404)
         d = self.client.get('/api/services/?lang=hu').json()['results']
         self.assertTrue(any(x['slug'] == 'carbon-hamlasztas' and x['blocks'] for x in d))
+
+
+class BodyMarkupTests(TestCase):
+    def test_linkify_and_faq(self):
+        from content.templatetags.site_extras import linkify, faq_marked
+        out = linkify('See [cellulite therapy](/cellulite-therapy) or book at https://l.fresha.com/x. <b>&')
+        self.assertIn('<a href="/cellulite-therapy">cellulite therapy</a>', out)
+        self.assertIn('<a href="https://l.fresha.com/x" target="_blank" rel="noopener">https://l.fresha.com/x</a>.', out)
+        self.assertIn('&lt;b&gt;&amp;', out)
+        self.assertNotIn('<a href="javascript', linkify('[x](javascript:alert(1))'))
+        self.assertEqual(linkify('[x](javascript:alert(1))'), '[x](javascript:alert(1))')
+        self.assertEqual(linkify('[a"><script>](https://www.infinitecare.hu/a)'), '<a href="https://www.infinitecare.hu/a">a&quot;&gt;&lt;script&gt;</a>')
+        bl = [{'type': 'h', 'text': 'What is it?'}, {'type': 'h', 'text': 'Frequently asked questions'},
+              {'type': 'h', 'text': 'Does it hurt?'}, {'type': 'p', 'text': 'No.'}, {'type': 'h', 'text': 'Book a consultation'},
+              {'type': 'h', 'text': 'Later?'}]
+        self.assertEqual([b['type'] for b in faq_marked(bl)], ['h', 'h', 'q', 'p', 'h', 'h'])
+        self.assertEqual(faq_marked([{'type': 'h', 'text': 'Gyakran ismételt kérdések'}, {'type': 'h', 'text': 'Fáj?'}])[1]['type'], 'q')

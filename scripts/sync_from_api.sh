@@ -27,6 +27,7 @@ fi
 run_export() {   # $1 = repo root to write into
   (cd "$1/backend" && SECRET_KEY=sync DEBUG=True MEDIA_ROOT="$1/assets/media" "$PY" manage.py export_static \
     --out "$1" --from-api "$API_URL" --site-url "$SITE_URL" --clean-urls --api-url "$API_URL/api/contact/")
+  python3 "$ROOT/scripts/html_redirects.py" "$1"
 }
 
 if [ "${1:-}" = "--check" ]; then
