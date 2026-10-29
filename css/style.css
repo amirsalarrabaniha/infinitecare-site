@@ -313,3 +313,4 @@ body.lb-open{overflow:hidden}
 .rise+.rise{animation-delay:.12s}
 @media (prefers-reduced-motion:reduce){.rise{animation:none}}
 .prose{max-width:760px;margin:0 auto;padding:4rem 1.25rem}.prose h2{margin:2rem 0 .6rem}.prose p,.prose li{line-height:1.7}.prose ul{padding-left:1.2rem}.prose .note{padding:1rem;border-left:3px solid var(--g);background:rgba(25,81,70,.06)}
+.crumbs a{text-decoration:underline;text-underline-offset:3px}
