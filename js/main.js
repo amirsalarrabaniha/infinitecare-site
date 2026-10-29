@@ -233,3 +233,30 @@ const run=()=>{const w=[J('settings','/api/settings/')];
 const start=()=>setTimeout(run,300);
 document.readyState==='complete'?start():addEventListener('load',start)}}
 })();
+// ---- first-visit discount popup: e-mail -> POST {api}/api/discount-signup/ (shown once; 7 days pause after closing; never after signup) ----
+(()=>{const b=document.body,api=(b.dataset.api||'').replace(/\/api\/contact\/?$/,'').replace(/\/+$/,'');if(!/^https?:|^\//.test(api)||!window.fetch)return;
+const K='ic-popup',now=Date.now();let st;try{st=JSON.parse(localStorage.getItem(K)||'null')}catch(e){return}
+if(st&&(st.done||now-st.t<7*864e5))return;
+const hu=b.dataset.lang==='hu',save=o=>{try{localStorage.setItem(K,JSON.stringify(o))}catch(e){}};
+const T=hu?{t:'{p}% kedvezmény az első kezelésből',x:'Add meg az e-mail címed, és az első látogatásodkor {p}% kedvezményt adunk.',em:'E-mail cím',ph:'nev@pelda.hu',c:'Hozzájárulok, hogy az Infinite Care e-mailben elküldje az ajánlatot és marketing leveleket küldjön. A hozzájárulás bármikor visszavonható.',go:'Kérem a kedvezményt',cl:'Bezárás',ok:'Köszönjük! Az első látogatásodkor {p}% kedvezményt kapsz – foglaláskor vagy a látogatáskor említsd meg ezt az e-mail címet.',code:'Kuponkód: ',bk:'Időpontfoglalás online',dup:'Ez az e-mail cím már regisztrálva van.',inv:'Kérjük, adj meg érvényes e-mail címet, és fogadd el a hozzájárulást.',net:'Hálózati hiba – kérjük, próbáld újra.',rl:'Túl sok próbálkozás – kérjük, próbáld újra később.'}
+ :{t:'{p}% off your first visit',x:'Enter your e-mail and get {p}% off your first treatment at Infinite Care.',em:'E-mail address',ph:'name@example.com',c:'I agree to receive the offer and marketing e-mails from Infinite Care. I can withdraw my consent at any time.',go:'Get my discount',cl:'Close',ok:'Thank you! You get {p}% off your first visit – just mention this e-mail address when you book or at your visit.',code:'Coupon code: ',bk:'Book online',dup:'This e-mail address is already registered.',inv:'Please enter a valid e-mail address and tick the consent box.',net:'Network error – please try again.',rl:'Too many attempts – please try again later.'};
+let shown=false;const open=s=>{if(shown)return;shown=true;const P=s.percent||10,f=v=>v.replace(/\{p\}/g,P),bk=s.booking_url||'https://l.fresha.com/3dvz3n7j6';
+ const last=document.activeElement,d=document.createElement('div');d.className='dp-wrap';
+ d.innerHTML=`<div class="dp" role="dialog" aria-modal="true" aria-labelledby="dp-t" aria-describedby="dp-x"><button type="button" class="dp-x" aria-label="${T.cl}">×</button><p class="dp-pc" aria-hidden="true">−${P}%</p><h2 id="dp-t"></h2><p id="dp-x"></p><form novalidate><label for="dp-e">${T.em}</label><input id="dp-e" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="${T.ph}"><input class="dp-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><label class="dp-c"><input type="checkbox" name="consent" required> <span>${T.c}</span></label><button class="btn" type="submit">${T.go}</button><p class="dp-m" role="status" aria-live="polite"></p></form></div>`;
+ d.querySelector('h2').textContent=s.title||f(T.t);d.querySelector('#dp-x').textContent=s.text||f(T.x);
+ const dlg=d.querySelector('.dp'),fm=d.querySelector('form'),m=d.querySelector('.dp-m'),btn=fm.querySelector('[type=submit]');
+ const close=()=>{d.remove();removeEventListener('keydown',key,true);const x=JSON.parse(localStorage.getItem(K)||'{}');if(!x.done)save({t:Date.now()});if(last&&last.focus)last.focus()};
+ const key=e=>{if(e.key==='Escape'){e.preventDefault();close()}else if(e.key==='Tab'){const fs=[...dlg.querySelectorAll('button,input:not(.dp-hp),a[href]')].filter(x=>x.offsetParent),a=fs[0],z=fs[fs.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}};
+ d.addEventListener('click',e=>{if(e.target===d||e.target.closest('.dp-x'))close()});addEventListener('keydown',key,true);
+ const msg=(t,c)=>{m.textContent=t;m.className='dp-m '+c};
+ fm.addEventListener('submit',async e=>{e.preventDefault();const em=fm.email.value.trim();if(!fm.email.checkValidity()||!em||!fm.consent.checked){msg(T.inv,'err');return}
+  btn.disabled=true;msg('','');let r;try{const ctl=new AbortController(),to=setTimeout(()=>ctl.abort(),12000);r=await fetch(api+'/api/discount-signup/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em,consent:true,lang:hu?'hu':'en',page:location.pathname,website:fm.website.value}),signal:ctl.signal});clearTimeout(to)}catch(x){btn.disabled=false;msg(T.net,'err');return}
+  btn.disabled=false;
+  if(r.status===201){save({done:1,t:Date.now()});const o=document.createElement('div');o.className='dp-ok';const p=document.createElement('p');p.textContent=f(T.ok);o.append(p);if(s.code){const c=document.createElement('p');c.className='dp-code';c.textContent=T.code+s.code;o.append(c)}const a=document.createElement('a');a.className='btn';a.href=bk;a.target='_blank';a.rel='noopener noreferrer';a.textContent=T.bk;o.append(a);fm.replaceWith(o);a.focus()}
+  else msg(r.status===409?T.dup:r.status===422?T.inv:r.status===429?T.rl:T.net,'err')});
+ b.append(d);requestAnimationFrame(()=>d.classList.add('on'));fm.email.focus({preventScroll:true})};
+const go=()=>{removeEventListener('scroll',go);clearTimeout(tm);const u=api+'/api/settings/?lang='+(hu?'hu':'en');let c;try{c=JSON.parse(sessionStorage.getItem('ic:'+u)||'null')}catch(e){}
+ const use=s=>{if(s&&s.popup&&s.popup.enabled===false)return;open({...(s&&s.popup||{}),booking_url:s&&s.booking_url})};
+ if(c&&c.d)use(c.d);else fetch(u,{headers:{Accept:'application/json'}}).then(r=>r.ok?r.json():null).then(use,()=>use(null))};
+let tm;const arm=()=>{tm=setTimeout(go,4000);addEventListener('scroll',go,{passive:true,once:true})};
+document.readyState==='complete'?arm():addEventListener('load',arm)})();

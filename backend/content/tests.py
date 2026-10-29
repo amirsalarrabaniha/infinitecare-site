@@ -629,3 +629,14 @@ class BodyMarkupTests(TestCase):
               {'type': 'h', 'text': 'Later?'}]
         self.assertEqual([b['type'] for b in faq_marked(bl)], ['h', 'h', 'q', 'p', 'h', 'h'])
         self.assertEqual(faq_marked([{'type': 'h', 'text': 'Gyakran ismételt kérdések'}, {'type': 'h', 'text': 'Fáj?'}])[1]['type'], 'q')
+
+
+class DiscountPopupAssetTests(TestCase):
+    """The first-visit discount popup ships in js/main.js and posts to the API (no inline script: CSP script-src 'self')."""
+    def test_popup_code_present(self):
+        from django.conf import settings
+        root = pathlib.Path(settings.SITE_ROOT)
+        js = (root / 'js/main.js').read_text(encoding='utf-8')
+        for s in ("/api/discount-signup/", "aria-modal=\"true\"", "'Escape'", "ic-popup", "7*864e5", "r.status===409"):
+            self.assertIn(s, js)
+        self.assertIn('.dp-wrap{position:fixed', (root / 'css/style.css').read_text(encoding='utf-8'))
