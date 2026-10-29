@@ -10,7 +10,7 @@ export default defineConfig({
     name: "infinitecare-next",
     entrypoint: "vinext/server/fetch-handler",
     compatibilityDate: "2026-10-29",
-    compatibilityFlags: ["nodejs_compat"],
+    compatibilityFlags: ["nodejs_compat", "global_fetch_strictly_public"],
     observability: {
       enabled: true,
       traces: { enabled: true },

@@ -88,7 +88,10 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (pathname === "/blog/post" || pathname === "/hu/blog/post") {
+  if (pathname === "/hu") return NextResponse.redirect(new URL("/hu/" + url.search, url.origin), 301);
+
+  // old static "shell" URL (/blog/post.html?p=<slug>) -> the post, in one hop
+  if (["/blog/post", "/hu/blog/post", "/blog/post.html", "/hu/blog/post.html"].includes(pathname)) {
     const p = url.searchParams.get("p");
     if (p) {
       const dest = pathname.startsWith("/hu") ? `/hu/blog/${encodeURIComponent(p)}` : `/blog/${encodeURIComponent(p)}`;
