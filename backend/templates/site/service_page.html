@@ -1,10 +1,11 @@
 {% extends "site/base.html" %}
+{% load site_extras %}
 {% block meta %}<script type="application/ld+json">{{ ld_json|safe }}</script>{% endblock %}
 {% block content %}{% with kicker=svc.eyebrow %}{% include "site/subhero.html" %}{% endwith %}
 <main class="post spage"><article class="wrap post-in">
 <nav class="crumbs" aria-label="Breadcrumb"><a href="{{ urls.index }}">{{ ui.nav.0 }}</a> / <a href="{{ urls.services }}">{{ ui.nav.1 }}</a> / <span aria-current="page">{{ svc.title }}</span></nav>
 <div class="pbody" data-live="svc" data-fp="{{ fp.svc }}"><p class="sp-lead">{% for l in svc.description %}{{ l }}{% if not forloop.last %}<br>{% endif %}{% endfor %}</p>
-{% for b in svc.blocks %}{% if b.type == 'h' %}<h2>{{ b.text }}</h2>{% elif b.type == 'ul' %}<ul>{% for i in b.items %}<li>{{ i }}</li>{% endfor %}</ul>{% else %}<p>{{ b.text }}</p>{% endif %}{% endfor %}
+{% for b in svc.blocks|faq_marked %}{% if b.type == 'h' %}<h2>{{ b.text }}</h2>{% elif b.type == 'q' %}<h3 class="faq-q">{{ b.text }}</h3>{% elif b.type == 'ul' %}<ul>{% for i in b.items %}<li>{{ i }}</li>{% endfor %}</ul>{% else %}<p>{{ b.text }}</p>{% endif %}{% endfor %}
 {% if svc.videos %}<h2>{{ ui.svc_videos }}</h2><div class="svc-vids">{% for v in svc.videos %}{% include "site/yt.html" %}{% endfor %}</div>{% endif %}</div>
 <div class="post-cta"><h3>{{ ui.book_cta }}</h3><div class="pc-btns">{% if site.booking_url %}{% include "site/book_link.html" with label=ui.book_online cls="pc-book" %}{% endif %}<a class="btn pc-tel" href="{{ site.phone_href }}" data-s="phone">{{ site.phone }}</a></div></div>
 </article>

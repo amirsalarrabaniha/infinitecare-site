@@ -16,7 +16,7 @@
 <body class="page-{{ page }}" data-lang="{{ lang }}" data-api="{{ api_url }}" data-post="{{ post_tpl }}" data-slugs="{{ post_slugs }}"{% if shell %} data-shell{% endif %}{% if post %} data-slug="{{ post.slug }}"{% endif %}{% if svc %} data-svc="{{ svc.id }}"{% endif %} data-root="{{ S }}" data-privacy="{{ privacy_url }}">
 <div class="loader"><img src="{{ S }}assets/images/infinitecare-logo-4.png" alt="" width="248" height="260"></div><div class="cursor-glow"></div><div class="progress"></div>
 <header class="nav">
- <a href="{{ urls.index }}" class="brand"><img class="logo-light" src="{{ S }}assets/images/infinitecare-logo-2.png" alt="Infinite Care" width="240" height="120"><img class="logo-dark" src="{{ S }}assets/images/infinitecare-logo-1.png" alt="Infinite Care" width="280" height="105"></a>
+ <a href="{{ urls.index }}" class="brand"><img class="logo-light" src="{{ S }}assets/images/infinitecare-logo-2.png" alt="Infinite Care Beauty Clinic logo" width="240" height="120"><img class="logo-dark" src="{{ S }}assets/images/infinitecare-logo-1.png" alt="Infinite Care Beauty Clinic logo" width="280" height="105"></a>
  <nav class="menu">
   {% for n in nav %}<a href="{{ n.href }}" class="{% if n.key == nav_key %}active{% endif %}"{% if n.external %} target="_blank" rel="noopener noreferrer" data-s="offers"{% endif %}>{{ n.label }}{% if n.external %}<span class="vh"> ({{ ui.newtab }})</span>{% endif %}</a>{% endfor %}
   <div class="langsw" role="group" aria-label="Language">
@@ -31,7 +31,7 @@
 {% block content %}{% endblock %}
 <footer class="footer">
  <div class="wrap fgrid">
-  <div class="reveal"><img src="{{ S }}assets/images/infinitecare-logo-2.png" alt="Infinite Care" class="flogo" width="240" height="120" loading="lazy"><p class="script">Beauty Clinic</p><p class="flinks">{% for n in nav %}{% if n.key != 'offers' %}<a href="{{ n.href }}">{{ n.label }}</a>{% endif %}{% endfor %}<a href="{{ privacy_url }}">{{ ui.titles.privacy }}</a></p></div>
+  <div class="reveal"><img src="{{ S }}assets/images/infinitecare-logo-2.png" alt="Infinite Care Beauty Clinic logo" class="flogo" width="240" height="120" loading="lazy"><p class="script">Beauty Clinic</p><p class="flinks">{% for n in nav %}{% if n.key != 'offers' %}<a href="{{ n.href }}">{{ n.label }}</a>{% endif %}{% endfor %}<a href="{{ privacy_url }}">{{ ui.titles.privacy }}</a></p></div>
   <div class="reveal"><h3>{{ ui.hours }}</h3><p data-s="hours">{% for l in site.hours %}{{ l }}{% if not forloop.last %}<br>{% endif %}{% endfor %}</p></div>
   <div class="reveal"><h3>{{ ui.res }}</h3><p><a href="{{ site.phone_href }}" data-s="phone">{{ site.phone }}</a><br><span data-s="address">{{ site.address }}</span><br><a href="mailto:{{ site.email }}" data-s="email">{{ site.email }}</a></p></div>
   <div class="reveal"><h3>{{ ui.follow }}</h3><div class="social">{% include "site/social.html" %}</div></div>
