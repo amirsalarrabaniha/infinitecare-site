@@ -58,16 +58,16 @@ def absolute(u):
 
 
 SEO = {   # <title> and meta description of the main pages (search snippets), per language
-    'en': {'index': ('Infinite Care Beauty Clinic Budapest | Laser & Skin Treatments',
-                     'Beauty clinic in Budapest VI: laser hair removal, teeth whitening, exosome therapy, mesotherapy, carbon peeling and body treatments. Book your visit.'),
+    'en': {'index': ('Infinite Care Beauty Clinic Budapest | Laser & Aesthetics',
+                     'Infinite Care Beauty Clinic in Budapest VI: laser hair removal, mesotherapy, exosome therapy, face lifting, Botox and body treatments. Book a visit.'),
            'services': ('Treatments in Budapest – Laser, Skin & Body | Infinite Care',
                         'All Infinite Care treatments in Budapest: laser hair removal, teeth whitening, exosome therapy, mesotherapy, carbon peeling, RF facelifting, EMS and cellulite therapy.'),
            'blog': ('Beauty & Skincare Blog | Infinite Care Budapest',
                     'Skincare tips and treatment guides from Infinite Care Beauty Clinic in Budapest: laser hair removal, skin quality, peels and more.'),
            'privacy': ('Privacy notice | Infinite Care Beauty Clinic',
                        'How Infinite Care Beauty Clinic in Budapest handles the personal data you send through the contact form and the discount sign-up.')},
-    'hu': {'index': ('Infinite Care kozmetika Budapest | Lézeres szőrtelenítés',
-                     'Kozmetika Budapest VI. kerületében: lézeres szőrtelenítés, fogfehérítés, exoszóma-terápia, mezoterápia, carbon hámlasztás és testkezelések. Foglalj online!'),
+    'hu': {'index': ('Infinite Care szépségklinika Budapest | Lézer és esztétika',
+                     'Infinite Care szépségklinika Budapest VI. kerületében: lézeres szőrtelenítés, mezoterápia, exoszóma, face lifting, Botox és testkezelések. Foglaljon időpontot!'),
            'services': ('Kezelések Budapesten – lézer, arc és test | Infinite Care',
                         'Az Infinite Care kezelései Budapesten: lézeres szőrtelenítés, fogfehérítés, exoszóma-terápia, mezoterápia, carbon hámlasztás, RF arcfeszesítés, EMS és cellulitkezelés.'),
            'blog': ('Szépségápolási blog | Infinite Care Budapest',
@@ -75,6 +75,31 @@ SEO = {   # <title> and meta description of the main pages (search snippets), pe
            'privacy': ('Adatkezelési tájékoztató | Infinite Care Beauty Clinic',
                        'Hogyan kezeli a budapesti Infinite Care Beauty Clinic a kapcsolatfelvételi űrlapon és a kedvezmény-feliratkozáskor megadott személyes adatokat.')},
 }
+ALT_NAMES = ['Infinite Care', 'InfiniteCare', 'Infinite Care Beauty', 'Infinity Care', 'Infinity Klinika', 'Infinity szépségszalon']   # brand + common misspellings (searches); the name stays Infinite Care Beauty Clinic
+
+
+def LOGO():
+    return {'@type': 'ImageObject', 'url': settings.STATIC_EXPORT_SITE_URL + 'assets/images/infinite-care-beauty-clinic-logo.png',
+            'width': 280, 'height': 105, 'caption': 'Infinite Care Beauty Clinic logo'}
+
+
+def faq_ld(blocks, url):
+    """FAQPage for the 'Frequently asked questions' part of a body (questions = faq_marked 'q' blocks, answer = following paragraphs)."""
+    from .templatetags.site_extras import faq_marked
+    items, cur = [], None
+    for b in faq_marked(blocks):
+        if b.get('type') == 'q':
+            cur = {'@type': 'Question', 'name': b['text'], 'acceptedAnswer': {'@type': 'Answer', 'text': ''}}; items.append(cur)
+        elif b.get('type') == 'h':
+            cur = None
+        elif cur is not None:
+            t = b.get('text') or ' '.join(b.get('items') or [])
+            t = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', t)
+            a = cur['acceptedAnswer']; a['text'] = (a['text'] + ' ' + t).strip()
+    items = [i for i in items if i['acceptedAnswer']['text']]
+    return {'@type': 'FAQPage', '@id': url + '#faq', 'mainEntity': items} if items else None
+
+
 MAPS_URL = 'https://maps.google.com/?cid=7015004816567906002'   # the clinic's Google Maps place (from the map embed)
 DAYS = {'mon': 'Monday', 'tue': 'Tuesday', 'wed': 'Wednesday', 'thu': 'Thursday', 'fri': 'Friday', 'sat': 'Saturday', 'sun': 'Sunday'}
 
@@ -115,8 +140,8 @@ def business(site, socials, ui, lang):
     """The clinic as a schema.org local business (home page @graph; referenced by @id from the other pages)."""
     base = settings.STATIC_EXPORT_SITE_URL
     street = re.sub(r'^\s*Bp\.\s*VI\.\s*', '', site['address']).replace(' str.', ' utca')
-    org = {'@type': ['BeautySalon', 'HealthAndBeautyBusiness'], '@id': base + '#clinic', 'name': 'Infinite Care Beauty Clinic',
-           'url': base, 'logo': base + 'assets/images/infinitecare-logo-1.png', 'image': og_image('assets/images/gallery/clinic-lounge.webp'),
+    org = {'@type': ['BeautySalon', 'HealthAndBeautyBusiness'], '@id': base + '#clinic', 'name': 'Infinite Care Beauty Clinic', 'alternateName': ALT_NAMES,
+           'url': base, 'logo': LOGO(), 'image': og_image('assets/images/gallery/clinic-lounge.webp'),
            'telephone': site['phone'], 'email': site['email'], 'slogan': site.get('tagline') or None,
            'address': {'@type': 'PostalAddress', 'streetAddress': street, 'addressLocality': 'Budapest', 'postalCode': '1065', 'addressRegion': 'VI. kerület', 'addressCountry': 'HU'},
            'hasMap': MAPS_URL, 'areaServed': {'@type': 'City', 'name': 'Budapest'}, 'sameAs': [x['url'] for x in socials],
@@ -131,7 +156,7 @@ def business(site, socials, ui, lang):
 
 def website(lang):
     base = settings.STATIC_EXPORT_SITE_URL
-    return {'@type': 'WebSite', '@id': base + '#website', 'url': base, 'name': 'Infinite Care Beauty Clinic', 'inLanguage': ['en', 'hu'], 'publisher': {'@id': base + '#clinic'}}
+    return {'@type': 'WebSite', '@id': base + '#website', 'url': base, 'name': 'Infinite Care Beauty Clinic', 'alternateName': ALT_NAMES, 'inLanguage': ['en', 'hu'], 'publisher': {'@id': base + '#clinic'}}
 
 
 def crumbs(items):
@@ -185,6 +210,9 @@ def page_context(lang, page, urls, api_url, post=None, src=data, service_id=None
                   **({'image': image} if image else {}), 'areaServed': {'@type': 'City', 'name': 'Budapest'},
                   'provider': business(site, socials, ui, lang)},
                  crumbs([(ui['nav'][0], home), (ui['nav'][1], alt_url(lang, 'services')), (svc['title'], ctx['canonical'])])]
+        faq = faq_ld(svc['blocks'], ctx['canonical'])
+        if faq:
+            graph.append(faq)
         ctx.update(svc=svc, photos=photos, others=others, title=svc['title'], nav_key='services',
                    page_title=f"{svc['meta_title']} | Infinite Care", description=svc['meta_description'] or ctx['description'],
                    hero_image=svc['image'], og_image_url=og_image(svc['image']) or image, fp=dict(svc=live.svc_fp(svc)),
@@ -226,16 +254,19 @@ def page_context(lang, page, urls, api_url, post=None, src=data, service_id=None
         og = og_image('assets/media/' + post.cover.name)
         cover = settings.STATIC_EXPORT_SITE_URL + 'assets/media/' + post.cover.name
         clinic = {'@type': 'Organization', '@id': settings.STATIC_EXPORT_SITE_URL + '#clinic', 'name': 'Infinite Care Beauty Clinic', 'url': settings.STATIC_EXPORT_SITE_URL,
-                  'logo': {'@type': 'ImageObject', 'url': settings.STATIC_EXPORT_SITE_URL + 'assets/images/infinitecare-logo-1.png'}, 'sameAs': [x['url'] for x in socials]}
+                  'logo': LOGO(), 'sameAs': [x['url'] for x in socials]}
         ld = {'@context': 'https://schema.org', '@graph': [
             dict({'@type': 'BlogPosting', '@id': ctx['canonical'] + '#post'}, headline=p['title'][:110], description=p['excerpt'],
                  datePublished=p['iso_date'], dateModified=p.get('updated') or p['iso_date'], image=[cover, og] if og != cover else cover, inLanguage=lang,
                  mainEntityOfPage=ctx['canonical'], author=clinic, publisher=clinic),
             crumbs([(ui['nav'][0], alt_url(lang, 'index')), (ui['nav'][3], alt_url(lang, 'blog')), (p['title'], ctx['canonical'])])]}
+        faq = faq_ld(p.get('blocks'), ctx['canonical'])
+        if faq:
+            ld['@graph'].append(faq)
         more = [x for x in src.blog_posts(lang, urls) if x['slug'] != post.slug][:2]
         ctx.update(post=p, more_posts=more, fp=dict(post=live.fp(live.no_url([p])[0]), more=live.fp(live.no_url(more))), hero_image=p['cover'], canonical=ctx['alternates'][lang],
                    ld_json=to_ld(ld), og_image_url=og, description=p['excerpt'],
-                   page_title=f"{p['title']} | Infinite Care")
+                   page_title=p['title'] if len(p['title']) > 46 else f"{p['title']} | Infinite Care")
     return ctx
 
 
