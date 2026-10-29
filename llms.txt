@@ -4,18 +4,36 @@
 
 ## Pages
 
-- [Home](https://infinitecare-site.amyrsalarr.workers.dev/): clinic introduction, photo gallery, treatment videos and the contact form
-- [Our treatments](https://infinitecare-site.amyrsalarr.workers.dev/services): all treatments
-- [Blog](https://infinitecare-site.amyrsalarr.workers.dev/blog): articles about treatments and skin care
-- [Professional teeth whitening: the basics](https://infinitecare-site.amyrsalarr.workers.dev/blog/professional-teeth-whitening-basics)
-- [Laser hair removal: how to prepare and what to do afterwards](https://infinitecare-site.amyrsalarr.workers.dev/blog/laser-hair-removal-preparation-and-aftercare)
-- [What to expect at your first visit to Infinite Care1](https://infinitecare-site.amyrsalarr.workers.dev/blog/what-to-expect-at-your-first-visit)
+- [Home](https://www.infinitecare.hu/): clinic introduction, photo gallery, treatment videos and the contact form
+- [Our treatments](https://www.infinitecare.hu/services): all treatments
+- [Blog](https://www.infinitecare.hu/blog): articles about treatments and skin care
+- [Exosome Therapy](https://www.infinitecare.hu/exosome-therapy): Exosome therapy at Infinite Care Beauty Clinic, Budapest: reduced inflammation, improved tissue repair and enhanced collagen production for wrinkles, pigmentation, scars and scalp problems.
+- [Laser hair removal](https://www.infinitecare.hu/laser-hair-removal): Painless, permanent laser hair removal with our brand new laser machine in Budapest. Visible results after the first few treatments. Before and after care tips.
+- [Mesotherapy with micro needles](https://www.infinitecare.hu/mesotherapy): Mesotherapy is a non-surgical technique that delivers vitamins, plant extracts and other ingredients into the skin with micro needles. Revitalize serums for skin, body and hair in Budapest.
+- [Emsculpt treatment](https://www.infinitecare.hu/ems-treatment): EMSCULPT treatment: build muscle and burn fat with electric muscle stimulation (EMS). Faster results than conventional training, with no load on your joints. Budapest.
+- [Cellulite therapy](https://www.infinitecare.hu/cellulite-therapy): Anti-cellulite treatment for a flawless body with radio frequency, infrared and vacuum (U Shaping) for smoother, tighter skin. Budapest.
+- [Carbon peeling](https://www.infinitecare.hu/carbon-peeling): Anti-aging carbon peeling with laser for a perfectly tight and wrinkle free face. Ideal for scars and oily, uneven skin. Infinite Care Beauty Clinic, Budapest.
+- [Teeth whitening](https://www.infinitecare.hu/teeth-whitening): Hollywood smile without pain in 60 minutes with our latest laser teeth whitening machine. How the treatment works. Infinite Care Beauty Clinic, Budapest.
+- [Face lifting](https://www.infinitecare.hu/face-lifting-en): Non-surgical facelifting: radio frequency skin tightening with infrared and vacuum stimulates collagen, elastin and new skin cells to firm and lift sagging skin. Budapest.
+- [Brazilift](https://www.infinitecare.hu/brazilift-en): Brazilift: our buttocks and breast treatment with vacuum for a more plumped, tighter body. Painless Brazilian lift at Infinite Care Beauty Clinic, Budapest.
+- [Professional teeth whitening: the basics](https://www.infinitecare.hu/blog/professional-teeth-whitening-basics)
+- [Laser hair removal: how to prepare and what to do afterwards](https://www.infinitecare.hu/blog/laser-hair-removal-preparation-and-aftercare)
+- [What to expect at your first visit to Infinite Care1](https://www.infinitecare.hu/blog/what-to-expect-at-your-first-visit)
 
 ## Magyar
 
-- [Főoldal](https://infinitecare-site.amyrsalarr.workers.dev/hu/)
-- [Szolgáltatásaink](https://infinitecare-site.amyrsalarr.workers.dev/hu/services)
-- [Blog](https://infinitecare-site.amyrsalarr.workers.dev/hu/blog)
+- [Főoldal](https://www.infinitecare.hu/hu/)
+- [Szolgáltatásaink](https://www.infinitecare.hu/hu/services)
+- [Blog](https://www.infinitecare.hu/hu/blog)
+- [Exoszóma Terápia](https://www.infinitecare.hu/exoszoma-terapia)
+- [Dióda lézeres tartós szörtelenítés](https://www.infinitecare.hu/lezeres-tartos-szortelenites)
+- [Mikrotűs mezoterápia](https://www.infinitecare.hu/mezoterapia)
+- [Emsculpt testkezelés](https://www.infinitecare.hu/ems-testkezeles)
+- [Cellulit terápia](https://www.infinitecare.hu/cellulit-terapia)
+- [Carbon hámlasztás](https://www.infinitecare.hu/carbon-hamlasztas)
+- [Fogfehérítés](https://www.infinitecare.hu/fogfeherites)
+- [Face lifting (ultrahang)](https://www.infinitecare.hu/face-lifting)
+- [Brazilift](https://www.infinitecare.hu/brazilift)
 
 ## Contact
 

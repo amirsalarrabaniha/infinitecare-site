@@ -110,7 +110,7 @@ EMAIL_BACKEND = ('django.core.mail.backends.smtp.EmailBackend' if EMAIL_HOST
 
 # Static export (GitHub Pages fallback): API URL baked into exported pages ('' = mailto fallback)
 STATIC_EXPORT_API_URL = os.getenv('STATIC_EXPORT_API_URL', '')
-STATIC_EXPORT_SITE_URL = os.getenv('STATIC_EXPORT_SITE_URL', 'https://amirsalarrabaniha.github.io/infinitecare-site/')
+STATIC_EXPORT_SITE_URL = os.getenv('STATIC_EXPORT_SITE_URL', 'https://www.infinitecare.hu/')
 # True = canonical/hreflang URLs without .html (Cloudflare Workers assets serve /services, /hu/blog/<slug>, …)
 STATIC_EXPORT_CLEAN_URLS = os.getenv('STATIC_EXPORT_CLEAN_URLS', 'False').lower() in ('1', 'true', 'yes')
 

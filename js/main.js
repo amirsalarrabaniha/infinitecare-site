@@ -37,7 +37,7 @@ initTilt(document);
 const gg=document.querySelector('.g-grid'),gf=document.querySelector('.g-filters');let setFilter=()=>{},curFilter='all';
 if(gg){const photos=()=>[...gg.querySelectorAll('.g-item:not(.g-vid)')],vis=()=>photos().filter(i=>!i.hidden);
  setFilter=k=>{curFilter=k;const bs=[...gf.querySelectorAll('button')];bs.forEach(y=>{const on=y.dataset.filter===k;y.classList.toggle('on',on);y.setAttribute('aria-pressed',on)});gg.querySelectorAll('.g-item').forEach(i=>{i.hidden=k!=='all'&&!i.dataset.cat.split(' ').includes(k)});const st=document.querySelector('.g-status');if(st)st.textContent=st.dataset.tpl.replace('{n}',[...gg.querySelectorAll('.g-item')].filter(i=>!i.hidden).length)};
- gf.addEventListener('click',e=>{const x=e.target.closest('button');if(!x)return;setFilter(x.dataset.filter);const bar=x.parentElement;if(bar.scrollWidth>bar.clientWidth)bar.scrollTo({left:x.offsetLeft-bar.offsetLeft-12,behavior:'smooth'})});
+ if(gf)gf.addEventListener('click',e=>{const x=e.target.closest('button');if(!x)return;setFilter(x.dataset.filter);const bar=x.parentElement;if(bar.scrollWidth>bar.clientWidth)bar.scrollTo({left:x.offsetLeft-bar.offsetLeft-12,behavior:'smooth'})});
  let lb,cur=-1,last;
  const build=()=>{lb=document.createElement('div');lb.className='lb';lb.setAttribute('role','dialog');lb.setAttribute('aria-modal','true');lb.hidden=true;
   lb.innerHTML='<button type="button" class="lb-x"></button><button type="button" class="lb-p"></button><button type="button" class="lb-n"></button><figure><img alt=""><figcaption></figcaption></figure>';
@@ -102,10 +102,11 @@ if(form){const st=form.querySelector('.form-status'),btn=form.querySelector('but
 const api=(b.dataset.api||'').replace(/\/api\/contact\/?$/,'').replace(/\/+$/,'');
 if(/^https?:\/\//.test(api)&&window.fetch){
 const hu=b.dataset.lang==='hu';
+const root=b.dataset.root||'',svcId=b.dataset.svc||'';
 const slug=b.dataset.slug||(b.hasAttribute('data-shell')&&new URLSearchParams(location.search).get('p'))||'';
-const L=hu?{read:'Tovább olvasom →',nt:'új lapon nyílik meg',bo:'Online időpontfoglalás',bk:'Foglalás',play:'Videó lejátszása',empty:'Hamarosan új cikkekkel jelentkezünk.',reel:'Videó lejátszása / szüneteltetése',offers:'Akciók',
+const L=hu?{more:'Bővebben a kezelésről',vids:'Nézd meg a kezelést',read:'Tovább olvasom →',nt:'új lapon nyílik meg',bo:'Online időpontfoglalás',bk:'Foglalás',play:'Videó lejátszása',empty:'Hamarosan új cikkekkel jelentkezünk.',reel:'Videó lejátszása / szüneteltetése',offers:'Akciók',
  f:{all:'Mind',clinic:'Klinika',treatments:'Kezelések',events:'Események',whitening:'Fogfehérítés',facial:'Arckezelés',laser:'Lézer',emsculpt:'Emsculpt',carbon:'Carbon hámlasztás',cellulite:'Cellulit',brazilift:'Brazilift'}}
- :{read:'Read more →',nt:'opens in a new tab',bo:'Book online',bk:'Book an appointment',play:'Play video',empty:'New articles are coming soon.',reel:'Play / pause video',offers:'Offers',
+ :{more:'More about this treatment',vids:'Watch the treatment',read:'Read more →',nt:'opens in a new tab',bo:'Book online',bk:'Book an appointment',play:'Play video',empty:'New articles are coming soon.',reel:'Play / pause video',offers:'Offers',
  f:{all:'All',clinic:'Clinic',treatments:'Treatments',events:'Events',whitening:'Teeth Whitening',facial:'Facial',laser:'Laser',emsculpt:'Emsculpt',carbon:'Carbon Peeling',cellulite:'Cellulite',brazilift:'Brazilift'}};
 const q=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -202,8 +203,11 @@ const render=()=>{
    if(sh.length){const w=document.createElement('div');w.className='w-shorts';w.innerHTML=sh.map(v=>`<div class="reveal in">${yt(v)}</div>`).join('');if(s)s.replaceWith(w);else el.append(w)}else if(s)s.remove();
    return sized(el).then(g=>{settle(el);return g})});
  }
- if(SV&&S)upd('services',fp(SV.results),el=>{const html=SV.results.map((s,i)=>{const n=i+1;return `<article class="svc wrap ${n%2?'':'svc-rev'}" id="service-${esc(s.id)}"><div class="f-img reveal-img in"><img src="${esc(s.image)}" alt="${esc(s.title)}" loading="lazy" decoding="async" data-tilt><span class="num">${String(n).padStart(2,'0')}</span></div><div class="f-text"><span class="eyebrow reveal in">${esc(s.eyebrow)}</span><h2 class="split in">${esc(s.title)}</h2><p class="reveal in">${s.description.map(esc).join('<br>')}</p><div class="reveal in btnrow">${S.booking_url?bookA(L.bo,'',S.booking_url)+'<a class="link" href="'+esc(S.phone_href)+'" data-s="phone">'+esc(S.phone)+'</a>':'<a class="btn" href="'+esc(S.phone_href)+'" data-s="tel">'+esc(L.bk)+'</a>'}</div>${s.videos&&s.videos.length?'<div class="svc-vids reveal in">'+s.videos.map(yt).join('')+'</div>':''}</div></article>`}).join('');
+ if(SV&&S)upd('services',fp(SV.results),el=>{const html=SV.results.map((s,i)=>{const n=i+1;return `<article class="svc wrap ${n%2?'':'svc-rev'}" id="service-${esc(s.id)}"><div class="f-img reveal-img in"><img src="${esc(s.image)}" alt="${esc(s.title)}" loading="lazy" decoding="async" data-tilt><span class="num">${String(n).padStart(2,'0')}</span></div><div class="f-text"><span class="eyebrow reveal in">${esc(s.eyebrow)}</span><h2 class="split in">${esc(s.title)}</h2><p class="reveal in">${s.description.map(esc).join('<br>')}</p><div class="reveal in btnrow">${S.booking_url?bookA(L.bo,'',S.booking_url)+'<a class="link" href="'+esc(S.phone_href)+'" data-s="phone">'+esc(S.phone)+'</a>':'<a class="btn" href="'+esc(S.phone_href)+'" data-s="tel">'+esc(L.bk)+'</a>'}</div>${s.slug?'<p class="reveal in svc-more"><a class="link" href="'+esc(root+s.slug+'.html')+'">'+esc(L.more)+' →</a></p>':''}${s.videos&&s.videos.length?'<div class="svc-vids reveal in">'+s.videos.map(yt).join('')+'</div>':''}</div></article>`}).join('');
   const t=tpl(html);return sized(t).then(g=>{if(!g)return false;el.replaceChildren(t);settle(el)})});
+ if(SV&&svcId){const s=SV.results.find(x=>String(x.id)===svcId);   // service page (/carbon-peeling): lead, body, videos
+  if(s)upd('svc',fp([s.description,s.blocks,s.videos]),el=>{const t=tpl(`<p class="sp-lead">${s.description.map(esc).join('<br>')}</p>`+s.blocks.map(k=>k.type==='h'?`<h2>${esc(k.text)}</h2>`:k.type==='ul'?`<ul>${k.items.map(i=>'<li>'+esc(i)+'</li>').join('')}</ul>`:`<p>${esc(k.text)}</p>`).join('')+(s.videos&&s.videos.length?`<h2>${esc(L.vids)}</h2><div class="svc-vids">${s.videos.map(yt).join('')}</div>`:''));
+   return sized(t).then(g=>{if(!g)return false;el.replaceChildren(t);settle(el)})})}
  if(B){
   upd('blog',fp(nourl(B.results)),el=>{const html=B.results.length?`<div class="bgrid" data-live="blog">${B.results.map(card).join('')}</div>`:`<p class="b-empty" data-live="blog">${esc(L.empty)}</p>`;return replace(el,html,fp(nourl(B.results)))});
   if(slug){const rest=B.results.filter(p=>p.slug!==slug).slice(0,2),sec=document.querySelector('[data-live=more]');
@@ -219,7 +223,7 @@ const render=()=>{
 const run=()=>{const w=[J('settings','/api/settings/')];
  if(document.querySelector('.hero'))w.push(J('home','/api/home/'));
  if(document.querySelector('[data-live=gallery],[data-live=clips],[data-live=watch]'))w.push(J('gallery','/api/gallery/'));
- if(document.querySelector('[data-live=services]'))w.push(J('services','/api/services/'));
+ if(document.querySelector('[data-live=services],[data-live=svc]'))w.push(J('services','/api/services/'));
  if(document.querySelector('[data-live=blog],[data-live=more]')||slug)w.push(J('blog','/api/blog/'));
  if(slug)w.push(J('post','/api/blog/'+encodeURIComponent(slug)+'/'));
  render();   // cached data (stale) first, then every fresh response

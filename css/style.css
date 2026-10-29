@@ -253,3 +253,12 @@ body.lb-open{overflow:hidden}
 @media (max-width:820px){.bb-act{align-items:stretch}.bb-act .btn{text-align:center;justify-content:center}.bb-act p{text-align:center}.bb-in{grid-template-columns:1fr;padding:2.2rem 1.6rem;gap:1.6rem}.bookband{padding-top:5rem}
  .menu .menu-book{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:.9rem 2.2rem;background:var(--gold);color:var(--gd)!important;border-color:var(--gold);font-family:Montserrat,"Montserrat Fallback",sans-serif;font-size:.8rem!important;letter-spacing:.16em;text-transform:uppercase}.menu .menu-book:after{display:none}.menu .menu-book:before{background:#fff}
  .menu .menu-tel{display:block;font-size:1rem!important;opacity:.85}.nav-cta{display:none}}
+/* service landing pages (/carbon-peeling, /carbon-hamlasztas …) */
+.crumbs{font-size:.8rem;letter-spacing:.04em;color:#58665f;margin:0 0 2rem}.crumbs a{color:var(--g);border-bottom:1px solid transparent}.crumbs a:hover{border-color:var(--gold)}
+.post-in .sp-lead{font-size:1.2rem;line-height:1.8;color:var(--g)}
+.spage .svc-vids{margin:0 0 2rem}
+.sp-gal{padding:3rem 0 1rem}.sp-gal h2{font-size:clamp(1.5rem,3vw,2rem);margin-bottom:1.5rem}
+.sp-others{max-width:760px;padding:2rem 0 5rem}.sp-others h3{font-size:1.3rem;margin-bottom:1rem}
+.sp-others ul{list-style:none;padding:0;margin:0 0 2rem;display:flex;flex-wrap:wrap;gap:.6rem}
+.sp-others li a{display:inline-block;padding:.55rem 1.1rem;border:1px solid var(--gold);border-radius:999px;font-size:.85rem;color:var(--g);transition:background .3s}.sp-others li a:hover{background:#f3eee4}
+.svc-more{margin-top:1.2rem}

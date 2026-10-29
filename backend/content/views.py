@@ -16,6 +16,8 @@ LANGS = settings.SITE_LANGUAGES
 def alt_url(lang, page, slug=None):
     """Absolute URL (static export layout) of a page in a language, for hreflang / canonical / og tags.
     With STATIC_EXPORT_CLEAN_URLS (Cloudflare Workers assets: /services instead of /services.html) the .html is dropped."""
+    if page == 'service' and slug:   # service pages of both languages live in the site root: /carbon-peeling, /carbon-hamlasztas
+        return settings.STATIC_EXPORT_SITE_URL + (slug if settings.STATIC_EXPORT_CLEAN_URLS else f'{slug}.html')
     base = settings.STATIC_EXPORT_SITE_URL + ('hu/' if lang == 'hu' else '')
     name = f'blog/{slug}' if slug else page
     if settings.STATIC_EXPORT_CLEAN_URLS:
@@ -33,8 +35,25 @@ def asset_version():
     return h.hexdigest()[:8]
 
 
-def page_context(lang, page, urls, api_url, post=None, src=data):
-    """`page` is one of data.PAGES, or 'blog_post' (then `post` is the BlogPost to show).
+def to_ld(obj):
+    return json.dumps(obj, ensure_ascii=False).replace('<', '\\u003c')
+
+
+def absolute(u):
+    """Relative asset URL of the export (../assets/media/x.webp) -> absolute URL on the public site, for og:image / JSON-LD."""
+    if not u or u.startswith('http'):
+        return u
+    return settings.STATIC_EXPORT_SITE_URL + 'assets/' + u.split('assets/', 1)[1] if 'assets/' in u else ''
+
+
+def service_pair(src, service_id, urls):
+    """The service in both languages ({'en': {...}, 'hu': {...}}), as `data.services` returns it."""
+    return {l: next(x for x in src.services(l, urls) if x['id'] == service_id) for l in LANGS}
+
+
+def page_context(lang, page, urls, api_url, post=None, src=data, service_id=None):
+    """`page` is one of data.PAGES, 'blog_post' (then `post` is the BlogPost to show)
+    or 'service' (the landing page of the service `service_id`, e.g. /carbon-peeling).
     `src` provides the content: `data` (database) or an `api_source.ApiSource` (JSON API of the Django backend)."""
     other = 'hu' if lang == 'en' else 'en'
     ui = UI[lang]
@@ -48,13 +67,38 @@ def page_context(lang, page, urls, api_url, post=None, src=data):
     nav.append(dict(key='blog', label=ui['nav'][3], href=urls.page('blog')))
     socials = src.socials(site, lang)
     ctx = dict(lang=lang, other=other, page=page, nav_key='blog' if page == 'blog_post' else page, ui=ui,
-               title=ui['titles'][page] if not post else post.tr('title', lang), nav=nav, S=urls.static, v=asset_version(),
+               title=ui['titles'].get(page, '') if not post else post.tr('title', lang), nav=nav, S=urls.static, v=asset_version(),
                urls={k: urls.page(k) for k in nav_keys},
                switch={l: urls.page('blog' if post else page, l, slug) for l in LANGS},
                alternates={l: alt_url(l, 'blog' if post else page, slug) for l in LANGS},
                site=site, socials=socials, api_url=api_url, post_tpl=urls.page('blog', slug='__SLUG__'), post_slugs=','.join(x.slug for x in src.published_posts()), description=f"{ui['desc']} {site['address']}")
+    if page == 'service':
+        pair = service_pair(src, service_id, urls)
+        svc = pair[lang]
+        # a language without its own page of this service falls back to its services page
+        ctx.update(switch={l: urls.service(x['slug']) if x['slug'] else urls.page('services', l) for l, x in pair.items()},
+                   alternates={l: alt_url(l, 'service', x['slug']) if x['slug'] else alt_url(l, 'services') for l, x in pair.items()})
     ctx['canonical'] = ctx['alternates'][lang]
-    if page == 'index':
+    if page == 'service':
+        cat = svc['gallery_category']
+        photos = [g for g in src.gallery(lang, urls) if g['category'] == cat][:9] if cat else []
+        others = [dict(title=x['title'], href=urls.service(x['slug'])) for x in src.services(lang, urls) if x['slug'] and x['id'] != svc['id']]
+        home = alt_url(lang, 'index')
+        image = absolute(svc['image'])
+        graph = [{'@type': 'Service', '@id': ctx['canonical'] + '#service', 'name': svc['title'], 'serviceType': svc['title'],
+                  'description': svc['meta_description'] or ' '.join(svc['description']), 'url': ctx['canonical'], 'inLanguage': lang,
+                  **({'image': image} if image else {}), 'areaServed': {'@type': 'City', 'name': 'Budapest'},
+                  'provider': {'@type': 'HealthAndBeautyBusiness', 'name': 'Infinite Care Beauty Clinic', 'url': settings.STATIC_EXPORT_SITE_URL,
+                               'telephone': site['phone'], 'address': site['address'] + ', ' + site['city']}},
+                 {'@type': 'BreadcrumbList', 'itemListElement': [
+                     {'@type': 'ListItem', 'position': 1, 'name': ui['nav'][0], 'item': home},
+                     {'@type': 'ListItem', 'position': 2, 'name': ui['nav'][1], 'item': alt_url(lang, 'services')},
+                     {'@type': 'ListItem', 'position': 3, 'name': svc['title'], 'item': ctx['canonical']}]}]
+        ctx.update(svc=svc, photos=photos, others=others, title=svc['title'], nav_key='services',
+                   page_title=f"{svc['meta_title']} | Infinite Care", description=svc['meta_description'] or ctx['description'],
+                   hero_image=svc['image'], og_image_url=image, fp=dict(svc=live.svc_fp(svc)),
+                   ld_json=to_ld({'@context': 'https://schema.org', '@graph': graph}))
+    elif page == 'index':
         yt = src.youtube(lang, urls)
         gallery = src.gallery(lang, urls)
         gallery_videos = [v for v in yt if v['gallery']]
@@ -70,7 +114,10 @@ def page_context(lang, page, urls, api_url, post=None, src=data):
                    watch_featured=next((v for v in yt if v['featured']), None), watch_shorts=[v for v in yt if v['home'] and not v['featured']][:4])
     elif page == 'services':
         svcs = src.services(lang, urls)
-        ctx.update(services=svcs, fp=dict(services=live.fp(svcs)),
+        f = live.fp(svcs)
+        for x in svcs:   # link of the card to the service's own page (not part of the fingerprint, the API has no site URLs)
+            x['href'] = urls.service(x['slug']) if x.get('slug') else ''
+        ctx.update(services=svcs, fp=dict(services=f),
                    hero_image=urls.static + 'assets/images/services.webp')
     elif page == 'blog':
         posts = src.blog_posts(lang, urls)
@@ -114,8 +161,21 @@ def blog_post(request, lang, slug):
     return render(request, 'site/blog_post.html', ctx)
 
 
+def service_page(request, slug):
+    """/carbon-peeling/ (EN) or /carbon-hamlasztas/ (HU): the landing page of one service."""
+    for lang in LANGS:
+        svc = data.Service.objects.filter(is_active=True, **{f'slug_{lang}': slug}).first()
+        if svc:
+            return render(request, 'site/service_page.html', page_context(lang, 'service', data.LiveUrls(lang), '/api/contact/', service_id=svc.id))
+    raise Http404
+
+
 def page(request, lang, name='index'):
-    if lang not in LANGS or name not in data.PAGES:
+    if lang not in LANGS:
+        if name == 'index':
+            return service_page(request, lang)
+        raise Http404
+    if name not in data.PAGES:
         raise Http404
     ctx = page_context(lang, name, data.LiveUrls(lang), '/api/contact/')
     return render(request, f'site/{name}.html', ctx)

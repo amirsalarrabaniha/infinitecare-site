@@ -1,3 +1,17 @@
+# Cloudflare Workers assets. Old (pre-2026) URLs of infinitecare.hu without a 1:1 successor -> one 301 to a 200 page.
+# The old service URLs (/carbon-hamlasztas, /laser-hair-removal …) are real pages now (exported from the services in the admin).
+/home / 301
+/home/ / 301
+/home.html / 301
+/fooldal /hu/ 301
+/fooldal/ /hu/ 301
+/fooldal.html /hu/ 301
+/szolgaltatasaink /hu/services 301
+/szolgaltatasaink/ /hu/services 301
+/szolgaltatasaink.html /hu/services 301
+/araink /hu/services 301
+/araink/ /hu/services 301
+/araink.html /hu/services 301
 /prices /services 301
 /prices/ /services 301
 /prices.html /services 301
