@@ -60,6 +60,13 @@ class Command(BaseCommand):
                 ctx = shell_context(lang, api_url, src, next(iter(posts)))
                 (folder / 'blog' / 'post.html').write_text(render_to_string('site/blog_post.html', ctx), encoding='utf-8')
                 n += 1
+            # service landing pages, in the site root for both languages (/carbon-peeling, /carbon-hamlasztas: the old site's URLs)
+            urls = data.ExportUrls(lang, root=True)
+            for svc in src.services(lang, urls):
+                if svc.get('slug'):
+                    ctx = page_context(lang, 'service', urls, api_url, src=src, service_id=svc['id'])
+                    (out / f"{svc['slug']}.html").write_text(render_to_string('site/service_page.html', ctx), encoding='utf-8')
+                    n += 1
         if from_api:
             self.stdout.write(f'Media: {src.downloaded} downloaded, {len(src.media_names) - src.downloaded} already present')
         self.write_discovery_files(out, src)
@@ -78,6 +85,16 @@ class Command(BaseCommand):
             lastmod = next((p.published_at.isoformat() for p in posts if p.slug == slug), '')
             for l, u in alts.items():
                 rows.append(f'<url><loc>{u}</loc>{f"<lastmod>{lastmod}</lastmod>" if lastmod else ""}{links}</url>')
+        urls = data.ExportUrls('en', root=True)
+        pairs = {l: {x['id']: x for x in src.services(l, urls)} for l in settings.SITE_LANGUAGES}
+        services = [x for x in pairs['en'].values() if any(pairs[l].get(x['id'], {}).get('slug') for l in pairs)]
+        for svc in services:
+            alts = {l: alt_url(l, 'service', pairs[l][svc['id']]['slug']) for l in settings.SITE_LANGUAGES if pairs[l].get(svc['id'], {}).get('slug')}
+            links = ''.join(f'<xhtml:link rel="alternate" hreflang="{l}" href="{u}"/>' for l, u in alts.items())
+            links += f'<xhtml:link rel="alternate" hreflang="x-default" href="{alts.get("en") or next(iter(alts.values()))}"/>'
+            lastmod = svc.get('updated') or ''
+            for u in alts.values():
+                rows.append(f'<url><loc>{u}</loc>{f"<lastmod>{lastmod}</lastmod>" if lastmod else ""}{links}</url>')
         (out / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
                                          'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + '\n'.join(rows) + '\n</urlset>\n', encoding='utf-8')
         (out / 'robots.txt').write_text(f'User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: {base}sitemap.xml\n', encoding='utf-8')
@@ -90,9 +107,11 @@ class Command(BaseCommand):
                  f'- [Home]({en("index")}): clinic introduction, photo gallery, treatment videos and the contact form',
                  f'- [Our treatments]({en("services")}): all treatments',
                  f'- [Blog]({en("blog")}): articles about treatments and skin care']
+        lines += [f'- [{x["title"]}]({en("service", x["slug"])}): {x["meta_description"]}' for x in pairs['en'].values() if x.get('slug')]
         lines += [f'- [{p.tr("title", "en")}]({en("blog", p.slug)})' for p in posts]
         lines += ['', '## Magyar', '',
                   f'- [Főoldal]({hu("index")})', f'- [Szolgáltatásaink]({hu("services")})', f'- [Blog]({hu("blog")})',
+                  *[f'- [{x["title"]}]({hu("service", x["slug"])})' for x in pairs['hu'].values() if x.get('slug')],
                   '', '## Contact', '', f'- Phone: {s["phone"]}', f'- E-mail: {s["email"]}', f'- Address: {s["address"]}, {s["city"]}']
         lines += [f'- Opening hours: {h}' for h in s['hours']]
         (out / 'llms.txt').write_text('\n'.join(lines) + '\n', encoding='utf-8')

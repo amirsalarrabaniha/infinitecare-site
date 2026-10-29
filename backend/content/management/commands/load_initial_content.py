@@ -12,6 +12,7 @@ from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
+from content import service_pages
 from content.models import (SiteSettings, HomePage, Counter, Service,
                             GalleryItem, VideoClip, YouTubeVideo, BlogPost)
 
@@ -109,6 +110,7 @@ class Command(BaseCommand):
             obj = Service(order=(i + 1) * 10, **{k: v for k, v in s.items() if k != 'image'})
             attach(obj, 'image', s['image'], 'services')
             obj.save()
+        service_pages.fill(Service)   # text / URLs of the service landing pages
         photos, clips = load_gallery(d)
         posts = load_blog(d)
         load_youtube(d)

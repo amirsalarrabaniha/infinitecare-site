@@ -137,6 +137,13 @@ class Counter(Ordered):
         return f'{self.value} {self.label_en}'
 
 
+# file / folder names of the static site and its redirects: a service page must not use them
+RESERVED_SLUGS = {'index', 'services', 'blog', 'hu', 'en', 'assets', 'css', 'js', 'api', 'admin', 'media', 'static', 'stats',
+                  'home', 'fooldal', 'szolgaltatasaink', 'prices', 'araink', 'sitemap', 'robots', 'llms', 'post'}
+GALLERY_CATEGORIES_PAGE = [('whitening', 'Teeth Whitening'), ('facial', 'Facial'), ('laser', 'Laser'), ('emsculpt', 'Emsculpt'),
+                           ('carbon', 'Carbon Peeling'), ('cellulite', 'Cellulite'), ('brazilift', 'Brazilift')]
+
+
 class Service(Ordered):
     image = models.ImageField(upload_to='services/')
     eyebrow_en = models.CharField('Subtitle (EN)', max_length=150, blank=True)
@@ -145,12 +152,43 @@ class Service(Ordered):
     title_hu = models.CharField(max_length=150, blank=True)
     description_en = models.TextField()
     description_hu = models.TextField(blank=True)
+    # own landing page (/<slug>): EN page at slug_en, HU page at slug_hu. Empty slug = no page in that language
+    slug_en = models.SlugField('Page URL (EN)', max_length=80, blank=True,
+                               help_text='The English page is published at /<this>, e.g. carbon-peeling. Empty = no own page. Changing it breaks old links.')
+    slug_hu = models.SlugField('Page URL (HU)', max_length=80, blank=True,
+                               help_text='The Hungarian page is published at /<this>, e.g. carbon-hamlasztas.')
+    meta_title_en = models.CharField('Search title (EN)', max_length=70, blank=True, help_text='Title shown by Google (max ~60 characters). Empty = the service title.')
+    meta_title_hu = models.CharField('Search title (HU)', max_length=70, blank=True)
+    meta_description_en = models.CharField('Search description (EN)', max_length=300, blank=True, help_text='Snippet shown by Google (~150 characters).')
+    meta_description_hu = models.CharField('Search description (HU)', max_length=300, blank=True)
+    body_en = models.TextField('Page text (EN)', blank=True,
+                               help_text="Text of the service page. Blank line = new paragraph, '## ' at the start = heading, lines starting with '- ' = list.")
+    body_hu = models.TextField('Page text (HU)', blank=True)
+    gallery_category = models.CharField('Gallery photos', max_length=20, blank=True, choices=[(k, v) for k, v in GALLERY_CATEGORIES_PAGE],
+                                        help_text='Gallery photos of this category are shown on the service page.')
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta(Ordered.Meta):
         pass
 
     def __str__(self):
         return self.title_en
+
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        errors = {}
+        for f in ('slug_en', 'slug_hu'):
+            v = getattr(self, f)
+            if not v:
+                continue
+            if v in RESERVED_SLUGS:
+                errors[f] = f'"{v}" is used by another page of the site.'
+            elif Service.objects.exclude(pk=self.pk).filter(models.Q(slug_en=v) | models.Q(slug_hu=v)).exists():
+                errors[f] = f'"{v}" is already used by another service.'
+        if self.slug_en and self.slug_en == self.slug_hu:
+            errors['slug_hu'] = 'The Hungarian page needs a different URL than the English one.'
+        if errors:
+            raise ValidationError(errors)
 
 
 GALLERY_CATEGORIES = [('clinic', 'Clinic'), ('treatments', 'Treatments'), ('events', 'Events'),

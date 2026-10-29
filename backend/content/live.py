@@ -44,3 +44,8 @@ def index_fps(h, counters, gallery, yt, clips):
         cta=fp([h['cta_image'], h['cta_script'], h['cta_title'], h['cta_button']]),
         contact=fp([h['contact_eyebrow'], h['contact_title'], h['contact_text'], h['contact_image']]),
         gallery=fp(dict(photos=gallery, yt=yt, clips=clips)))
+
+
+def svc_fp(s):
+    """The live part of a service page: lead text, body and videos."""
+    return fp([s['description'], s['blocks'], s['videos']])

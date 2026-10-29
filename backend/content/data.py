@@ -23,6 +23,9 @@ class LiveUrls:
             return f'/{lang}/blog/{slug}/'
         return f'/{lang}/' if name == 'index' else f'/{lang}/{name}/'
 
+    def service(self, slug):
+        return f'/{slug}/'
+
     def media(self, f):
         return f.url if f else ''
 
@@ -30,9 +33,9 @@ class LiveUrls:
 class ExportUrls:
     """Relative URLs for the static export: EN in the root, HU in /hu/, blog posts in blog/ (EN) and hu/blog/ (HU).
     `subdir` is the folder of the page being rendered below its language root ('' or 'blog')."""
-    def __init__(self, lang, subdir=''):
-        self.lang = lang
-        self.cur = ('hu/' if lang == 'hu' else '') + (subdir + '/' if subdir else '')
+    def __init__(self, lang, subdir='', root=False):
+        self.lang = lang   # root=True: a page of `lang` that lives in the site root (service pages: /carbon-hamlasztas)
+        self.cur = '' if root else ('hu/' if lang == 'hu' else '') + (subdir + '/' if subdir else '')
         self.prefix = '../' * self.cur.count('/')
         self.static = self.prefix
 
@@ -40,6 +43,10 @@ class ExportUrls:
         lang = lang or self.lang
         target = ('hu/' if lang == 'hu' else '') + (f'blog/{slug}.html' if slug else f'{name}.html')
         return posixpath.relpath(target, self.cur.rstrip('/') or '.')
+
+    def service(self, slug):
+        """Service pages of both languages are in the site root, so the old URLs (/carbon-hamlasztas, /laser-hair-removal) keep working."""
+        return posixpath.relpath(f'{slug}.html', self.cur.rstrip('/') or '.')
 
     def media(self, f):
         return f'{self.prefix}assets/media/{f.name}' if f else ''
@@ -101,7 +108,11 @@ def counters(lang):
 def services(lang, urls):
     vids = [v for v in youtube(lang, urls) if v['service_id']]
     return [dict(videos=[v for v in vids if v['service_id'] == s.id][:2], id=s.id, image=urls.media(s.image), eyebrow=s.tr('eyebrow', lang), title=s.tr('title', lang),
-                 description=lines(s.tr('description', lang)), order=s.order)
+                 description=lines(s.tr('description', lang)), order=s.order,
+                 slug=getattr(s, f'slug_{lang}'), slugs=dict(en=s.slug_en, hu=s.slug_hu),
+                 meta_title=s.tr('meta_title', lang) or s.tr('title', lang), meta_description=s.tr('meta_description', lang),
+                 blocks=body_blocks(s.tr('body', lang)), gallery_category=s.gallery_category,
+                 updated=s.updated_at.date().isoformat() if s.updated_at else '')
             for s in Service.objects.filter(is_active=True)]
 
 

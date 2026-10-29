@@ -13,7 +13,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 ROOT="$PWD"
 API_URL="${API_URL:-https://infinitecare-api.amyrsalarr.workers.dev}"
-SITE_URL="${SITE_URL:-https://infinitecare-site.amyrsalarr.workers.dev/}"
+SITE_URL="${SITE_URL:-https://www.infinitecare.hu/}"
 
 PY="${SYNC_PYTHON:-}"
 if [ -z "$PY" ]; then

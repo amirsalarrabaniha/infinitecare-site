@@ -15,22 +15,41 @@ RedirectMatch 404 /(backend|cf-django|cloudflare|scripts|\.git|\.wrangler|node_m
  </IfModule>
 </FilesMatch>
 
-# --- clean URLs (/services -> services.html) and the old /prices pages; links in the pages are .html so this is only a convenience ---
+# --- clean URLs (/services -> services.html, /carbon-hamlasztas -> carbon-hamlasztas.html) and the old site's URLs ---
+# Every redirect goes straight to the final https://www URL (one hop, no chains); canonical URLs are clean and never redirect.
+<IfModule mod_dir.c>
+# /blog is a page (blog.html) and a folder (blog/<post>.html) at the same time: let the rules below decide about the slash
+DirectorySlash Off
+</IfModule>
 <IfModule mod_rewrite.c>
 RewriteEngine On
 # explicit base: without it some hosts (e.g. Rackhost/ISPConfig) build redirect URLs from the filesystem path
 RewriteBase /
-RewriteRule ^(hu/)?prices(\.html|/)?$ $1services [R=301,L]
+# old (pre-2026) pages that have no 1:1 successor
+RewriteRule ^home(\.html|/)?$ https://www.infinitecare.hu/ [R=301,L]
+RewriteRule ^fooldal(\.html|/)?$ https://www.infinitecare.hu/hu/ [R=301,L]
+RewriteRule ^(szolgaltatasaink|araink)(\.html|/)?$ https://www.infinitecare.hu/hu/services [R=301,L]
+RewriteRule ^prices(\.html|/)?$ https://www.infinitecare.hu/services [R=301,L]
+RewriteRule ^hu/prices(\.html|/)?$ https://www.infinitecare.hu/hu/services [R=301,L]
+# one host: infinitecare.hu -> www.infinitecare.hu
+RewriteCond %{HTTP_HOST} ^infinitecare\.hu$ [NC]
+RewriteRule ^(.*)$ https://www.infinitecare.hu/$1 [R=301,L]
+# folder with an index page: /hu -> /hu/
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_FILENAME}/index.html -f
+RewriteRule ^(.+[^/])$ $1/ [R=301,L]
+# folder without an index page: /blog/ -> /blog (blog.html)
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_FILENAME}index.html !-f
+RewriteRule ^(.+)/$ $1 [R=301,L]
+# page with a trailing slash: /carbon-hamlasztas/ -> /carbon-hamlasztas
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^(.+)/$ $1 [R=301,L]
+# clean URL -> .html file
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.+)$ $1.html [L]
-# /blog/ and /hu/blog/ have no index.html (blog.html sits next to the blog/ folder). Some hosts add the slash to /blog before .htaccess runs,
-# so /blog cannot be rewritten internally there: send the folder URL to the page itself (/blog/ -> /blog.html)
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteCond %{REQUEST_FILENAME}index.html !-f
-RewriteCond %{REQUEST_FILENAME} ^(.+)/$
-RewriteCond %1.html -f
-RewriteRule ^(.+)/$ $1.html [R=301,L]
 </IfModule>
 
 # --- security headers (same as _headers). connect-src/img-src/media-src include the API: the pages read it at runtime ---

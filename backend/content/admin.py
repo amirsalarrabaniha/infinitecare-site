@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.utils.html import format_html
+from django.utils.html import format_html, format_html_join
 from .models import SiteSettings, HomePage, Counter, Service, GalleryItem, VideoClip, YouTubeVideo, BlogPost
 
 admin.site.site_header = 'Infinite Care admin'
@@ -48,11 +48,23 @@ class Thumb:
 
 @admin.register(Service)
 class ServiceAdmin(Thumb, admin.ModelAdmin):
-    list_display = ['thumb', 'title_en', 'title_hu', 'order', 'is_active']
     list_editable = ['order', 'is_active']
     list_display_links = ['thumb', 'title_en']
     search_fields = ['title_en', 'title_hu']
-    fields = ['image', ('order', 'is_active'), *pairs('eyebrow', 'title', 'description')]
+    list_display = ['thumb', 'title_en', 'title_hu', 'page_links', 'order', 'is_active']
+    fieldsets = [
+        (None, {'fields': ['image', ('order', 'is_active'), *pairs('eyebrow', 'title', 'description')]}),
+        ('Service page (own URL for Google)', {
+            'description': 'Each service can have its own page on the website, e.g. /carbon-peeling (EN) and /carbon-hamlasztas (HU). '
+                           'The page shows the text below, the YouTube videos linked to this service and the gallery photos of the chosen category. '
+                           'Changes show on the live pages; new URLs need a site export (see README).',
+            'fields': [('slug_en', 'slug_hu'), *pairs('meta_title', 'meta_description', 'body'), 'gallery_category']}),
+    ]
+
+    @admin.display(description='Page')
+    def page_links(self, obj):
+        slugs = [(s,) for s in (obj.slug_en, obj.slug_hu) if s]
+        return format_html_join(' · ', '<code>/{}</code>', slugs) if slugs else '–'
 
 
 @admin.register(Counter)

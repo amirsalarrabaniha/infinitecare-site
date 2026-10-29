@@ -1,0 +1,14 @@
+{% extends "site/base.html" %}
+{% block meta %}<script type="application/ld+json">{{ ld_json|safe }}</script>{% endblock %}
+{% block content %}{% with kicker=svc.eyebrow %}{% include "site/subhero.html" %}{% endwith %}
+<main class="post spage"><article class="wrap post-in">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="{{ urls.index }}">{{ ui.nav.0 }}</a> / <a href="{{ urls.services }}">{{ ui.nav.1 }}</a> / <span aria-current="page">{{ svc.title }}</span></nav>
+<div class="pbody" data-live="svc" data-fp="{{ fp.svc }}"><p class="sp-lead">{% for l in svc.description %}{{ l }}{% if not forloop.last %}<br>{% endif %}{% endfor %}</p>
+{% for b in svc.blocks %}{% if b.type == 'h' %}<h2>{{ b.text }}</h2>{% elif b.type == 'ul' %}<ul>{% for i in b.items %}<li>{{ i }}</li>{% endfor %}</ul>{% else %}<p>{{ b.text }}</p>{% endif %}{% endfor %}
+{% if svc.videos %}<h2>{{ ui.svc_videos }}</h2><div class="svc-vids">{% for v in svc.videos %}{% include "site/yt.html" %}{% endfor %}</div>{% endif %}</div>
+<div class="post-cta"><h3>{{ ui.book_cta }}</h3><div class="pc-btns">{% if site.booking_url %}{% include "site/book_link.html" with label=ui.book_online cls="pc-book" %}{% endif %}<a class="btn pc-tel" href="{{ site.phone_href }}" data-s="phone">{{ site.phone }}</a></div></div>
+</article>
+{% if photos %}<section class="sp-gal"><div class="wrap"><h2>{{ ui.svc_photos }}</h2>
+<div class="g-grid" data-lb-close="{{ ui.lb.close }}" data-lb-prev="{{ ui.lb.prev }}" data-lb-next="{{ ui.lb.next }}">{% for g in photos %}<button type="button" class="g-item" data-cat="{{ g.cats }}" data-full="{{ g.image }}" data-caption="{{ g.alt }}"><img src="{{ g.image }}" alt="{{ g.alt }}" loading="lazy" decoding="async"{% if g.width %} width="{{ g.width }}" height="{{ g.height }}"{% endif %}><span>{{ g.alt }}</span></button>{% endfor %}</div></div></section>{% endif %}
+{% if others %}<nav class="sp-others wrap" aria-label="{{ ui.svc_others }}"><h3>{{ ui.svc_others }}</h3><ul>{% for o in others %}<li><a href="{{ o.href }}">{{ o.title }}</a></li>{% endfor %}</ul><a class="post-back" href="{{ urls.services }}">{{ ui.svc_back }}</a></nav>{% endif %}
+</main>{% endblock %}

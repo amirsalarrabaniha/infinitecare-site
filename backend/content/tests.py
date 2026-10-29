@@ -286,7 +286,7 @@ class ContentTests(TestCase):
             self.assertNotIn('prices', txt, f)
             self.assertNotIn('massage', txt, f)
             self.assertNotIn('masszázs', txt, f)
-        self.assertEqual((p / 'sitemap.xml').read_text(encoding='utf-8').count('<url>'), 12)   # (home, treatments, blog + 3 posts) x EN + HU
+        self.assertEqual((p / 'sitemap.xml').read_text(encoding='utf-8').count('<url>'), 30)   # (home, treatments, blog + 3 posts + 9 service pages) x EN + HU
 
     # ---- blog ----
     def test_blog_seed(self):
@@ -302,7 +302,7 @@ class ContentTests(TestCase):
         self.assertContains(r, 'href="/hu/blog/laser-hair-removal-preparation-and-aftercare/"')
         r = self.client.get('/hu/blog/laser-hair-removal-preparation-and-aftercare/')
         self.assertContains(r, 'Lézeres szőrtelenítés: felkészülés és utógondozás')
-        self.assertContains(r, 'hreflang="en" href="https://amirsalarrabaniha.github.io/infinitecare-site/blog/laser-hair-removal-preparation-and-aftercare.html"')
+        self.assertContains(r, 'hreflang="en" href="https://www.infinitecare.hu/blog/laser-hair-removal-preparation-and-aftercare.html"')
         self.assertContains(r, 'href="/en/blog/laser-hair-removal-preparation-and-aftercare/" hreflang="en"')
         self.assertContains(r, 'property="og:image"')
         self.assertContains(r, '"@type": "BlogPosting"')
@@ -368,7 +368,8 @@ class ContentTests(TestCase):
         self.assertNotIn('<h4', en)
         sm = (p / 'sitemap.xml').read_text(encoding='utf-8')
         self.assertIn('<loc>https://example.test/hu/blog</loc>', sm)
-        self.assertEqual(sm.count('<loc>'), 2 * (3 + BlogPost.objects.filter(is_published=True).count()))
+        n_svc = Service.objects.filter(is_active=True).exclude(slug_en='').count()
+        self.assertEqual(sm.count('<loc>'), 2 * (3 + BlogPost.objects.filter(is_published=True).count() + n_svc))
         self.assertIn('Sitemap: https://example.test/sitemap.xml', (p / 'robots.txt').read_text(encoding='utf-8'))
         llms = (p / 'llms.txt').read_text(encoding='utf-8')
         self.assertTrue(llms.startswith('# Infinite Care Beauty Clinic'))
@@ -546,3 +547,65 @@ class LiveContentTests(TestCase):
         for (html, key, _), got in zip(cases, json.loads(res.stdout)):
             m = re.search(rf'data-live="{key}" data-fp="([^"]+)"', html)
             self.assertEqual(m.group(1), got, f"{key}")
+
+
+class ServicePageTests(TestCase):
+    """Landing pages of the services at the old site's URLs (/carbon-hamlasztas, /laser-hair-removal …)."""
+    @classmethod
+    def setUpTestData(cls):
+        call_command('load_initial_content', verbosity=0)
+
+    def export(self, **kw):
+        out = tempfile.mkdtemp()
+        call_command('export_static', out=out, api_url='/api/contact/', site_url='https://www.infinitecare.hu/', clean_urls=True, verbosity=0, **kw)
+        return pathlib.Path(out)
+
+    def test_old_urls_are_seeded(self):
+        slugs = set(Service.objects.values_list('slug_en', flat=True)) | set(Service.objects.values_list('slug_hu', flat=True))
+        for old in ('carbon-hamlasztas', 'ems-testkezeles', 'cellulite-therapy', 'exosome-therapy', 'brazilift', 'lezeres-tartos-szortelenites',
+                    'face-lifting-en', 'mezoterapia', 'laser-hair-removal', 'cellulit-terapia', 'face-lifting'):
+            self.assertIn(old, slugs)
+
+    def test_reserved_and_duplicate_slugs_are_rejected(self):
+        from django.core.exceptions import ValidationError
+        s = Service.objects.exclude(slug_en='').first()
+        other = Service.objects.exclude(pk=s.pk).exclude(slug_en='').first()
+        for bad in ('services', 'home', other.slug_en, other.slug_hu):
+            s.slug_en = bad
+            with self.assertRaises(ValidationError):
+                s.full_clean()
+
+    def test_exported_pages(self):
+        p = self.export()
+        hu = (p / 'carbon-hamlasztas.html').read_text(encoding='utf-8')
+        en = (p / 'carbon-peeling.html').read_text(encoding='utf-8')
+        self.assertIn('<link rel="canonical" href="https://www.infinitecare.hu/carbon-hamlasztas">', hu)
+        self.assertIn('<html lang="hu">', hu)
+        self.assertIn('hreflang="en" href="https://www.infinitecare.hu/carbon-peeling"', hu)
+        self.assertIn('hreflang="hu" href="https://www.infinitecare.hu/carbon-hamlasztas"', en)
+        self.assertIn('href="carbon-peeling.html" hreflang="en"', hu)            # language switch -> counterpart page
+        self.assertIn('href="hu/services.html"', hu)                              # HU nav from the site root
+        self.assertIn('"@type": "BreadcrumbList"', hu)
+        self.assertIn('"@type": "Service"', en)
+        self.assertIn('<meta property="og:url" content="https://www.infinitecare.hu/carbon-peeling">', en)
+        self.assertEqual(len(re.findall(r'<h1', en)), 1)
+        self.assertIn('l.fresha.com', en)
+        self.assertNotRegex(en.lower() + hu.lower(), r'massage|masszázs|\bhuf\b|\d ?ft\b')
+        titles = [re.search(r'<title>(.*?)</title>', f.read_text(encoding='utf-8')).group(1) for f in p.glob('*.html')]
+        self.assertEqual(len(titles), len(set(titles)))                           # unique titles
+        cards = (p / 'services.html').read_text(encoding='utf-8')
+        self.assertIn('href="carbon-peeling.html"', cards)
+        self.assertIn('href="../carbon-hamlasztas.html"', (p / 'hu' / 'services.html').read_text(encoding='utf-8'))
+        sm = (p / 'sitemap.xml').read_text(encoding='utf-8')
+        self.assertIn('<loc>https://www.infinitecare.hu/cellulit-terapia</loc><lastmod>', sm)
+        self.assertIn('Sitemap: https://www.infinitecare.hu/sitemap.xml', (p / 'robots.txt').read_text(encoding='utf-8'))
+        import xml.dom.minidom
+        xml.dom.minidom.parseString(sm.encode())
+
+    def test_live_django_page(self):
+        r = self.client.get('/carbon-hamlasztas/')
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, 'lang="hu"')
+        self.assertEqual(self.client.get('/no-such-page/').status_code, 404)
+        d = self.client.get('/api/services/?lang=hu').json()['results']
+        self.assertTrue(any(x['slug'] == 'carbon-hamlasztas' and x['blocks'] for x in d))
