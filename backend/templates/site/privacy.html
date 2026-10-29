@@ -1,0 +1,32 @@
+{% extends "site/base.html" %}
+{% block content %}{% with kicker="Infinite Care" %}{% include "site/subhero.html" %}{% endwith %}
+<main class="prose">{% if lang == 'hu' %}
+<p class="note">Ez a tájékoztató általános összefoglaló. Az Infinite Care Beauty Clinic folyamatosan felülvizsgálja és szükség szerint frissíti.</p>
+<h2>Adatkezelő</h2>
+<p>Infinite Care Beauty Clinic, {{ site.address }}, {{ site.city }}. Kapcsolat: <a href="mailto:{{ site.email }}">{{ site.email }}</a>, <a href="{{ site.phone_href }}">{{ site.phone }}</a>.</p>
+<h2>Kapcsolatfelvételi űrlap</h2>
+<p>Ha üzenetet küldesz a weboldalon, a megadott nevet, e-mail címet, telefonszámot és az üzenet szövegét kizárólag arra használjuk, hogy válaszoljunk és időpontot egyeztessünk veled. Az adatokat nem adjuk el és nem adjuk át harmadik félnek marketing célra.</p>
+<h2>Kedvezmény-feliratkozás</h2>
+<p>Ha a felugró ablakban megadod az e-mail címed és hozzájárulsz, az e-mail címet, a nyelvet és a feliratkozás idejét tároljuk, hogy elküldjük a kedvezményt és ajánlatokat küldjünk. A hozzájárulást bármikor visszavonhatod egy e-maillel a fenti címre, ekkor töröljük az e-mail címedet a listáról.</p>
+<h2>Videók és térkép</h2>
+<p>A YouTube-videók csak akkor töltődnek be, ha a lejátszás gombra kattintasz, és a youtube-nocookie.com domainről, adatvédelmi módban jelennek meg; a Google Térkép csak akkor töltődik be, ha a „Térkép megjelenítése” gombra kattintasz. Ilyenkor a Google saját adatkezelési szabályai érvényesek.</p>
+<h2>Böngészőben tárolt adatok</h2>
+<p>A weboldal nem használ követő vagy hirdetési sütiket. Egy működéshez szükséges süti és a böngésződ helyi tárolója csak a választott nyelvet és azt jegyzi meg, hogy a kedvezményes ablakot már láttad.</p>
+<h2>Jogaid</h2>
+<p>Kérheted a rólad tárolt adatokhoz való hozzáférést, azok helyesbítését vagy törlését, illetve tiltakozhatsz az adatkezelés ellen az <a href="mailto:{{ site.email }}">{{ site.email }}</a> címen. Panasszal a Nemzeti Adatvédelmi és Információszabadság Hatósághoz (NAIH) fordulhatsz.</p>
+{% else %}
+<p class="note">This notice is a general summary. Infinite Care Beauty Clinic reviews it regularly and updates it when needed.</p>
+<h2>Who we are</h2>
+<p>Infinite Care Beauty Clinic, {{ site.address }}, {{ site.city }}. Contact: <a href="mailto:{{ site.email }}">{{ site.email }}</a>, <a href="{{ site.phone_href }}">{{ site.phone }}</a>.</p>
+<h2>Contact form</h2>
+<p>When you send a message through the website, we use the name, e-mail address, phone number and message you enter only to reply to you and arrange your appointment. We do not sell your data or pass it to third parties for marketing.</p>
+<h2>Discount sign-up</h2>
+<p>If you enter your e-mail address in the pop-up and give your consent, we store the e-mail address, the language and the time of sign-up to send you the discount and our offers. You can withdraw your consent at any time by e-mailing us at the address above; we then remove your e-mail address from the list.</p>
+<h2>Videos and map</h2>
+<p>YouTube videos only load when you click play, and are then embedded from youtube-nocookie.com in privacy-enhanced mode; and Google Maps only loads when you click “Show the map”. Google's own privacy policy then applies.</p>
+<h2>Data stored in your browser</h2>
+<p>The website does not use tracking or advertising cookies. One functional cookie and your browser's local storage only remember your chosen language and that you have already seen the discount pop-up.</p>
+<h2>Your rights</h2>
+<p>You can ask for access to, correction or deletion of your data, or object to its processing, at <a href="mailto:{{ site.email }}">{{ site.email }}</a>. You can also lodge a complaint with the Hungarian data protection authority (NAIH).</p>
+{% endif %}</main>
+{% endblock %}

@@ -1,6 +1,6 @@
 """Fixed interface strings (labels/buttons). Editable content lives in the database."""
 UI = {
-    'en': dict(nav=['Home', 'Our treatments', 'Offers', 'Blog'], titles={'index': 'Home', 'services': 'Our treatments', 'blog': 'Blog'},
+    'en': dict(nav=['Home', 'Our treatments', 'Offers', 'Blog'], titles={'index': 'Home', 'services': 'Our treatments', 'blog': 'Blog', 'privacy': 'Privacy notice'},
                desc='Infinite Care Beauty Clinic – The Beauty of Health.',
                svc_more='More about this treatment', svc_photos='Photos', svc_others='Other treatments', svc_back='← All treatments',
                svc_videos='Watch the treatment',
@@ -28,7 +28,7 @@ UI = {
                find_us='Find us', entrance='The entrance of Infinite Care Beauty Clinic',
                map_title='Map: Infinite Care Beauty Clinic', map_show='Show the map', map_note='Loads Google Maps', map_open='Open in Google Maps',
                form_tool='Send a message to Infinite Care Beauty Clinic in Budapest: a question or an appointment request.'),
-    'hu': dict(nav=['Főoldal', 'Szolgáltatásaink', 'Akciók', 'Blog'], titles={'index': 'Főoldal', 'services': 'Szolgáltatásaink', 'blog': 'Blog'},
+    'hu': dict(nav=['Főoldal', 'Szolgáltatásaink', 'Akciók', 'Blog'], titles={'index': 'Főoldal', 'services': 'Szolgáltatásaink', 'blog': 'Blog', 'privacy': 'Adatkezelési tájékoztató'},
                desc='Infinite Care Beauty Clinic – Az Egészség Szépsége.',
                svc_more='Bővebben a kezelésről', svc_photos='Képek', svc_others='További kezeléseink', svc_back='← Összes szolgáltatás',
                svc_videos='Nézd meg a kezelést',

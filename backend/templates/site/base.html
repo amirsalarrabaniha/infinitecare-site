@@ -5,14 +5,15 @@
 <title>{% if page_title %}{{ page_title }}{% else %}{{ title }} | Infinite Care Beauty Clinic{% endif %}</title>
 <meta name="description" content="{{ description }}">
 {% block meta %}{% endblock %}
-<meta property="og:url" content="{{ canonical }}"><meta property="og:site_name" content="Infinite Care Beauty Clinic"><meta property="og:locale" content="{% if lang == 'hu' %}hu_HU{% else %}en_US{% endif %}">{% if page != 'blog_post' %}<meta property="og:type" content="website"><meta property="og:title" content="{% if page_title %}{{ page_title }}{% else %}{{ title }} | Infinite Care Beauty Clinic{% endif %}"><meta property="og:description" content="{{ description }}">{% if og_image_url %}<meta property="og:image" content="{{ og_image_url }}">{% endif %}{% endif %}
+<meta property="og:url" content="{{ canonical }}"><meta property="og:site_name" content="Infinite Care Beauty Clinic"><meta property="og:locale" content="{% if lang == 'hu' %}hu_HU{% else %}en_US{% endif %}">{% if page != 'blog_post' %}<meta property="og:type" content="website"><meta property="og:title" content="{% if page_title %}{{ page_title }}{% else %}{{ title }} | Infinite Care Beauty Clinic{% endif %}"><meta property="og:description" content="{{ description }}">{% if og_image_url %}<meta property="og:image" content="{{ og_image_url }}">{% endif %}{% endif %}{% if og_image_url and "/og/" in og_image_url %}<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">{% endif %}
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{% if page_title %}{{ page_title }}{% else %}{{ title }} | Infinite Care Beauty Clinic{% endif %}"><meta name="twitter:description" content="{{ description }}">{% if og_image_url %}<meta name="twitter:image" content="{{ og_image_url }}">{% endif %}
 <link rel="alternate" hreflang="en" href="{{ alternates.en }}"><link rel="alternate" hreflang="hu" href="{{ alternates.hu }}"><link rel="alternate" hreflang="x-default" href="{{ alternates.en }}">
-<link rel="icon" href="{{ S }}assets/images/favicon.ico"><link rel="icon" sizes="96x96" href="{{ S }}assets/images/infinitecare-96.png">
+<link rel="icon" href="{{ S }}assets/images/favicon.ico"><link rel="icon" sizes="96x96" href="{{ S }}assets/images/infinitecare-96.png"><link rel="apple-touch-icon" href="{{ S }}assets/images/icon-180.png"><link rel="manifest" href="{{ S }}site.webmanifest">
 {% if noindex %}<meta name="robots" content="noindex">{% endif %}<link rel="canonical" href="{{ canonical }}"><meta name="theme-color" content="#195146">
 <link rel="preload" href="{{ S }}assets/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="{{ S }}assets/fonts/playfair-display-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{{ S }}css/style.css?v={{ v }}">
 </head>
-<body class="page-{{ page }}" data-lang="{{ lang }}" data-api="{{ api_url }}" data-post="{{ post_tpl }}" data-slugs="{{ post_slugs }}"{% if shell %} data-shell{% endif %}{% if post %} data-slug="{{ post.slug }}"{% endif %}{% if svc %} data-svc="{{ svc.id }}"{% endif %} data-root="{{ S }}">
+<body class="page-{{ page }}" data-lang="{{ lang }}" data-api="{{ api_url }}" data-post="{{ post_tpl }}" data-slugs="{{ post_slugs }}"{% if shell %} data-shell{% endif %}{% if post %} data-slug="{{ post.slug }}"{% endif %}{% if svc %} data-svc="{{ svc.id }}"{% endif %} data-root="{{ S }}" data-privacy="{{ privacy_url }}">
 <div class="loader"><img src="{{ S }}assets/images/infinitecare-logo-4.png" alt="" width="248" height="260"></div><div class="cursor-glow"></div><div class="progress"></div>
 <header class="nav">
  <a href="{{ urls.index }}" class="brand"><img class="logo-light" src="{{ S }}assets/images/infinitecare-logo-2.png" alt="Infinite Care" width="240" height="120"><img class="logo-dark" src="{{ S }}assets/images/infinitecare-logo-1.png" alt="Infinite Care" width="280" height="105"></a>
@@ -30,7 +31,7 @@
 {% block content %}{% endblock %}
 <footer class="footer">
  <div class="wrap fgrid">
-  <div class="reveal"><img src="{{ S }}assets/images/infinitecare-logo-2.png" alt="Infinite Care" class="flogo" width="240" height="120" loading="lazy"><p class="script">Beauty Clinic</p><p class="flinks">{% for n in nav %}{% if n.key != 'offers' %}<a href="{{ n.href }}">{{ n.label }}</a>{% endif %}{% endfor %}</p></div>
+  <div class="reveal"><img src="{{ S }}assets/images/infinitecare-logo-2.png" alt="Infinite Care" class="flogo" width="240" height="120" loading="lazy"><p class="script">Beauty Clinic</p><p class="flinks">{% for n in nav %}{% if n.key != 'offers' %}<a href="{{ n.href }}">{{ n.label }}</a>{% endif %}{% endfor %}<a href="{{ privacy_url }}">{{ ui.titles.privacy }}</a></p></div>
   <div class="reveal"><h3>{{ ui.hours }}</h3><p data-s="hours">{% for l in site.hours %}{{ l }}{% if not forloop.last %}<br>{% endif %}{% endfor %}</p></div>
   <div class="reveal"><h3>{{ ui.res }}</h3><p><a href="{{ site.phone_href }}" data-s="phone">{{ site.phone }}</a><br><span data-s="address">{{ site.address }}</span><br><a href="mailto:{{ site.email }}" data-s="email">{{ site.email }}</a></p></div>
   <div class="reveal"><h3>{{ ui.follow }}</h3><div class="social">{% include "site/social.html" %}</div></div>

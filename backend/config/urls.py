@@ -19,7 +19,7 @@ urlpatterns = [
     # uploaded images (small site: served by Django itself; put a CDN/nginx in front for heavy traffic)
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     path('', v.root, name='root'),
-    re_path(r'^(?:hu/)?(?P<name>index|services|blog)\.html$', v.legacy),
+    re_path(r'^(?:hu/)?(?P<name>index|services|blog|privacy)\.html$', v.legacy),
     path('<str:lang>/blog/<slug:slug>/', v.blog_post, name='blog-post'),
     path('<str:lang>/', v.page, name='home'),
     path('<str:lang>/<str:name>/', v.page, name='page'),

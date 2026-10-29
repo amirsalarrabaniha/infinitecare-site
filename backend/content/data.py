@@ -7,7 +7,7 @@ from django.utils.safestring import mark_safe
 from .ui import UI
 from .models import TREATMENT_TYPES, SiteSettings, HomePage, Counter, Service, GalleryItem, VideoClip, YouTubeVideo, BlogPost
 
-PAGES = ('index', 'services', 'blog')   # pages with one HTML file per language; blog posts are exported separately
+PAGES = ('index', 'services', 'blog', 'privacy')   # pages with one HTML file per language; blog posts are exported separately
 
 
 class LiveUrls:

@@ -1,3 +1,4 @@
+AddType application/manifest+json .webmanifest
 # Apache (shared hosting) equivalent of _headers / _redirects (those are read by Cloudflare only).
 # The site is plain static files: `git pull` is the whole deployment. Every block is wrapped in <IfModule>, so a module that
 # is not available on the host only disables that block instead of breaking the site.
