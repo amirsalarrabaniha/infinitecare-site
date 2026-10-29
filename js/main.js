@@ -183,7 +183,7 @@ const render=()=>{
  if(H){
   upd('hero',fp([H.hero_image,H.hello,H.h1_main,H.h1_em,H.lead]),el=>{const i=el.querySelector('.hero-bg img');txt(el.querySelector('.hero-script'),H.hello);heading(el.querySelector('h1'),H.h1_main,H.h1_em);txt(el.querySelector('.lead'),H.lead);return swapImg(i,H.hero_image)});
   upd('marquee',fp(H.marquee),el=>{const w=H.marquee;show(el,!!w.length);const t=el.querySelector('.marquee-track'),s=w.concat(w).map(x=>`<span>${esc(x)}</span><i>✦</i>`).join('');if(s)t.innerHTML=s});
-  [['f1',false],['f2',true]].forEach(([k,rev])=>upd(k,fp(H[k]),el=>{const a=el.querySelector('a.btn'),h=a?a.getAttribute('href'):navA(1).getAttribute('href');return replace(el,feature(H[k],rev,h,k,fp(H[k])),fp(H[k]))}));
+  [['f1',false],['f2',true]].forEach(([k,rev])=>upd(k,fp(H[k]),el=>{const a=el.querySelector('a.btn'),h=a?a.getAttribute('href'):navA(1).getAttribute('href');const sl=el.querySelector('[data-slider]');return replace(el,feature(H[k],rev,h,k,fp(H[k])),fp(H[k])).then(r=>{if(r===false||!sl)return r;const i=sl.querySelector('.sl-slide img');if(i){i.src=H[k].image;i.alt=H[k].title}const n=document.querySelector('[data-live="'+k+'"] .f-img');if(n)n.replaceWith(sl);return r})}));
   upd('counters',fp(H.counters),el=>{show(el,!!H.counters.length);el.innerHTML=H.counters.map(c=>`<div class="stat reveal in"><b data-count="${esc(c.value)}" data-suffix="${esc(c.suffix)}">${esc(c.value)}${esc(c.suffix)}</b><span>${esc(c.label)}</span></div>`).join('')});
   upd('cta',fp([H.cta_image,H.cta_script,H.cta_title,H.cta_button]),el=>{txt(el.querySelector('.cta-in .script'),H.cta_script);heading(el.querySelector('h2'),H.cta_title);txt(el.querySelector('a.btn'),H.cta_button);return swapImg(el.querySelector('.cta-bg img'),H.cta_image)});
   upd('contact',fp([H.contact_eyebrow,H.contact_title,H.contact_text,H.contact_image]),el=>{txt(el.querySelector('.c-info .eyebrow'),H.contact_eyebrow);heading(el.querySelector('.c-info h2'),H.contact_title);txt(el.querySelector('.c-info>p'),H.contact_text);return swapImg(el.querySelector('.c-photo img'),H.contact_image)});
@@ -260,3 +260,22 @@ const go=()=>{removeEventListener('scroll',go);clearTimeout(tm);const u=api+'/ap
  if(c&&c.d)use(c.d);else fetch(u,{headers:{Accept:'application/json'}}).then(r=>r.ok?r.json():null).then(use,()=>use(null))};
 let tm;const arm=()=>{tm=setTimeout(go,4000);addEventListener('scroll',go,{passive:true,once:true})};
 document.readyState==='complete'?arm():addEventListener('load',arm)})();
+
+// ---- home treatments slider: crossfade + Ken Burns, autoplay 4.5 s (paused on hover/focus/hidden tab, off with reduced motion)
+(()=>{const R=document.querySelector('[data-slider]');if(!R)return;
+const S=[...R.querySelectorAll('.sl-slide')],D=[...R.querySelectorAll('.sl-dots button')],n=S.length;if(n<2)return;
+const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;if(rm)R.classList.add('sl-still');
+let i=0,tm=0,hold=0;
+const load=k=>{const im=S[k%n].querySelector('img');if(im&&im.loading==='lazy')im.loading='eager'};
+const go=k=>{k=(k+n)%n;if(k===i)return;load(k);load(k+1);S[i].classList.remove('on');S[i].setAttribute('aria-hidden','true');D[i]&&D[i].removeAttribute('aria-current');
+ i=k;S[i].classList.add('on');S[i].removeAttribute('aria-hidden');D[i]&&D[i].setAttribute('aria-current','true');sched()};
+const sched=()=>{clearTimeout(tm);if(rm||hold||document.hidden)return;tm=setTimeout(()=>go(i+1),4500)};
+R.querySelector('.sl-prev').addEventListener('click',()=>go(i-1));R.querySelector('.sl-next').addEventListener('click',()=>go(i+1));
+D.forEach((d,k)=>d.addEventListener('click',()=>go(k)));
+R.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();go(i-1)}else if(e.key==='ArrowRight'){e.preventDefault();go(i+1)}});
+const h=v=>()=>{hold=v;sched()};R.addEventListener('mouseenter',h(1));R.addEventListener('mouseleave',h(0));R.addEventListener('focusin',h(1));R.addEventListener('focusout',e=>{if(!R.contains(e.relatedTarget))h(0)()});
+document.addEventListener('visibilitychange',sched);
+let x0=null,y0=0;R.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+R.addEventListener('touchend',e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy))go(i+(dx<0?1:-1))},{passive:true});
+const io='IntersectionObserver' in window&&new IntersectionObserver(es=>{if(es[0].isIntersecting){load(1);sched();io.disconnect()}},{rootMargin:'200px'});io?io.observe(R):sched();
+})();
