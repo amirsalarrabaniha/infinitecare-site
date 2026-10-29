@@ -6,8 +6,11 @@ Redesigned, bilingual (EN/HU) website for https://www.infinitecare.hu, rebuilt w
 ```
 backend/            Django project (config/, content/ app = site content, contact/ app = messages, templates/site/)
 css/ js/ assets/    design, animations, original images (served by Django as /static/…)
-index.html …, hu/   static export of the site for GitHub Pages (generated from the DB)
+index.html …, hu/   static export of the site (generated from the DB) — production until cutover
+web/                Next.js (vinext) app for Cloudflare Workers (`infinitecare-next`) — see web/README.md
 ```
+
+The static Worker `infinitecare-site` and `python manage.py export_static` / `scripts/sync_from_api.sh` stay the production path on `master` until cutover. The Next.js app lives only in `web/` and deploys as a **separate** Worker. Local run, preview deploy, and DNS/Rackhost cutover steps: **[web/README.md](web/README.md)**.
 
 ## Run locally
 ```bash

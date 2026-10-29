@@ -1,0 +1,292 @@
+{
+  "photos": [
+    {
+      "id": 1,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/gallery/clinic-facade.webp",
+      "category": "clinic",
+      "cats": "clinic",
+      "alt": "Az Infinite Care Beauty Clinic bejárata a Podmaniczky utcában",
+      "width": 1206,
+      "height": 783
+    },
+    {
+      "id": 2,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/gallery/clinic-lounge.webp",
+      "category": "clinic",
+      "cats": "clinic",
+      "alt": "Várótermünk",
+      "width": 1206,
+      "height": 725
+    },
+    {
+      "id": 3,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/gallery/clinic-reception-logo-wall.webp",
+      "category": "clinic",
+      "cats": "clinic",
+      "alt": "Recepció az Infinite Care logófallal",
+      "width": 1412,
+      "height": 1600
+    },
+    {
+      "id": 4,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/gallery/clinic-reception-hallway.webp",
+      "category": "clinic",
+      "cats": "clinic",
+      "alt": "Recepció és folyosó",
+      "width": 1200,
+      "height": 1600
+    },
+    {
+      "id": 5,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/gallery/clinic-treatment-room.webp",
+      "category": "clinic",
+      "cats": "clinic",
+      "alt": "Kezelőszoba",
+      "width": 1200,
+      "height": 1600
+    },
+    {
+      "id": 6,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/gallery/treatment-microneedling.webp",
+      "category": "facial",
+      "cats": "facial treatments",
+      "alt": "Mikrotűs bőrkezelés",
+      "width": 1200,
+      "height": 1600
+    },
+    {
+      "id": 7,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/gallery/treatment-laser-hair-removal.webp",
+      "category": "laser",
+      "cats": "laser treatments",
+      "alt": "Lézeres szőrtelenítés",
+      "width": 780,
+      "height": 681
+    },
+    {
+      "id": 8,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/gallery/treatment-emsculpt.webp",
+      "category": "emsculpt",
+      "cats": "emsculpt treatments",
+      "alt": "EMSCULPT testformálás",
+      "width": 1042,
+      "height": 628
+    },
+    {
+      "id": 9,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/gallery/teeth-whitening-before-after.webp",
+      "category": "whitening",
+      "cats": "whitening treatments",
+      "alt": "Fogfehérítés, előtte és utána",
+      "width": 1080,
+      "height": 1146
+    },
+    {
+      "id": 10,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/gallery/event-welcome-table.webp",
+      "category": "events",
+      "cats": "events",
+      "alt": "Esemény a klinikán",
+      "width": 1206,
+      "height": 849
+    },
+    {
+      "id": 11,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/gallery/event-logo-backdrop.webp",
+      "category": "events",
+      "cats": "events",
+      "alt": "Vendégeink az Infinite Care háttér előtt",
+      "width": 1206,
+      "height": 800
+    },
+    {
+      "id": 12,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/gallery/event-long-table.webp",
+      "category": "events",
+      "cats": "events",
+      "alt": "Vendégeink a hosszú asztalnál rendezvényünkön",
+      "width": 1206,
+      "height": 1515
+    },
+    {
+      "id": 13,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/gallery/event-guests-portrait.webp",
+      "category": "events",
+      "cats": "events",
+      "alt": "Üdvözlés rendezvényünkön",
+      "width": 1073,
+      "height": 1600
+    }
+  ],
+  "videos": [
+    {
+      "id": 1,
+      "video": "https://infinitecare-api.amyrsalarr.workers.dev/media/video/facial-treatment-extraction.mp4",
+      "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/video/facial-treatment-extraction-poster.webp",
+      "title": "Arckezelés: gőz és tisztítás",
+      "category": "facial"
+    },
+    {
+      "id": 2,
+      "video": "https://infinitecare-api.amyrsalarr.workers.dev/media/video/facial-treatment-cleansing.mp4",
+      "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/video/facial-treatment-cleansing-poster.webp",
+      "title": "Arckezelés: gyengéd bőrápolás",
+      "category": "facial"
+    }
+  ],
+  "youtube": [
+    {
+      "id": 1,
+      "youtube_id": "TXip__AECX0",
+      "title": "Üdvözlünk az Infinite Care Beauty Clinicben",
+      "caption": "",
+      "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/TXip__AECX0.webp",
+      "width": 960,
+      "height": 540,
+      "vertical": false,
+      "category": "clinic",
+      "cats": "clinic",
+      "featured": true,
+      "home": false,
+      "gallery": true,
+      "service_id": null,
+      "post_id": null
+    },
+    {
+      "id": 2,
+      "youtube_id": "K6xqcKtySA4",
+      "title": "A klinika belülről",
+      "caption": "",
+      "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/K6xqcKtySA4.webp",
+      "width": 405,
+      "height": 720,
+      "vertical": true,
+      "category": "clinic",
+      "cats": "clinic",
+      "featured": false,
+      "home": false,
+      "gallery": true,
+      "service_id": null,
+      "post_id": null
+    },
+    {
+      "id": 4,
+      "youtube_id": "Miej6lMfoRk",
+      "title": "Fogfehérítés",
+      "caption": "",
+      "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/Miej6lMfoRk.webp",
+      "width": 405,
+      "height": 720,
+      "vertical": true,
+      "category": "whitening",
+      "cats": "whitening treatments",
+      "featured": false,
+      "home": true,
+      "gallery": true,
+      "service_id": 7,
+      "post_id": 3
+    },
+    {
+      "id": 6,
+      "youtube_id": "GFkCHCBCbmU",
+      "title": "Diódalézeres tartós szőrtelenítés",
+      "caption": "",
+      "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/GFkCHCBCbmU.webp",
+      "width": 405,
+      "height": 720,
+      "vertical": true,
+      "category": "laser",
+      "cats": "laser treatments",
+      "featured": false,
+      "home": true,
+      "gallery": true,
+      "service_id": 2,
+      "post_id": null
+    },
+    {
+      "id": 7,
+      "youtube_id": "Dt0dmmsswzc",
+      "title": "Tudnivalók a lézeres szőrtelenítésről",
+      "caption": "",
+      "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/Dt0dmmsswzc.webp",
+      "width": 405,
+      "height": 720,
+      "vertical": true,
+      "category": "laser",
+      "cats": "laser treatments",
+      "featured": false,
+      "home": false,
+      "gallery": true,
+      "service_id": null,
+      "post_id": 2
+    },
+    {
+      "id": 8,
+      "youtube_id": "RhWkw_mH0M8",
+      "title": "Emsculpt testkezelés",
+      "caption": "",
+      "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/RhWkw_mH0M8.webp",
+      "width": 405,
+      "height": 720,
+      "vertical": true,
+      "category": "emsculpt",
+      "cats": "emsculpt treatments",
+      "featured": false,
+      "home": true,
+      "gallery": true,
+      "service_id": 4,
+      "post_id": null
+    },
+    {
+      "id": 9,
+      "youtube_id": "HcqKo_QBSBo",
+      "title": "Carbon hámlasztás",
+      "caption": "",
+      "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/HcqKo_QBSBo.webp",
+      "width": 405,
+      "height": 720,
+      "vertical": true,
+      "category": "carbon",
+      "cats": "carbon treatments",
+      "featured": false,
+      "home": true,
+      "gallery": true,
+      "service_id": 6,
+      "post_id": null
+    },
+    {
+      "id": 10,
+      "youtube_id": "otZDPSVBzZ8",
+      "title": "Cellulit terápia",
+      "caption": "",
+      "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/otZDPSVBzZ8.webp",
+      "width": 405,
+      "height": 720,
+      "vertical": true,
+      "category": "cellulite",
+      "cats": "cellulite treatments",
+      "featured": false,
+      "home": false,
+      "gallery": true,
+      "service_id": 5,
+      "post_id": null
+    },
+    {
+      "id": 11,
+      "youtube_id": "jEYC7rDP6W8",
+      "title": "Brazilift",
+      "caption": "",
+      "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/jEYC7rDP6W8.webp",
+      "width": 405,
+      "height": 720,
+      "vertical": true,
+      "category": "brazilift",
+      "cats": "brazilift treatments",
+      "featured": false,
+      "home": false,
+      "gallery": true,
+      "service_id": 10,
+      "post_id": null
+    }
+  ]
+}

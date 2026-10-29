@@ -1,0 +1,76 @@
+{
+  "results": [
+    {
+      "slug": "autumn-winter-skincare-routine",
+      "title": "Your autumn and winter skincare routine: professional advice",
+      "excerpt": "Cold air and indoor heating challenge the skin barrier. A clear daily routine for the colder months, and when a professional facial treatment can add value.",
+      "cover": "https://infinitecare-api.amyrsalarr.workers.dev/media/blog/cover-autumn-skincare-routine.webp",
+      "date": "October 29, 2026",
+      "iso_date": "2026-10-29",
+      "url": "/en/blog/autumn-winter-skincare-routine/"
+    },
+    {
+      "slug": "ingrown-hairs-and-laser-hair-removal",
+      "title": "Ingrown hairs and laser hair removal: a practical guide",
+      "excerpt": "Why ingrown hairs develop after shaving or waxing, how to care for irritated skin, and how laser hair removal may reduce the problem over a treatment course.",
+      "cover": "https://infinitecare-api.amyrsalarr.workers.dev/media/blog/cover-ingrown-hairs-laser-v2.webp",
+      "date": "October 29, 2026",
+      "iso_date": "2026-10-29",
+      "url": "/en/blog/ingrown-hairs-and-laser-hair-removal/"
+    },
+    {
+      "slug": "collagen-exosome-therapy-and-mesotherapy",
+      "title": "Collagen and skin quality: how exosome therapy and mesotherapy fit in",
+      "excerpt": "Collagen keeps skin firm and supple. Learn why it declines with age, which daily habits protect it, and how exosome therapy and microneedle mesotherapy may help.",
+      "cover": "https://infinitecare-api.amyrsalarr.workers.dev/media/blog/cover-collagen-exosome-mesotherapy-v2.webp",
+      "date": "October 29, 2026",
+      "iso_date": "2026-10-29",
+      "url": "/en/blog/collagen-exosome-therapy-and-mesotherapy/"
+    },
+    {
+      "slug": "carbon-peeling-and-pigmentation",
+      "title": "Carbon peeling and uneven skin tone: prevention and professional care",
+      "excerpt": "Why pigmentation appears, how daily sun protection helps prevent it, and how carbon peeling can support a clearer, more even-looking complexion.",
+      "cover": "https://infinitecare-api.amyrsalarr.workers.dev/media/blog/cover-carbon-peeling-pigmentation.webp",
+      "date": "October 29, 2026",
+      "iso_date": "2026-10-29",
+      "url": "/en/blog/carbon-peeling-and-pigmentation/"
+    },
+    {
+      "slug": "cellulite-therapy-what-to-know",
+      "title": "Cellulite therapy: what to know before you start",
+      "excerpt": "Cellulite is common and not a medical condition. Learn what causes it, what a clinic treatment course involves and how to set realistic expectations.",
+      "cover": "https://infinitecare-api.amyrsalarr.workers.dev/media/blog/cover-cellulite-therapy-v2.webp",
+      "date": "October 29, 2026",
+      "iso_date": "2026-10-29",
+      "url": "/en/blog/cellulite-therapy-what-to-know/"
+    },
+    {
+      "slug": "professional-teeth-whitening-basics",
+      "title": "Professional teeth whitening: the basics",
+      "excerpt": "What professional teeth whitening is, how a visit usually goes and how to look after your smile afterwards.",
+      "cover": "https://infinitecare-api.amyrsalarr.workers.dev/media/blog/blog-teeth-whitening-cover.webp",
+      "date": "October 26, 2026",
+      "iso_date": "2026-10-26",
+      "url": "/en/blog/professional-teeth-whitening-basics/"
+    },
+    {
+      "slug": "laser-hair-removal-preparation-and-aftercare",
+      "title": "Laser hair removal: how to prepare and what to do afterwards",
+      "excerpt": "General tips for getting ready for a laser hair removal session and looking after your skin once it is over.",
+      "cover": "https://infinitecare-api.amyrsalarr.workers.dev/media/blog/treatment-laser-hair-removal.webp",
+      "date": "October 19, 2026",
+      "iso_date": "2026-10-19",
+      "url": "/en/blog/laser-hair-removal-preparation-and-aftercare/"
+    },
+    {
+      "slug": "what-to-expect-at-your-first-visit",
+      "title": "What to expect at your first visit to Infinite Care",
+      "excerpt": "A friendly walk-through of your first visit: arriving, the consultation, your treatment and what happens afterwards.",
+      "cover": "https://infinitecare-api.amyrsalarr.workers.dev/media/blog/clinic-lounge.webp",
+      "date": "October 12, 2026",
+      "iso_date": "2026-10-12",
+      "url": "/en/blog/what-to-expect-at-your-first-visit/"
+    }
+  ]
+}

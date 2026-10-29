@@ -1,0 +1,57 @@
+{
+  "hero_image": "https://infinitecare-api.amyrsalarr.workers.dev/media/home/clinic-lounge.webp",
+  "hello": "Hello Beautiful!",
+  "h1_main": "Infinite Care",
+  "h1_em": "health and beauty",
+  "lead": "Welcome to the Infinite Care Beauty Clinic! Our highly educated and experienced beauty team are waiting for you in the heart of Budapest. Let's find together the harmony between body and soul. Infinite Care health and beauty.",
+  "marquee": [
+    "Exosome Therapy",
+    "Laser hair removal",
+    "Mesotherapy",
+    "Emsculpt",
+    "Carbon peeling",
+    "Teeth whitening",
+    "Face lifting",
+    "Brazilift"
+  ],
+  "f1": {
+    "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/home/service-microneedling.webp",
+    "eyebrow": "Our treatments",
+    "title": "Enhance your beauty",
+    "paragraphs": [
+      "Let your face, skin and your whole body smile to the world! Let's shine brighter! You deserve to be beautiful in every single minute of your life.",
+      "Our highly educated beauty team, brand new treatments and techniques and the most powerful machines are waiting for you in our clinic!"
+    ],
+    "button": "Our treatments"
+  },
+  "f2": {
+    "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/home/home-treatment-room.webp",
+    "eyebrow": "Perfect harmony",
+    "title": "The beautiful body is waiting for you!",
+    "paragraphs": [
+      "When did you feel last time that your body and soul were in harmony? When you felt that everything is perfect and you don't need anything just to enjoy the moment you are living in?",
+      "We help you to find the harmony between your body and soul!"
+    ],
+    "button": "Learn more about us!"
+  },
+  "cta_image": "https://infinitecare-api.amyrsalarr.workers.dev/media/home/services.webp",
+  "cta_script": "Beauty and health",
+  "cta_title": "We are waiting for you to a consultation",
+  "cta_button": "+36 1 707 0075",
+  "contact_eyebrow": "Contact",
+  "contact_title": "Beauty and health",
+  "contact_text": "Have you got any questions about us or our treatments? keep in touch we get back to you!",
+  "contact_image": "https://infinitecare-api.amyrsalarr.workers.dev/media/home/clinic-facade.webp",
+  "counters": [
+    {
+      "value": 11,
+      "suffix": "+",
+      "label": "treatments"
+    },
+    {
+      "value": 6,
+      "suffix": "",
+      "label": "days a week"
+    }
+  ]
+}

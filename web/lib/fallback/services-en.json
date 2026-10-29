@@ -1,0 +1,609 @@
+{
+  "results": [
+    {
+      "videos": [],
+      "id": 1,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/box-14.webp",
+      "eyebrow": "Brand new, Worldwide innovation",
+      "title": "Exosome Therapy",
+      "description": [
+        "Exosome therapy offers several benefits as a standalone treatment, including reduced inflammation, improved tissue repair, and enhanced collagen production. This makes exosomes particularly effective in reducing the appearance of wrinkles, uneven skin tone, pigmentation, promoting wound healing, hair and scalp problems and treating scars."
+      ],
+      "order": 10,
+      "slug": "exosome-therapy",
+      "slugs": {
+        "en": "exosome-therapy",
+        "hu": "exoszoma-terapia"
+      },
+      "meta_title": "Exosome therapy in Budapest",
+      "meta_description": "Exosome therapy at Infinite Care Beauty Clinic, Budapest: reduced inflammation, improved tissue repair and enhanced collagen production for wrinkles, pigmentation, scars and scalp problems.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Brand new, worldwide innovation with exosome stem cells!"
+        },
+        {
+          "type": "p",
+          "text": "Exosome therapy offers several benefits as a standalone treatment, including reduced inflammation, improved tissue repair and enhanced collagen production. This makes exosomes particularly effective in reducing the appearance of wrinkles, uneven skin tone and pigmentation, promoting wound healing, treating hair and scalp problems and scars."
+        },
+        {
+          "type": "h",
+          "text": "Benefits"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Reduced inflammation",
+            "Improved tissue repair",
+            "Enhanced collagen production",
+            "Fewer visible wrinkles, a more even skin tone and less pigmentation",
+            "Support for hair and scalp problems and for scars"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "What is exosome?"
+        },
+        {
+          "type": "p",
+          "text": "Exosomes are the natural by-product of cells. They are often described as microscopic bubbles or, in the scientific world, as nano extracellular vesicles. It is now recognised that these tiny molecules have an enormous role to play in skin and hair rejuvenation."
+        },
+        {
+          "type": "h",
+          "text": "How often do I need exosome therapy?"
+        },
+        {
+          "type": "p",
+          "text": "We suggest a treatment every second week, 3-4 times, depending on your skin's condition. In certain cases we may offer you a weekly treatment. Before starting the exosome therapy we hold a consultation free of charge."
+        }
+      ],
+      "gallery_category": "facial",
+      "updated": "2026-10-29"
+    },
+    {
+      "videos": [
+        {
+          "id": 5,
+          "youtube_id": "xr3tZAVtGsA",
+          "title": "Laser hair removal",
+          "caption": "",
+          "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/xr3tZAVtGsA.webp",
+          "width": 405,
+          "height": 720,
+          "vertical": true,
+          "category": "laser",
+          "cats": "laser treatments",
+          "featured": false,
+          "home": true,
+          "gallery": true,
+          "service_id": 2,
+          "post_id": null
+        }
+      ],
+      "id": 2,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/service-laser-hair-removal.webp",
+      "eyebrow": "Soft and infinitely smooth",
+      "title": "Laser hair removal",
+      "description": [
+        "Smooth and hairless body all over the year? Yes, it's possible! We all know the feeling when our body is not perfectly shaved and hairless. We have the best solution for this problem! Painless and permanent hair removal. Visible result after the first treatment. Ideal solution for men as well!"
+      ],
+      "order": 20,
+      "slug": "laser-hair-removal",
+      "slugs": {
+        "en": "laser-hair-removal",
+        "hu": "lezeres-tartos-szortelenites"
+      },
+      "meta_title": "Laser hair removal in Budapest – painless, permanent",
+      "meta_description": "Painless, permanent laser hair removal with our brand new laser machine in Budapest. Visible results after the first few treatments. Before and after care tips.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Painless, permanent hair removal with our brand new laser machine. Visible results after the first few treatments."
+        },
+        {
+          "type": "h",
+          "text": "How it works"
+        },
+        {
+          "type": "p",
+          "text": "Depending on your skin and hair type we recommend a minimum of 6-12 treatments. Come every 4 weeks for the best result."
+        },
+        {
+          "type": "h",
+          "text": "Before laser hair removal"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Shave the area with a razor one day before the treatment.",
+            "Don't use wax or an epilator!",
+            "Wash your skin carefully before the treatment and don't leave any perfume or body lotion on it."
+          ]
+        },
+        {
+          "type": "h",
+          "text": "After laser hair removal"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Avoid direct sunlight and hot baths for 1-2 days.",
+            "Use sun protection!",
+            "In case of irritation use aloe vera gel."
+          ]
+        },
+        {
+          "type": "h",
+          "text": "Between treatments"
+        },
+        {
+          "type": "p",
+          "text": "Shave regularly with a razor; don't use wax or an epilator."
+        }
+      ],
+      "gallery_category": "laser",
+      "updated": "2026-10-29"
+    },
+    {
+      "videos": [],
+      "id": 3,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/service-microneedling.webp",
+      "eyebrow": "Bio-rejuvenation for the flawless skin",
+      "title": "Mesotherapy with micro needles",
+      "description": [
+        "Recent days perfectly clean and even skin tone are a must have. Here in Infinite Care Beauty Clinic we help you to achieve your perfect skin goal with our pure Revitalize serums used for micro needling Mesotherapy."
+      ],
+      "order": 30,
+      "slug": "mesotherapy",
+      "slugs": {
+        "en": "mesotherapy",
+        "hu": "mezoterapia"
+      },
+      "meta_title": "Mesotherapy with Revitalize serums in Budapest",
+      "meta_description": "Mesotherapy is a non-surgical technique that delivers vitamins, plant extracts and other ingredients into the skin with micro needles. Revitalize serums for skin, body and hair in Budapest.",
+      "blocks": [
+        {
+          "type": "h",
+          "text": "What is mesotherapy?"
+        },
+        {
+          "type": "p",
+          "text": "Mesotherapy is a non-surgical technique that uses micro-injections of pharmaceutical or homeopathic preparations, plant extracts, vitamins and other ingredients into the skin and subcutaneous fat. There are many published studies on the clinical treatments and effects of these preparations."
+        },
+        {
+          "type": "h",
+          "text": "How long will it last?"
+        },
+        {
+          "type": "p",
+          "text": "Mesotherapy is usually given in a course of treatment with results lasting between 3-5 months. Top-up treatments are required to maintain the results, and treatment protocols vary depending on the indication and the serum used."
+        },
+        {
+          "type": "h",
+          "text": "Who is it for?"
+        },
+        {
+          "type": "p",
+          "text": "It is ideal for those who are in generally good health but are troubled by the appearance of wrinkles, uneven skin texture, sagging skin or cellulite, or who want to kick-start a visible complexion transformation."
+        },
+        {
+          "type": "h",
+          "text": "What can you expect after a Revitalize treatment?"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Skin rejuvenation: a glowing complexion, more hydrated skin with less visible wrinkles",
+            "Skin tightening: improved skin tone and greater elasticity as collagen and elastin fibres build within the skin",
+            "Cellulite: fat cells are dissolved, improving the appearance of cellulite; stubborn fat pockets shrink",
+            "Hair rejuvenation: a healthier scalp, stronger existing hair, and dormant hair follicles stimulated to create new hair growth",
+            "Acne and scarring: scars become smoother and less visible, acne and blemishes resolve for a clearer complexion"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "The secret of Revitalize"
+        },
+        {
+          "type": "p",
+          "text": "MyFiller Revitalize has been developed by a team of experts dedicated to bringing \"new life to the skin\". The range of serums expands to accommodate the demands of today's clients."
+        },
+        {
+          "type": "h",
+          "text": "Serums you can choose from"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Revitalize Pure – uneven skin tone and hydration: collagen balanced with hyaluronic acid for stretch marks, acne marks, scars and other skin imperfections",
+            "Revitalize Essence – smoothing wrinkles and skin imperfections: high and low density hyaluronic acid for optimum hydration",
+            "Revitalize Vitamins – nourishment from the inside out: hyaluronic acid, vitamins, amino acids, minerals and coenzymes for revitalized, radiant skin",
+            "Revitalize Body – firming and shaping: for flaccidity, stretch marks, after laser or peeling treatments",
+            "Revitalize Slim – targeted fat dissolving: for localized fat on the belly, the back of the arms, the neck and the legs",
+            "Revitalize White Skin – uneven skin tone and pigmentation: lightens the skin tone and reduces spots",
+            "Revitalize Hair – stronger, healthier hair: nourishes the scalp and promotes hair growth"
+          ]
+        }
+      ],
+      "gallery_category": "facial",
+      "updated": "2026-10-29"
+    },
+    {
+      "videos": [
+        {
+          "id": 8,
+          "youtube_id": "RhWkw_mH0M8",
+          "title": "Emsculpt treatment",
+          "caption": "",
+          "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/RhWkw_mH0M8.webp",
+          "width": 405,
+          "height": 720,
+          "vertical": true,
+          "category": "emsculpt",
+          "cats": "emsculpt treatments",
+          "featured": false,
+          "home": true,
+          "gallery": true,
+          "service_id": 4,
+          "post_id": null
+        }
+      ],
+      "id": 4,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/service-emsculpt.webp",
+      "eyebrow": "Perfect body all over the year",
+      "title": "Emsculpt treatment",
+      "description": [
+        "Perfect body within two weeks with electric muscle stimulation! The EMSCULPT is the best solution if you want to build muscles and burn fat at the same time!"
+      ],
+      "order": 40,
+      "slug": "ems-treatment",
+      "slugs": {
+        "en": "ems-treatment",
+        "hu": "ems-testkezeles"
+      },
+      "meta_title": "EMSCULPT EMS body treatment in Budapest",
+      "meta_description": "EMSCULPT treatment: build muscle and burn fat with electric muscle stimulation (EMS). Faster results than conventional training, with no load on your joints. Budapest.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Perfect body with electric muscle stimulation (EMS)."
+        },
+        {
+          "type": "h",
+          "text": "Benefits"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Faster effects than with any conventional training, thanks to the powerful muscle activation and the high number of muscles activated in each session",
+            "Studies show that electrostimulation can activate up to 95% of the fibres of a muscle, compared to 60-70% in conventional training",
+            "No additional loads, so there is no risk of injuring yourself",
+            "No weights, so your joints do not suffer: there is no joint impact that overloads and wears out the joints"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "How it works"
+        },
+        {
+          "type": "p",
+          "text": "Electrical impulses stimulate your muscles deeply and intensively. It is the best solution if you want to build muscle and burn fat at the same time."
+        }
+      ],
+      "gallery_category": "emsculpt",
+      "updated": "2026-10-29"
+    },
+    {
+      "videos": [
+        {
+          "id": 10,
+          "youtube_id": "otZDPSVBzZ8",
+          "title": "Cellulite therapy",
+          "caption": "",
+          "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/otZDPSVBzZ8.webp",
+          "width": 405,
+          "height": 720,
+          "vertical": true,
+          "category": "cellulite",
+          "cats": "cellulite treatments",
+          "featured": false,
+          "home": false,
+          "gallery": true,
+          "service_id": 5,
+          "post_id": null
+        }
+      ],
+      "id": 5,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/box-4.webp",
+      "eyebrow": "Good bye cellulite",
+      "title": "Cellulite therapy",
+      "description": [
+        "Anti cellulite treatment for flawlessly perfect body with ultrasound technology what burns fat and tighten the skin on the critical areas."
+      ],
+      "order": 50,
+      "slug": "cellulite-therapy",
+      "slugs": {
+        "en": "cellulite-therapy",
+        "hu": "cellulit-terapia"
+      },
+      "meta_title": "Cellulite therapy – U Shaping in Budapest",
+      "meta_description": "Anti-cellulite treatment for a flawless body with radio frequency, infrared and vacuum (U Shaping) for smoother, tighter skin. Budapest.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Anti-cellulite treatment for a flawlessly perfect body."
+        },
+        {
+          "type": "h",
+          "text": "How it works"
+        },
+        {
+          "type": "p",
+          "text": "The U Shaping treatment combines radio frequency, infrared and vacuum."
+        },
+        {
+          "type": "h",
+          "text": "Benefits"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Smoother skin with less visible cellulite",
+            "Tighter skin on the critical areas",
+            "Improved circulation"
+          ]
+        }
+      ],
+      "gallery_category": "cellulite",
+      "updated": "2026-10-29"
+    },
+    {
+      "videos": [
+        {
+          "id": 9,
+          "youtube_id": "HcqKo_QBSBo",
+          "title": "Carbon peeling",
+          "caption": "",
+          "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/HcqKo_QBSBo.webp",
+          "width": 405,
+          "height": 720,
+          "vertical": true,
+          "category": "carbon",
+          "cats": "carbon treatments",
+          "featured": false,
+          "home": true,
+          "gallery": true,
+          "service_id": 6,
+          "post_id": null
+        }
+      ],
+      "id": 6,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/box-5.webp",
+      "eyebrow": "Experience the flawless and radiant skin",
+      "title": "Carbon peeling",
+      "description": [
+        "The anti-aging carbon peeling gives everything what your skin needs. Ideal for scares and wrinkles, lightens the dark and uneven spots on your skin for a more beautiful skin tone. We recommend this treatment all over the body."
+      ],
+      "order": 60,
+      "slug": "carbon-peeling",
+      "slugs": {
+        "en": "carbon-peeling",
+        "hu": "carbon-hamlasztas"
+      },
+      "meta_title": "Carbon peeling with laser in Budapest",
+      "meta_description": "Anti-aging carbon peeling with laser for a perfectly tight and wrinkle free face. Ideal for scars and oily, uneven skin. Infinite Care Beauty Clinic, Budapest.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Anti-aging carbon peeling with laser for a perfectly tight and wrinkle free face. Ideal for scars and oily, uneven skin."
+        },
+        {
+          "type": "h",
+          "text": "Benefits"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Tighter, cleaner skin",
+            "Fewer fine wrinkles",
+            "Ideal for scars and for oily, uneven skin",
+            "Lightens dark and uneven spots for a more even skin tone"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "How does the treatment work?"
+        },
+        {
+          "type": "p",
+          "text": "Our beauty therapist cleans your face properly, then applies a special carbon mask mixed with minerals and vitamins. Once the mask has dried, we pop it off with our laser machine. Your eyes are covered with cotton pads and special laser glasses to protect them from the laser light. After the treatment we cleanse and hydrate your skin."
+        }
+      ],
+      "gallery_category": "carbon",
+      "updated": "2026-10-29"
+    },
+    {
+      "videos": [
+        {
+          "id": 3,
+          "youtube_id": "ckGJs4jgLhI",
+          "title": "Teeth whitening: Hollywood smile",
+          "caption": "",
+          "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/ckGJs4jgLhI.webp",
+          "width": 405,
+          "height": 720,
+          "vertical": true,
+          "category": "whitening",
+          "cats": "whitening treatments",
+          "featured": false,
+          "home": true,
+          "gallery": true,
+          "service_id": 7,
+          "post_id": 3
+        }
+      ],
+      "id": 7,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/service-teeth-whitening.webp",
+      "eyebrow": "The secret of the perfect smile",
+      "title": "Teeth whitening",
+      "description": [
+        "Hollywood smile without pain in 30 or 60 minutes. It's a must have treatment you will ever need for the whiter and brighter looking teeth."
+      ],
+      "order": 70,
+      "slug": "teeth-whitening",
+      "slugs": {
+        "en": "teeth-whitening",
+        "hu": "fogfeherites"
+      },
+      "meta_title": "Laser teeth whitening in Budapest – Hollywood smile",
+      "meta_description": "Hollywood smile without pain in 60 minutes with our latest laser teeth whitening machine. How the treatment works. Infinite Care Beauty Clinic, Budapest.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Hollywood smile without pain in 60 minutes with our latest laser machine!"
+        },
+        {
+          "type": "h",
+          "text": "How does the treatment work?"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Before the treatment we ask you to brush your teeth properly. Don't worry, we give you a toothbrush and toothpaste.",
+            "We apply a special gum protector and put the whitening serum on your teeth.",
+            "We place the laser machine close to your mouth.",
+            "Now you only need to relax for 60 minutes, then enjoy your perfectly white Hollywood smile!"
+          ]
+        }
+      ],
+      "gallery_category": "whitening",
+      "updated": "2026-10-29"
+    },
+    {
+      "videos": [],
+      "id": 8,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/box-7.webp",
+      "eyebrow": "Happy life without wrinkles",
+      "title": "Face lifting",
+      "description": [
+        "Our face is the most important part of our body. We have to take care of it as much as possible and give everything it needs. Our ultimate machines are the best options to spoil the skin on your face."
+      ],
+      "order": 80,
+      "slug": "face-lifting-en",
+      "slugs": {
+        "en": "face-lifting-en",
+        "hu": "face-lifting"
+      },
+      "meta_title": "Facelifting (RF) – non-surgical face lift in Budapest",
+      "meta_description": "Non-surgical facelifting: radio frequency skin tightening with infrared and vacuum stimulates collagen, elastin and new skin cells to firm and lift sagging skin. Budapest.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "A nonsurgical facelift that firms and lifts sagging skin."
+        },
+        {
+          "type": "h",
+          "text": "How it works"
+        },
+        {
+          "type": "p",
+          "text": "During radio frequency (RF) skin tightening we use an electromagnetic device combined with infrared and vacuum that generates heat to stimulate the production of collagen, elastin and new skin cells."
+        },
+        {
+          "type": "h",
+          "text": "Results"
+        },
+        {
+          "type": "p",
+          "text": "The results are temporary, but they are similar to a surgical facelift."
+        }
+      ],
+      "gallery_category": "facial",
+      "updated": "2026-10-29"
+    },
+    {
+      "videos": [],
+      "id": 9,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/box-8.webp",
+      "eyebrow": "Plumped lips, wrinkle free skin",
+      "title": "Esthetic treatments",
+      "description": [
+        "Wrinkle free face, beautiful and plumped lips, tighter skin, excellent nose. You can find everything in our beauty clinic what you need: Botox, Lip fillers, Russian lips technique, filler for cheeks, chin and jaw line, nose correction, face slimming, double chin removal, collagen therapy, skin booster, body fat dissolving, mesotherapy."
+      ],
+      "order": 90,
+      "slug": "",
+      "slugs": {
+        "en": "",
+        "hu": ""
+      },
+      "meta_title": "Esthetic treatments",
+      "meta_description": "",
+      "blocks": [],
+      "gallery_category": "",
+      "updated": "2026-10-29"
+    },
+    {
+      "videos": [
+        {
+          "id": 11,
+          "youtube_id": "jEYC7rDP6W8",
+          "title": "Brazilift",
+          "caption": "",
+          "poster": "https://infinitecare-api.amyrsalarr.workers.dev/media/youtube/jEYC7rDP6W8.webp",
+          "width": 405,
+          "height": 720,
+          "vertical": true,
+          "category": "brazilift",
+          "cats": "brazilift treatments",
+          "featured": false,
+          "home": false,
+          "gallery": true,
+          "service_id": 10,
+          "post_id": null
+        }
+      ],
+      "id": 10,
+      "image": "https://infinitecare-api.amyrsalarr.workers.dev/media/services/box-9.webp",
+      "eyebrow": "Bigger and tighter buttocks and boobs",
+      "title": "Brazilift",
+      "description": [
+        "If you don't like the shape of your buttocks or you want naturally plumped and bigger boobs you are in a right place! BRAZILIFT is the ultimate treatment for bigger and tighter buttocks and more plumped boobs. Try our painless Brazilian lift and your body will look like as a body of a Brazilian supermodel."
+      ],
+      "order": 100,
+      "slug": "brazilift-en",
+      "slugs": {
+        "en": "brazilift-en",
+        "hu": "brazilift"
+      },
+      "meta_title": "Brazilift – Brazilian butt and breast lift in Budapest",
+      "meta_description": "Brazilift: our buttocks and breast treatment with vacuum for a more plumped, tighter body. Painless Brazilian lift at Infinite Care Beauty Clinic, Budapest.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Our brand new buttocks and breast treatment that makes the body more plumped and tighter with vacuum."
+        },
+        {
+          "type": "h",
+          "text": "How it works"
+        },
+        {
+          "type": "p",
+          "text": "The painless vacuum treatment boosts blood and lymph circulation in the treated area."
+        },
+        {
+          "type": "h",
+          "text": "Results"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Tighter, more toned buttocks",
+            "More plumped breasts"
+          ]
+        }
+      ],
+      "gallery_category": "brazilift",
+      "updated": "2026-10-29"
+    }
+  ]
+}
